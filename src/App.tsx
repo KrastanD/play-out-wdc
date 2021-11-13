@@ -6,6 +6,9 @@ function App() {
     Array.from(Array(5), () => new Array(12).fill(0))
   );
 
+  const COLOR_MERCEDES = "#00D2BE";
+  const COLOR_REDBULL = "#0600EF";
+
   const pointsSystem = [
     [3, 2, 1, 0],
     [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
@@ -108,104 +111,103 @@ function App() {
     setRaceResults(() => buttonClickRegistered);
   };
 
+  const arrayColumn = (arr: number[][], n: number) => arr.map((x) => x[n]);
+
   return (
     <div>
-      <p
-        style={{
-          fontSize: 15,
-          marginLeft: "5px",
-          marginTop: "5px",
-          marginBottom: "5px",
-        }}
-      >
-        Instructions Desktop: Left Click = Max, Right Click = Lewis <br />
-        Instructions Mobile: Tap = Max, Long Press = Lewis
-      </p>
-      <div className="App" style={{ display: "flex" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: "45px",
-          }}
-        >
-          {positions.map((position) => (
-            <p
-              style={{
-                lineHeight: "20px",
-                paddingTop: "2.5px",
-                paddingBottom: "2.5px",
-                minWidth: "90px",
-                maxWidth: "90px",
-              }}
-            >
-              {position}
-            </p>
-          ))}
-        </div>
-
-        {pointsSystem.map((e, race) => (
-          <div
-            key={race}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <p
-              style={{
-                minWidth: "100px",
-                maxWidth: "100px",
-                fontSize: "14px",
-                height: "25px",
-                marginBottom: "20px",
-              }}
-            >
-              {raceMetadata[race].name}
-            </p>
-            {pointsSystem[race].map((buttonText, position) => (
-              <button
-                onClick={() => {
-                  // means max
-                  onButtonClick(1, race, position);
-                }}
-                style={
-                  raceResults[race][position] === 1
-                    ? {
-                        backgroundColor: "darkblue",
-                        color: "white",
-                        width: "50px",
-                        height: "25px",
-                        userSelect: "none",
-                      }
-                    : raceResults[race][position] === 2
-                    ? {
-                        backgroundColor: "cyan",
-                        width: "50px",
-                        height: "25px",
-                        userSelect: "none",
-                      }
-                    : { width: "50px", height: "25px", userSelect: "none" }
-                }
-                key={position}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  //means lewis
-                  onButtonClick(2, race, position);
-                }}
-              >
-                {!!buttonText ? buttonText : "DNF"}
-              </button>
-            ))}
+      <nav className="navbar navbar-light bg-danger">
+        <h3 className="mx-4 my-1 text-light">Play Out WDC</h3>
+      </nav>
+      <div className="container">
+        <div className="row justify-content-sm-center">
+          <div className="col col-sm-8 rounded my-2 bg-danger bg-gradient bg-opacity-10">
+            <h4 className="d-sm-none text-center">
+              Instructions: Tap = Max, Long Press = Lewis
+            </h4>
+            <h4 className="d-none d-sm-block text-center">
+              Instructions: Left Click = Max, Right Click = Lewis
+            </h4>
           </div>
-        ))}
+        </div>
       </div>
-      <div style={{ marginTop: "25px" }}>
-        <p>Max: {maxTotal} pts</p>
-        <p>Lewis: {lewisTotal} pts</p>
-        <p>Winner: {maxTotal > lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}</p>
+
+      <div className="container">
+        <div className="row">
+          <h4 className="col text-center">Max: {maxTotal} pts</h4>
+          <h4 className="col text-center">Lewis: {lewisTotal} pts</h4>
+        </div>
+        <div className="row">
+          <h3 className="col text-center">
+            Winner: {maxTotal > lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}
+          </h3>
+        </div>
+      </div>
+
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Position</th>
+              {raceMetadata.map((meta) => (
+                <th scope="col">{meta.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {positions.map((positionValue, position) => {
+              return (
+                <tr>
+                  <td>{positionValue}</td>
+                  {arrayColumn(pointsSystem, position).map((points, race) => {
+                    console.log(race, position, points);
+                    if (points === undefined) {
+                      return <td></td>;
+                    }
+                    return (
+                      <td>
+                        <button
+                          onClick={() => {
+                            // means max
+                            onButtonClick(1, race, position);
+                          }}
+                          className="btn btn-outline-secondary"
+                          style={
+                            raceResults[race][position] === 1
+                              ? {
+                                  backgroundColor: COLOR_REDBULL,
+                                  color: "white",
+                                  width: "60px",
+                                  userSelect: "none",
+                                }
+                              : raceResults[race][position] === 2
+                              ? {
+                                  backgroundColor: COLOR_MERCEDES,
+                                  color: "white",
+                                  width: "60px",
+                                  userSelect: "none",
+                                }
+                              : {
+                                  width: "60px",
+                                  userSelect: "none",
+                                }
+                          }
+                          key={position}
+                          onContextMenu={(e) => {
+                            e.preventDefault();
+                            //means lewis
+                            onButtonClick(2, race, position);
+                          }}
+                        >
+                          {points}
+                        </button>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
