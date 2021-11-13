@@ -1,10 +1,13 @@
 import { useState } from "react";
 import "./App.css";
+import ContextMenuHandler from "./contextMenuHandler";
 
 function App() {
   const [raceResults, setRaceResults] = useState<number[][]>(
     Array.from(Array(5), () => new Array(12).fill(0))
   );
+
+  const contextMenuHandler = new ContextMenuHandler();
 
   const COLOR_MERCEDES = "#00D2BE";
   const COLOR_REDBULL = "#0600EF";
@@ -202,10 +205,18 @@ function App() {
                           }
                           key={position}
                           onContextMenu={(e) => {
-                            e.preventDefault();
-                            //means lewis
-                            onButtonClick(2, race, position);
+                            contextMenuHandler.onContextMenu(e, () =>
+                              onButtonClick(2, race, position)
+                            );
                           }}
+                          onTouchStart={(e) => {
+                            contextMenuHandler.onTouchStart(e, () =>
+                              onButtonClick(2, race, position)
+                            );
+                          }}
+                          onTouchCancel={contextMenuHandler.onTouchCancel}
+                          onTouchEnd={contextMenuHandler.onTouchEnd}
+                          onTouchMove={contextMenuHandler.onTouchMove}
                         >
                           {points}
                         </button>
