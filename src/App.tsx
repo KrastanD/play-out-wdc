@@ -155,7 +155,7 @@ function App() {
       </div>
 
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-striped user-select-none">
           <thead>
             <tr>
               <th scope="col" style={{ width: "15%" }}>
