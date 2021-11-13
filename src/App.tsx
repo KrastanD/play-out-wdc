@@ -120,13 +120,21 @@ function App() {
       </nav>
       <div className="container">
         <div className="row justify-content-sm-center">
-          <div className="col col-sm-8 rounded my-2 bg-danger bg-gradient bg-opacity-10">
-            <h4 className="d-sm-none text-center">
-              Instructions: Tap = Max, Long Press = Lewis
-            </h4>
-            <h4 className="d-none d-sm-block text-center">
-              Instructions: Left Click = Max, Right Click = Lewis
-            </h4>
+          <div className="col col-sm-6 rounded my-2 bg-danger bg-gradient bg-opacity-10">
+            <h5 className="d-sm-none text-center">
+              Instructions
+              <br />
+              Tap -{">"} Max
+              <br />
+              Long Press -{">"} Lewis
+            </h5>
+            <h5 className="d-none d-sm-block text-center">
+              Instructions
+              <br />
+              Left Click -{">"} Max
+              <br />
+              Right Click -{">"} Lewis
+            </h5>
           </div>
         </div>
       </div>
@@ -170,25 +178,22 @@ function App() {
                             // means max
                             onButtonClick(1, race, position);
                           }}
-                          className="btn btn-outline-secondary"
+                          className="btn btn-outline-secondary user-select-none"
                           style={
                             raceResults[race][position] === 1
                               ? {
                                   backgroundColor: COLOR_REDBULL,
                                   color: "white",
                                   width: "60px",
-                                  userSelect: "none",
                                 }
                               : raceResults[race][position] === 2
                               ? {
                                   backgroundColor: COLOR_MERCEDES,
                                   color: "white",
                                   width: "60px",
-                                  userSelect: "none",
                                 }
                               : {
                                   width: "60px",
-                                  userSelect: "none",
                                 }
                           }
                           key={position}
