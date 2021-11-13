@@ -155,9 +155,13 @@ function App() {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Position</th>
+              <th scope="col" style={{ width: "15%" }}>
+                Position
+              </th>
               {raceMetadata.map((meta) => (
-                <th scope="col">{meta.name}</th>
+                <th scope="col" style={{ width: "15%" }}>
+                  {meta.name}
+                </th>
               ))}
             </tr>
           </thead>
