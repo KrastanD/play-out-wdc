@@ -91,6 +91,12 @@ function App() {
 
     const previousResult = raceResults[race].findIndex((x) => x === driverNum);
 
+    if (raceResults[race][raceResults[0].length - 2] === driverNum) {
+      if (position === DNF) {
+        return;
+      }
+    }
+
     //If previous result wasn't fastest lap
     if (
       previousResult !== -1 &&
@@ -100,12 +106,6 @@ function App() {
       if (previousResult === position) {
         // if clicking on previous result
         setRaceResults(() => buttonClickRegistered);
-        return;
-      }
-    }
-
-    if (isFastestLap(previousResult)) {
-      if (position === DNF) {
         return;
       }
     }
@@ -161,8 +161,8 @@ function App() {
               <th scope="col" style={{ width: "15%" }}>
                 Position
               </th>
-              {raceMetadata.map((meta) => (
-                <th scope="col" style={{ width: "15%" }}>
+              {raceMetadata.map((meta, i) => (
+                <th key={i} scope="col" style={{ width: "15%" }}>
                   {meta.name}
                 </th>
               ))}
@@ -171,15 +171,14 @@ function App() {
           <tbody>
             {positions.map((positionValue, position) => {
               return (
-                <tr>
+                <tr key={position}>
                   <td>{positionValue}</td>
                   {arrayColumn(pointsSystem, position).map((points, race) => {
-                    console.log(race, position, points);
                     if (points === undefined) {
-                      return <td></td>;
+                      return <td key={race}></td>;
                     }
                     return (
-                      <td>
+                      <td key={race}>
                         <button
                           onClick={() => {
                             // means max
