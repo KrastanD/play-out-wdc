@@ -178,7 +178,7 @@ function App() {
         </div>
         <div className="row">
           <h3 className="col text-center">
-            Winner: {maxTotal > lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}
+            Winner: {maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}
           </h3>
         </div>
       </div>
