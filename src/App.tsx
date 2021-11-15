@@ -35,12 +35,22 @@ function App() {
     "Out of points",
   ];
 
-  const raceMetadata = [
+  interface MetadataType {
+    name: string;
+    Max?: number[];
+    Lewis?: number[];
+  }
+
+  const raceMetadata: MetadataType[] = [
     {
       name: "Brazilian Sprint Race",
+      Max: [1],
+      Lewis: [3],
     },
     {
       name: "Brazilian GP",
+      Max: [1],
+      Lewis: [0],
     },
     {
       name: "Qatar Grand Prix",
@@ -52,6 +62,23 @@ function App() {
       name: "Abu Dhabi GP",
     },
   ];
+
+  const setPreviousResults = (raceMetadata: MetadataType[]) => {
+    let buttonClickRegistered = [...raceResults];
+
+    raceMetadata.forEach((race, index) => {
+      if (race.Max) {
+        race.Max.forEach((result) => {
+          buttonClickRegistered[index][result] = 1;
+        });
+      }
+      if (race.Lewis) {
+        race.Lewis.forEach((result) => {
+          buttonClickRegistered[index][result] = 2;
+        });
+      }
+    });
+  };
 
   const getDriverTotal = (driverNum: number) => {
     let counter = 0;
@@ -115,6 +142,8 @@ function App() {
   };
 
   const arrayColumn = (arr: number[][], n: number) => arr.map((x) => x[n]);
+
+  setPreviousResults(raceMetadata);
 
   return (
     <div>
@@ -180,6 +209,10 @@ function App() {
                     return (
                       <td key={race}>
                         <button
+                          disabled={
+                            Boolean(raceMetadata[race].Max) ||
+                            Boolean(raceMetadata[race].Lewis)
+                          }
                           onClick={() => {
                             // means max
                             onButtonClick(1, race, position);
