@@ -1,7 +1,7 @@
-import { pointsSystem } from "../../utils/constants";
+import { Drivers, pointsSystem } from "../../utils/constants";
 
 const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
-  const getDriverTotal = (driverNum: number) => {
+  const getDriverTotal = (driverNum: Drivers) => {
     let counter = 0;
     raceResults.forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
@@ -13,8 +13,8 @@ const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
     return counter;
   };
 
-  const maxTotal = getDriverTotal(1) + 312.5;
-  const lewisTotal = getDriverTotal(2) + 293.5;
+  const maxTotal = getDriverTotal(Drivers.Max) + 312.5;
+  const lewisTotal = getDriverTotal(Drivers.Lewis) + 293.5;
 
   return (
     <div className="container">

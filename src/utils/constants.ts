@@ -48,3 +48,9 @@ export const pointsSystem = [
   [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
   [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
 ];
+
+export enum Drivers {
+  None,
+  Max,
+  Lewis,
+}
