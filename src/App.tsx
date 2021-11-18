@@ -26,6 +26,15 @@ function App() {
   );
 
   useEffect(() => {
+    if (version === AppVersion.WCC) {
+      document.title = "Play Out WCC";
+      document.getElementsByTagName("meta")[3].content =
+        "Play out the WCC in the last rounds of 2021";
+    } else {
+      document.title = "Play Out WDC";
+      document.getElementsByTagName("meta")[3].content =
+        "Play out the WDC in the last rounds of 2021";
+    }
     setPreviousResultsWDC(raceResultsWDC, setRaceResultsWDC);
     setPreviousResultsWCC(raceResultsWCC, setRaceResultsWCC);
     // eslint-disable-next-line
