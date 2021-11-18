@@ -1,4 +1,4 @@
-import { Drivers, pointsSystem } from "../../utils/constants";
+import { Drivers, pointsSystem } from "../../../utils/constants";
 
 const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
   const getDriverTotal = (driverNum: Drivers) => {

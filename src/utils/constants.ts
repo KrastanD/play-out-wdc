@@ -2,6 +2,8 @@ export interface MetadataType {
   name: string;
   Max?: number[];
   Lewis?: number[];
+  RedBull?: number[];
+  Mercedes?: number[];
 }
 
 export const raceMetadata: MetadataType[] = [
@@ -9,11 +11,15 @@ export const raceMetadata: MetadataType[] = [
     name: "Brazilian Sprint Race",
     Max: [1],
     Lewis: [3],
+    RedBull: [1],
+    Mercedes: [0],
   },
   {
     name: "Brazilian GP",
     Max: [1],
     Lewis: [0],
+    RedBull: [1, 3, 10],
+    Mercedes: [0, 2],
   },
   {
     name: "Qatar Grand Prix",
@@ -25,6 +31,11 @@ export const raceMetadata: MetadataType[] = [
     name: "Abu Dhabi GP",
   },
 ];
+
+export const teamTiebreakerData = {
+  1: [9, 5, 4, 3, 3, 1, 0, 1, 2, 0],
+  2: [6, 8, 8, 2, 2, 1, 1, 0, 0, 0],
+};
 
 export const positions = [
   "1st",
@@ -53,4 +64,10 @@ export enum Drivers {
   None,
   Max,
   Lewis,
+}
+
+export enum Teams {
+  None,
+  RedBull,
+  Mercedes,
 }

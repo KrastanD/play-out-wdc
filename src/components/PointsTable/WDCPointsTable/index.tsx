@@ -1,39 +1,21 @@
-import ContextMenuHandler from "../../contextMenuHandler";
-import { arrayColumn } from "../../utils/helperFunctions";
+import ContextMenuHandler from "../../../contextMenuHandler";
+import { arrayColumn } from "../../../utils/helperFunctions";
 import "./styles.scss";
 
 import {
   Drivers,
-  MetadataType,
   pointsSystem,
   positions,
   raceMetadata,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
 interface Props {
-  raceResults: number[][];
-  setRaceResults: React.Dispatch<React.SetStateAction<number[][]>>;
+  raceResults: Drivers[][];
+  setRaceResults: React.Dispatch<React.SetStateAction<Drivers[][]>>;
 }
 
 const PointsTable = ({ raceResults, setRaceResults }: Props) => {
   const contextMenuHandler = new ContextMenuHandler();
-
-  const setPreviousResults = (raceMetadata: MetadataType[]) => {
-    let buttonClickRegistered = [...raceResults];
-
-    raceMetadata.forEach((race, index) => {
-      if (race.Max) {
-        race.Max.forEach((result) => {
-          buttonClickRegistered[index][result] = Drivers.Max;
-        });
-      }
-      if (race.Lewis) {
-        race.Lewis.forEach((result) => {
-          buttonClickRegistered[index][result] = Drivers.Lewis;
-        });
-      }
-    });
-  };
 
   const onButtonClick = (
     driverNum: Drivers,
@@ -84,8 +66,6 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
     buttonClickRegistered[race][position] = driverNum;
     setRaceResults(() => buttonClickRegistered);
   };
-
-  setPreviousResults(raceMetadata);
 
   return (
     <div className="table-responsive">
