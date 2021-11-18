@@ -8,7 +8,7 @@ export enum AppVersion {
 export const configSlice = createSlice({
   name: "config",
   initialState: {
-    version: AppVersion.WDC,
+    version: AppVersion.WCC,
   },
   reducers: {
     switchVersion: (state) => {
