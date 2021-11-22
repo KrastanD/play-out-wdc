@@ -23,6 +23,10 @@ export const raceMetadata: MetadataType[] = [
   },
   {
     name: "Qatar Grand Prix",
+    Max: [1, 10],
+    Lewis: [0],
+    RedBull: [1,3, 10],
+    Mercedes: [0, 11]
   },
   {
     name: "Saudi Arabian Grand Prix",
