@@ -17,27 +17,26 @@ interface Props {
 const PointsTable = ({ raceResults, setRaceResults }: Props) => {
   const contextMenuHandler = new ContextMenuHandler();
 
-  const onButtonClick = (
+  const onResultSelect = (
     driverNum: Drivers,
     race: number,
-    position: number
+    selectedPosition: number
   ) => {
-    const isFastestLap = (num: number) => num === pointsSystem[1].length - 2;
-    const DNF = pointsSystem[1].length - 1;
+    const fastestLapIndex = pointsSystem[1].length - 2;
+    const didNotFinishIndex = pointsSystem[1].length - 1;
 
-    let buttonClickRegistered = [...raceResults];
+    let updatedRaceResults = [...raceResults];
 
-    if (isFastestLap(position)) {
-      if (raceResults[race][position] === driverNum) {
-        // if previous fastest lap
-        buttonClickRegistered[race][position] = Drivers.None;
-        setRaceResults(() => buttonClickRegistered);
+    if (selectedPosition === fastestLapIndex) {
+      if (raceResults[race][selectedPosition] === driverNum) {
+        updatedRaceResults[race][selectedPosition] = Drivers.None;
+        setRaceResults(() => updatedRaceResults);
       } else {
-        if (raceResults[race][DNF] === driverNum) {
+        if (raceResults[race][didNotFinishIndex] === driverNum) {
           return;
         }
-        buttonClickRegistered[race][position] = driverNum;
-        setRaceResults(() => buttonClickRegistered);
+        updatedRaceResults[race][selectedPosition] = driverNum;
+        setRaceResults(() => updatedRaceResults);
       }
       return;
     }
@@ -45,26 +44,21 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
     const previousResult = raceResults[race].findIndex((x) => x === driverNum);
 
     if (raceResults[race][raceResults[0].length - 2] === driverNum) {
-      if (position === DNF) {
+      if (selectedPosition === didNotFinishIndex) {
         return;
       }
     }
 
-    //If previous result wasn't fastest lap
-    if (
-      previousResult !== -1 &&
-      previousResult !== pointsSystem[1].length - 2
-    ) {
-      buttonClickRegistered[race][previousResult] = Drivers.None;
-      if (previousResult === position) {
-        // if clicking on previous result
-        setRaceResults(() => buttonClickRegistered);
+    if (previousResult !== -1 && previousResult !== fastestLapIndex) {
+      updatedRaceResults[race][previousResult] = Drivers.None;
+      if (previousResult === selectedPosition) {
+        setRaceResults(() => updatedRaceResults);
         return;
       }
     }
 
-    buttonClickRegistered[race][position] = driverNum;
-    setRaceResults(() => buttonClickRegistered);
+    updatedRaceResults[race][selectedPosition] = driverNum;
+    setRaceResults(() => updatedRaceResults);
   };
 
   return (
@@ -107,18 +101,18 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                           Boolean(raceMetadata[race].Lewis)
                         }
                         onClick={() => {
-                          onButtonClick(Drivers.Max, race, position);
+                          onResultSelect(Drivers.Max, race, position);
                         }}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            onButtonClick(Drivers.Lewis, race, position)
+                            onResultSelect(Drivers.Lewis, race, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            onButtonClick(Drivers.Lewis, race, position)
+                            onResultSelect(Drivers.Lewis, race, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}
