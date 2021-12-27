@@ -1,40 +1,27 @@
-import ContextMenuHandler from "../../contextMenuHandler";
-import { arrayColumn } from "../../utils/helperFunctions";
+import ContextMenuHandler from "../../../contextMenuHandler";
+import { arrayColumn } from "../../../utils/helperFunctions";
 import "./styles.scss";
 
 import {
-  MetadataType,
+  Drivers,
   pointsSystem,
   positions,
   raceMetadata,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
 interface Props {
-  raceResults: number[][];
-  setRaceResults: React.Dispatch<React.SetStateAction<number[][]>>;
+  raceResults: Drivers[][];
+  setRaceResults: React.Dispatch<React.SetStateAction<Drivers[][]>>;
 }
 
 const PointsTable = ({ raceResults, setRaceResults }: Props) => {
   const contextMenuHandler = new ContextMenuHandler();
 
-  const setPreviousResults = (raceMetadata: MetadataType[]) => {
-    let buttonClickRegistered = [...raceResults];
-
-    raceMetadata.forEach((race, index) => {
-      if (race.Max) {
-        race.Max.forEach((result) => {
-          buttonClickRegistered[index][result] = 1;
-        });
-      }
-      if (race.Lewis) {
-        race.Lewis.forEach((result) => {
-          buttonClickRegistered[index][result] = 2;
-        });
-      }
-    });
-  };
-
-  const onButtonClick = (driverNum: number, race: number, position: number) => {
+  const onButtonClick = (
+    driverNum: Drivers,
+    race: number,
+    position: number
+  ) => {
     const isFastestLap = (num: number) => num === pointsSystem[1].length - 2;
     const DNF = pointsSystem[1].length - 1;
 
@@ -43,7 +30,7 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
     if (isFastestLap(position)) {
       if (raceResults[race][position] === driverNum) {
         // if previous fastest lap
-        buttonClickRegistered[race][position] = 0;
+        buttonClickRegistered[race][position] = Drivers.None;
         setRaceResults(() => buttonClickRegistered);
       } else {
         if (raceResults[race][DNF] === driverNum) {
@@ -68,7 +55,7 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
       previousResult !== -1 &&
       previousResult !== pointsSystem[1].length - 2
     ) {
-      buttonClickRegistered[race][previousResult] = 0;
+      buttonClickRegistered[race][previousResult] = Drivers.None;
       if (previousResult === position) {
         // if clicking on previous result
         setRaceResults(() => buttonClickRegistered);
@@ -79,8 +66,6 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
     buttonClickRegistered[race][position] = driverNum;
     setRaceResults(() => buttonClickRegistered);
   };
-
-  setPreviousResults(raceMetadata);
 
   return (
     <div className="table-responsive">
@@ -108,10 +93,10 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                   }
                   let buttonClass =
                     "btn btn-outline-secondary user-select-none constant-width";
-                  if (raceResults[race][position] === 1) {
+                  if (raceResults[race][position] === Drivers.Max) {
                     buttonClass += " white-text redbull-bg";
                   }
-                  if (raceResults[race][position] === 2) {
+                  if (raceResults[race][position] === Drivers.Lewis) {
                     buttonClass += " white-text mercedes-bg";
                   }
                   return (
@@ -122,18 +107,18 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                           Boolean(raceMetadata[race].Lewis)
                         }
                         onClick={() => {
-                          onButtonClick(1, race, position);
+                          onButtonClick(Drivers.Max, race, position);
                         }}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            onButtonClick(2, race, position)
+                            onButtonClick(Drivers.Lewis, race, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            onButtonClick(2, race, position)
+                            onButtonClick(Drivers.Lewis, race, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}
