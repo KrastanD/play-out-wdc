@@ -1,65 +1,41 @@
+import { useDispatch, useSelector } from "react-redux";
 import ContextMenuHandler from "../../../contextMenuHandler";
-import { arrayColumn } from "../../../utils/helperFunctions";
-import "./styles.scss";
-
 import {
   Drivers,
   pointsSystem,
   positions,
   raceMetadata,
 } from "../../../utils/constants";
+import { arrayColumn } from "../../../utils/helperFunctions";
+import "./styles.scss";
+import { resultSet, selectWDCResults } from "./wdcSlice";
 
-interface Props {
-  raceResults: Drivers[][];
-  setRaceResults: React.Dispatch<React.SetStateAction<Drivers[][]>>;
-}
-
-const PointsTable = ({ raceResults, setRaceResults }: Props) => {
+const PointsTable = () => {
   const contextMenuHandler = new ContextMenuHandler();
 
-  const onResultSelect = (
-    driverNum: Drivers,
-    race: number,
-    selectedPosition: number
-  ) => {
-    const fastestLapIndex = pointsSystem[1].length - 2;
-    const didNotFinishIndex = pointsSystem[1].length - 1;
+  const dispatch = useDispatch();
 
-    let updatedRaceResults = [...raceResults];
-
-    if (selectedPosition === fastestLapIndex) {
-      if (raceResults[race][selectedPosition] === driverNum) {
-        updatedRaceResults[race][selectedPosition] = Drivers.None;
-        setRaceResults(() => updatedRaceResults);
-      } else {
-        if (raceResults[race][didNotFinishIndex] === driverNum) {
-          return;
-        }
-        updatedRaceResults[race][selectedPosition] = driverNum;
-        setRaceResults(() => updatedRaceResults);
-      }
-      return;
-    }
-
-    const previousResult = raceResults[race].findIndex((x) => x === driverNum);
-
-    if (raceResults[race][raceResults[0].length - 2] === driverNum) {
-      if (selectedPosition === didNotFinishIndex) {
-        return;
-      }
-    }
-
-    if (previousResult !== -1 && previousResult !== fastestLapIndex) {
-      updatedRaceResults[race][previousResult] = Drivers.None;
-      if (previousResult === selectedPosition) {
-        setRaceResults(() => updatedRaceResults);
-        return;
-      }
-    }
-
-    updatedRaceResults[race][selectedPosition] = driverNum;
-    setRaceResults(() => updatedRaceResults);
+  const lewisOnClick = (race: number, position: number) => {
+    dispatch(
+      resultSet({
+        driverNum: Drivers.Lewis,
+        race,
+        selectedPosition: position,
+      })
+    );
   };
+
+  const maxOnClick = (race: number, position: number) => {
+    dispatch(
+      resultSet({
+        driverNum: Drivers.Max,
+        race,
+        selectedPosition: position,
+      })
+    );
+  };
+
+  const raceResults = useSelector(selectWDCResults);
 
   return (
     <div className="table-responsive">
@@ -100,19 +76,17 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                           Boolean(raceMetadata[race].Max) ||
                           Boolean(raceMetadata[race].Lewis)
                         }
-                        onClick={() => {
-                          onResultSelect(Drivers.Max, race, position);
-                        }}
+                        onClick={() => maxOnClick(race, position)}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            onResultSelect(Drivers.Lewis, race, position)
+                            lewisOnClick(race, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            onResultSelect(Drivers.Lewis, race, position)
+                            lewisOnClick(race, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}

@@ -2,7 +2,9 @@ import { Drivers, raceMetadata } from "../../../utils/constants";
 
 export const setPreviousResultsWDC = (
   raceResultsWDC: number[][],
-  setRaceResultsWDC: React.Dispatch<React.SetStateAction<number[][]>>
+  setRaceResultsWDC:
+    | React.Dispatch<React.SetStateAction<number[][]>>
+    | ((func: () => Drivers[][]) => void)
 ) => {
   let buttonClickRegistered = [...raceResultsWDC];
 

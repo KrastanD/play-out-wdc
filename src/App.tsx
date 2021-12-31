@@ -42,17 +42,14 @@ function App() {
 
   const Scoreboard = () =>
     version === AppVersion.WDC ? (
-      <WDCScoreboard raceResults={raceResultsWDC} />
+      <WDCScoreboard />
     ) : (
       <WCCScoreboard raceResults={raceResultsWCC} />
     );
 
   const PointsTable = () =>
     version === AppVersion.WDC ? (
-      <WDCPointsTable
-        raceResults={raceResultsWDC}
-        setRaceResults={setRaceResultsWDC}
-      />
+      <WDCPointsTable />
     ) : (
       <WCCPointsTable
         raceResults={raceResultsWCC}

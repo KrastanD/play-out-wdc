@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import { Drivers, pointsSystem } from "../../../utils/constants";
+import { selectWDCResults } from "../../PointsTable/WDCPointsTable/wdcSlice";
 
-const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
+const Scoreboard = () => {
+  const raceResults = useSelector(selectWDCResults);
   const getDriverTotal = (driverNum: Drivers) => {
     let counter = 0;
     raceResults.forEach((race, raceIndex) => {
