@@ -8,7 +8,7 @@ import {
 } from "../../../utils/constants";
 import { arrayColumn } from "../../../utils/helperFunctions";
 import "./styles.scss";
-import { resultSet, selectWDCResults } from "./wdcSlice";
+import { wdcResultSet, selectWDCResults } from "./wdcSlice";
 
 const PointsTable = () => {
   const contextMenuHandler = new ContextMenuHandler();
@@ -17,7 +17,7 @@ const PointsTable = () => {
 
   const lewisOnClick = (race: number, position: number) => {
     dispatch(
-      resultSet({
+      wdcResultSet({
         driverNum: Drivers.Lewis,
         race,
         selectedPosition: position,
@@ -27,7 +27,7 @@ const PointsTable = () => {
 
   const maxOnClick = (race: number, position: number) => {
     dispatch(
-      resultSet({
+      wdcResultSet({
         driverNum: Drivers.Max,
         race,
         selectedPosition: position,

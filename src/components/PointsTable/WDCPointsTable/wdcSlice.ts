@@ -25,7 +25,7 @@ const wdcSlice = createSlice({
   name: "wdc",
   initialState,
   reducers: {
-    resultSet(state, action: ResultSetAction) {
+    wdcResultSet(state, action: ResultSetAction) {
       const { selectedPosition, race, driverNum } = action.payload;
 
       const fastestLapIndex = pointsSystem[1].length - 2;
@@ -67,4 +67,4 @@ export default wdcSlice.reducer;
 
 export const selectWDCResults = (state: StoreType) => state.wdc;
 
-export const { resultSet } = wdcSlice.actions;
+export const { wdcResultSet } = wdcSlice.actions;
