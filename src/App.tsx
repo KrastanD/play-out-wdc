@@ -10,20 +10,9 @@ import WCCPointsTable from "./components/PointsTable/WCCPointsTable";
 import { StoreType } from "./store";
 import { useSelector } from "react-redux";
 import { AppVersion } from "./config/configSlice";
-import { Teams } from "./utils/constants";
-import { setPreviousResultsWDC } from "./components/PointsTable/WDCPointsTable/WDCPointsTablePM";
-import { setPreviousResultsWCC } from "./components/PointsTable/WCCPointsTable/WCCPointsTablePM";
 
 function App() {
   const version = useSelector((state: StoreType) => state.config.version);
-
-  const [raceResultsWDC, setRaceResultsWDC] = useState<number[][]>(
-    Array.from(Array(5), () => new Array(12).fill(Teams.None))
-  );
-
-  const [raceResultsWCC, setRaceResultsWCC] = useState<number[][]>(
-    Array.from(Array(5), () => new Array(12).fill(Teams.None))
-  );
 
   useEffect(() => {
     if (version === AppVersion.WCC) {
@@ -35,27 +24,14 @@ function App() {
       document.getElementsByTagName("meta")[3].content =
         "Play out the WDC in the last rounds of 2021";
     }
-    setPreviousResultsWDC(raceResultsWDC, setRaceResultsWDC);
-    setPreviousResultsWCC(raceResultsWCC, setRaceResultsWCC);
     // eslint-disable-next-line
   }, []);
 
   const Scoreboard = () =>
-    version === AppVersion.WDC ? (
-      <WDCScoreboard />
-    ) : (
-      <WCCScoreboard raceResults={raceResultsWCC} />
-    );
+    version === AppVersion.WDC ? <WDCScoreboard /> : <WCCScoreboard />;
 
   const PointsTable = () =>
-    version === AppVersion.WDC ? (
-      <WDCPointsTable />
-    ) : (
-      <WCCPointsTable
-        raceResults={raceResultsWCC}
-        setRaceResults={setRaceResultsWCC}
-      />
-    );
+    version === AppVersion.WDC ? <WDCPointsTable /> : <WCCPointsTable />;
 
   return (
     <div>

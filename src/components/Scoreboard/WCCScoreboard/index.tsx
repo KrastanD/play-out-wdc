@@ -1,12 +1,16 @@
+import { useSelector } from "react-redux";
 import {
-  Teams,
   pointsSystem,
+  Teams,
   teamTiebreakerData,
 } from "../../../utils/constants";
+import { selectWCCResults } from "../../PointsTable/WCCPointsTable/wccSlice";
 
-const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
+const Scoreboard = () => {
   const redBullString = "Red Bull 🇦🇹";
   const mercedesString = "Mercedes 🇩🇪";
+
+  const raceResults = useSelector(selectWCCResults);
 
   if (raceResults[0][0] === 0) {
     return null;

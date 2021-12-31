@@ -8,11 +8,10 @@ import {
 } from "../../../utils/constants";
 import { arrayColumn } from "../../../utils/helperFunctions";
 import "./styles.scss";
-import { wdcResultSet, selectWDCResults } from "./wdcSlice";
+import { selectWDCResults, wdcResultSet } from "./wdcSlice";
 
 const PointsTable = () => {
   const contextMenuHandler = new ContextMenuHandler();
-
   const dispatch = useDispatch();
 
   const lewisOnClick = (race: number, position: number) => {

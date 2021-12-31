@@ -2,7 +2,9 @@ import { raceMetadata, Teams } from "../../../utils/constants";
 
 export const setPreviousResultsWCC = (
   raceResultsWCC: number[][],
-  setRaceResultsWCC: React.Dispatch<React.SetStateAction<number[][]>>
+  setRaceResultsWCC:
+    | React.Dispatch<React.SetStateAction<number[][]>>
+    | ((func: () => Teams[][]) => void)
 ) => {
   let buttonClickRegistered = [...raceResultsWCC];
 

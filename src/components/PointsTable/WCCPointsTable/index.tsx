@@ -8,79 +8,34 @@ import {
   positions,
   raceMetadata,
 } from "../../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { selectWCCResults, wccResultSet } from "./wccSlice";
 
-interface Props {
-  raceResults: Teams[][];
-  setRaceResults: React.Dispatch<React.SetStateAction<Teams[][]>>;
-}
-
-const PointsTable = ({ raceResults, setRaceResults }: Props) => {
+const PointsTable = () => {
   const contextMenuHandler = new ContextMenuHandler();
+  const dispatch = useDispatch();
 
-  const onResultSelect = (
-    teamNum: Teams,
-    race: number,
-    selectedPosition: number
-  ) => {
-    const fastestLapIndex = pointsSystem[1].length - 2;
-    const didNotFinishIndex = pointsSystem[1].length - 1;
-
-    let updatedRaceResults = [...raceResults];
-    let previousResults: Teams[] = [];
-    raceResults[race].forEach((result, index) => {
-      if (result === teamNum) {
-        previousResults.push(index);
-      }
-    });
-
-    if (selectedPosition === fastestLapIndex) {
-      if (raceResults[race][selectedPosition] === teamNum) {
-        updatedRaceResults[race][selectedPosition] = Teams.None;
-        setRaceResults(() => updatedRaceResults);
-      } else {
-        if (
-          previousResults.length === 1 &&
-          previousResults[0] === didNotFinishIndex
-        ) {
-          return;
-        }
-        updatedRaceResults[race][selectedPosition] = teamNum;
-        setRaceResults(() => updatedRaceResults);
-      }
-      return;
-    }
-
-    if (
-      previousResults.length === 1 &&
-      raceResults[race][fastestLapIndex] === teamNum &&
-      selectedPosition === didNotFinishIndex
-    ) {
-      return;
-    }
-
-    if (previousResults.includes(selectedPosition)) {
-      updatedRaceResults[race][selectedPosition] = Teams.None;
-      setRaceResults(() => updatedRaceResults);
-      return;
-    }
-
-    previousResults = previousResults.filter(
-      (position) => position !== fastestLapIndex
+  const redBullOnClick = (race: number, position: number) => {
+    dispatch(
+      wccResultSet({
+        teamNum: Teams.RedBull,
+        race,
+        selectedPosition: position,
+      })
     );
-
-    if (previousResults.length === 1 || previousResults.length === 0) {
-      updatedRaceResults[race][selectedPosition] = teamNum;
-      setRaceResults(() => updatedRaceResults);
-      return;
-    }
-    if (previousResults.length === 2) {
-      // TODO: should do replacement in a more consistent way
-      updatedRaceResults[race][previousResults[0]] = Teams.None;
-      updatedRaceResults[race][selectedPosition] = teamNum;
-      setRaceResults(() => updatedRaceResults);
-      return;
-    }
   };
+
+  const mercedesOnClick = (race: number, position: number) => {
+    dispatch(
+      wccResultSet({
+        teamNum: Teams.Mercedes,
+        race,
+        selectedPosition: position,
+      })
+    );
+  };
+
+  const raceResults = useSelector(selectWCCResults);
 
   return (
     <div className="table-responsive">
@@ -121,19 +76,17 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                           Boolean(raceMetadata[race].RedBull) ||
                           Boolean(raceMetadata[race].Mercedes)
                         }
-                        onClick={() => {
-                          onResultSelect(Teams.RedBull, race, position);
-                        }}
+                        onClick={() => redBullOnClick(race, position)}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            onResultSelect(Teams.Mercedes, race, position)
+                            mercedesOnClick(race, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            onResultSelect(Teams.Mercedes, race, position)
+                            mercedesOnClick(race, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}

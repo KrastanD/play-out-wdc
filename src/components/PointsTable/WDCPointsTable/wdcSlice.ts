@@ -3,7 +3,7 @@ import { StoreType } from "../../../store";
 import { Drivers, pointsSystem } from "../../../utils/constants";
 import { setPreviousResultsWDC } from "./WDCPointsTablePM";
 
-interface ResultSetAction {
+interface WDCResultSetAction {
   type: string;
   payload: {
     driverNum: Drivers;
@@ -25,7 +25,7 @@ const wdcSlice = createSlice({
   name: "wdc",
   initialState,
   reducers: {
-    wdcResultSet(state, action: ResultSetAction) {
+    wdcResultSet(state, action: WDCResultSetAction) {
       const { selectedPosition, race, driverNum } = action.payload;
 
       const fastestLapIndex = pointsSystem[1].length - 2;
