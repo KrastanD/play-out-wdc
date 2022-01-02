@@ -7,12 +7,11 @@ import WDCScoreboard from "./components/Scoreboard/WDCScoreboard";
 import WCCScoreboard from "./components/Scoreboard/WCCScoreboard";
 import WDCPointsTable from "./components/PointsTable/WDCPointsTable";
 import WCCPointsTable from "./components/PointsTable/WCCPointsTable";
-import { StoreType } from "./store";
 import { useSelector } from "react-redux";
-import { AppVersion } from "./config/configSlice";
+import { AppVersion, selectConfigVersion } from "./config/configSlice";
 
 function App() {
-  const version = useSelector((state: StoreType) => state.config.version);
+  const version = useSelector(selectConfigVersion);
 
   useEffect(() => {
     if (version === AppVersion.WCC) {

@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
-import { AppVersion } from "../../config/configSlice";
-import { StoreType } from "../../store";
+import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 
 const Instructions = () => {
-  const version = useSelector((state: StoreType) => state.config.version);
+  const version = useSelector(selectConfigVersion);
 
   const backgroundStyle = `col col-sm-6 rounded my-2 bg-opacity-10 ${
     version === AppVersion.WDC ? "bg-danger" : "bg-success"

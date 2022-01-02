@@ -18,6 +18,7 @@ const Scoreboard = () => {
 
   const maxTotal = getDriverTotal(Drivers.Max) + 312.5;
   const lewisTotal = getDriverTotal(Drivers.Lewis) + 293.5;
+  const winner = maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧";
 
   return (
     <div className="container">
@@ -26,9 +27,7 @@ const Scoreboard = () => {
         <h4 className="col text-center">Lewis: {lewisTotal} pts</h4>
       </div>
       <div className="row">
-        <h3 className="col text-center">
-          Winner: {maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}
-        </h3>
+        <h3 className="col text-center">Winner: {winner}</h3>
       </div>
     </div>
   );

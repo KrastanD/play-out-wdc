@@ -1,7 +1,6 @@
-import "./styles.scss";
 import { useSelector } from "react-redux";
-import { AppVersion } from "../../config/configSlice";
-import { StoreType } from "../../store";
+import { AppVersion, selectConfigVersion } from "../../config/configSlice";
+import "./styles.scss";
 
 const Navbar = () => {
   let navStyle = "navbar navbar-light";
@@ -10,7 +9,7 @@ const Navbar = () => {
   let linkoOutStyle = "linkOutButton";
   let linkOut = "https://playoutwcc.krastan.com";
 
-  const version = useSelector((state: StoreType) => state.config.version);
+  const version = useSelector(selectConfigVersion);
   // const dispatch = useDispatch();
 
   if (version === AppVersion.WDC) {
