@@ -20,7 +20,7 @@ const Scoreboard = () => {
     raceResults.forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === team) {
-          counter += pointsSystem[raceIndex][pointIndex];
+          counter += pointsSystem[pointIndex];
         }
       });
     });

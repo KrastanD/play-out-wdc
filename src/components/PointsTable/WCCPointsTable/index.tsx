@@ -1,13 +1,7 @@
 import ContextMenuHandler from "../../../contextMenuHandler";
-import { arrayColumn } from "../../../utils/helperFunctions";
 import "./styles.scss";
 
-import {
-  Teams,
-  pointsSystem,
-  positions,
-  raceMetadata,
-} from "../../../utils/constants";
+import { Teams, positions, raceMetadata } from "../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { selectWCCResults, wccResultSet } from "./wccSlice";
 
@@ -57,43 +51,43 @@ const PointsTable = () => {
             return (
               <tr key={position}>
                 <td>{positionValue}</td>
-                {arrayColumn(pointsSystem, position).map((points, race) => {
-                  if (points === undefined) {
-                    return <td key={race}></td>;
+                {raceResults.map((race, raceIndex) => {
+                  if (race === undefined) {
+                    return <td key={raceIndex}></td>;
                   }
                   let buttonClass =
                     "btn btn-outline-secondary user-select-none constant-width";
-                  if (raceResults[race][position] === Teams.RedBull) {
+                  if (raceResults[raceIndex][position] === Teams.RedBull) {
                     buttonClass += " white-text redbull-bg";
                   }
-                  if (raceResults[race][position] === Teams.Mercedes) {
+                  if (raceResults[raceIndex][position] === Teams.Mercedes) {
                     buttonClass += " white-text mercedes-bg";
                   }
                   return (
-                    <td key={race}>
+                    <td key={raceIndex}>
                       <button
                         disabled={
-                          Boolean(raceMetadata[race].RedBull) ||
-                          Boolean(raceMetadata[race].Mercedes)
+                          Boolean(raceMetadata[raceIndex].RedBull) ||
+                          Boolean(raceMetadata[raceIndex].Mercedes)
                         }
-                        onClick={() => redBullOnClick(race, position)}
+                        onClick={() => redBullOnClick(raceIndex, position)}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            mercedesOnClick(race, position)
+                            mercedesOnClick(raceIndex, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            mercedesOnClick(race, position)
+                            mercedesOnClick(raceIndex, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}
                         onTouchEnd={contextMenuHandler.onTouchEnd}
                         onTouchMove={contextMenuHandler.onTouchMove}
                       >
-                        {points}
+                        {race}
                       </button>
                     </td>
                   );

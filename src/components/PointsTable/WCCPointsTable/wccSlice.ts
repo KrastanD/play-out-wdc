@@ -27,8 +27,8 @@ const wccSlice = createSlice({
   reducers: {
     wccResultSet(state, action: WCCResultSetAction) {
       const { teamNum, race, selectedPosition } = action.payload;
-      const fastestLapIndex = pointsSystem[1].length - 2;
-      const didNotFinishIndex = pointsSystem[1].length - 1;
+      const fastestLapIndex = pointsSystem.length - 2;
+      const didNotFinishIndex = pointsSystem.length - 1;
 
       let previousResults: Teams[] = [];
       state[race].forEach((result, index) => {

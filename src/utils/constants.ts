@@ -25,8 +25,8 @@ export const raceMetadata: MetadataType[] = [
     name: "Qatar Grand Prix",
     Max: [1, 10],
     Lewis: [0],
-    RedBull: [1,3, 10],
-    Mercedes: [0, 11]
+    RedBull: [1, 3, 10],
+    Mercedes: [0, 11],
   },
   {
     name: "Saudi Arabian Grand Prix",
@@ -56,13 +56,7 @@ export const positions = [
   "Out of points",
 ];
 
-export const pointsSystem = [
-  [3, 2, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-];
+export const pointsSystem = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0];
 
 export enum Drivers {
   None,

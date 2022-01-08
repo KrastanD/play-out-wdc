@@ -9,15 +9,15 @@ const Scoreboard = () => {
     raceResults.forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === driverNum) {
-          counter += pointsSystem[raceIndex][pointIndex];
+          counter += pointsSystem[pointIndex];
         }
       });
     });
     return counter;
   };
 
-  const maxTotal = getDriverTotal(Drivers.Max) + 312.5;
-  const lewisTotal = getDriverTotal(Drivers.Lewis) + 293.5;
+  const maxTotal = getDriverTotal(Drivers.Max);
+  const lewisTotal = getDriverTotal(Drivers.Lewis);
   const winner = maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧";
 
   return (
