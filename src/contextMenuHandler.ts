@@ -1,3 +1,5 @@
+//https://github.com/facebook/react/issues/17596
+
 const longPressDuration = 610;
 
 export default class ContextMenuHandler {

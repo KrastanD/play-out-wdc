@@ -24,14 +24,10 @@ const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
   };
 
   const getTiebreakerWinner = (): (string | number)[] => {
-    // if (redBullTotal !== mercedesTotal) {
-    //   return ["", 1];
-    // }
     let tiebreakerData = {
       1: [...teamTiebreakerData[1]],
       2: [...teamTiebreakerData[2]],
     };
-    console.log("before", JSON.stringify(tiebreakerData));
     raceResults.slice(1).forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === Teams.RedBull) {
@@ -42,7 +38,6 @@ const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
         }
       });
     });
-    console.log("after", JSON.stringify(tiebreakerData));
     for (let i = 0; i < tiebreakerData[1].length; i++) {
       if (
         tiebreakerData[Teams.RedBull][i] !== tiebreakerData[Teams.Mercedes][i]
