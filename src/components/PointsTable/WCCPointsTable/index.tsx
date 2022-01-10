@@ -17,63 +17,67 @@ interface Props {
 const PointsTable = ({ raceResults, setRaceResults }: Props) => {
   const contextMenuHandler = new ContextMenuHandler();
 
-  const onButtonClick = (teamNum: Teams, race: number, position: number) => {
-    const FL = pointsSystem[1].length - 2;
-    const DNF = pointsSystem[1].length - 1;
+  const onResultSelect = (
+    teamNum: Teams,
+    race: number,
+    selectedPosition: number
+  ) => {
+    const fastestLapIndex = pointsSystem[1].length - 2;
+    const didNotFinishIndex = pointsSystem[1].length - 1;
 
-    let buttonClickRegistered = [...raceResults];
-    let previousResult: Teams[] = [];
+    let updatedRaceResults = [...raceResults];
+    let previousResults: Teams[] = [];
     raceResults[race].forEach((result, index) => {
       if (result === teamNum) {
-        previousResult.push(index);
+        previousResults.push(index);
       }
     });
 
-    console.log(position, previousResult);
-
-    if (position === FL) {
-      if (raceResults[race][position] === teamNum) {
-        //disabling fastest lap
-        buttonClickRegistered[race][position] = Teams.None;
-        setRaceResults(() => buttonClickRegistered);
+    if (selectedPosition === fastestLapIndex) {
+      if (raceResults[race][selectedPosition] === teamNum) {
+        updatedRaceResults[race][selectedPosition] = Teams.None;
+        setRaceResults(() => updatedRaceResults);
       } else {
-        //DNFer attempting to FL
-        if (previousResult.length === 1 && previousResult[0] === DNF) {
+        if (
+          previousResults.length === 1 &&
+          previousResults[0] === didNotFinishIndex
+        ) {
           return;
         }
-        buttonClickRegistered[race][position] = teamNum;
-        setRaceResults(() => buttonClickRegistered);
+        updatedRaceResults[race][selectedPosition] = teamNum;
+        setRaceResults(() => updatedRaceResults);
       }
       return;
     }
 
-    // fastest lap holder attempting to DNF
     if (
-      previousResult.length === 1 &&
-      raceResults[race][FL] === teamNum &&
-      position === DNF
+      previousResults.length === 1 &&
+      raceResults[race][fastestLapIndex] === teamNum &&
+      selectedPosition === didNotFinishIndex
     ) {
       return;
     }
 
-    //disabling previous result
-    if (previousResult.includes(position)) {
-      buttonClickRegistered[race][position] = Teams.None;
-      setRaceResults(() => buttonClickRegistered);
+    if (previousResults.includes(selectedPosition)) {
+      updatedRaceResults[race][selectedPosition] = Teams.None;
+      setRaceResults(() => updatedRaceResults);
       return;
     }
 
-    previousResult = previousResult.filter((item) => item !== FL);
+    previousResults = previousResults.filter(
+      (position) => position !== fastestLapIndex
+    );
 
-    if (previousResult.length === 1 || previousResult.length === 0) {
-      buttonClickRegistered[race][position] = teamNum;
-      setRaceResults(() => buttonClickRegistered);
+    if (previousResults.length === 1 || previousResults.length === 0) {
+      updatedRaceResults[race][selectedPosition] = teamNum;
+      setRaceResults(() => updatedRaceResults);
       return;
     }
-    if (previousResult.length === 2) {
-      buttonClickRegistered[race][previousResult[0]] = Teams.None;
-      buttonClickRegistered[race][position] = teamNum;
-      setRaceResults(() => buttonClickRegistered);
+    if (previousResults.length === 2) {
+      // TODO: should do replacement in a more consistent way
+      updatedRaceResults[race][previousResults[0]] = Teams.None;
+      updatedRaceResults[race][selectedPosition] = teamNum;
+      setRaceResults(() => updatedRaceResults);
       return;
     }
   };
@@ -118,18 +122,18 @@ const PointsTable = ({ raceResults, setRaceResults }: Props) => {
                           Boolean(raceMetadata[race].Mercedes)
                         }
                         onClick={() => {
-                          onButtonClick(Teams.RedBull, race, position);
+                          onResultSelect(Teams.RedBull, race, position);
                         }}
                         className={buttonClass}
                         key={position}
                         onContextMenu={(e) => {
                           contextMenuHandler.onContextMenu(e, () =>
-                            onButtonClick(Teams.Mercedes, race, position)
+                            onResultSelect(Teams.Mercedes, race, position)
                           );
                         }}
                         onTouchStart={(e) => {
                           contextMenuHandler.onTouchStart(e, () =>
-                            onButtonClick(Teams.Mercedes, race, position)
+                            onResultSelect(Teams.Mercedes, race, position)
                           );
                         }}
                         onTouchCancel={contextMenuHandler.onTouchCancel}
