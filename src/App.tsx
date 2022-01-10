@@ -13,6 +13,7 @@ import { AppVersion } from "./config/configSlice";
 import { Teams } from "./utils/constants";
 import { setPreviousResultsWDC } from "./components/PointsTable/WDCPointsTable/WDCPointsTablePM";
 import { setPreviousResultsWCC } from "./components/PointsTable/WCCPointsTable/WCCPointsTablePM";
+import CountdownClock from "./components/CountdownClock";
 
 function App() {
   const version = useSelector((state: StoreType) => state.config.version);
@@ -63,6 +64,9 @@ function App() {
   return (
     <div>
       <Navbar />
+      <div className="m-5">
+        <CountdownClock />
+      </div>
       <Instructions />
       <Scoreboard />
       <PointsTable />
