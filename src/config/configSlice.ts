@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { StoreType } from "../store";
 
 export enum AppVersion {
   WDC,
   WCC,
+}
+
+export interface ChangeVersionAction {
+  type: string;
+  payload: AppVersion;
 }
 
 export const configSlice = createSlice({
@@ -11,16 +17,14 @@ export const configSlice = createSlice({
     version: AppVersion.WDC,
   },
   reducers: {
-    switchVersion: (state) => {
-      if (state.version === AppVersion.WDC) {
-        state.version = AppVersion.WCC;
-      } else {
-        state.version = AppVersion.WDC;
-      }
+    changeVersion: (state, action: ChangeVersionAction) => {
+      state.version = action.payload;
     },
   },
 });
 
-export const { switchVersion } = configSlice.actions;
+export const { changeVersion } = configSlice.actions;
 
 export default configSlice.reducer;
+
+export const selectConfigVersion = (state: StoreType) => state.config.version;

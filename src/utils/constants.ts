@@ -25,8 +25,8 @@ export const raceMetadata: MetadataType[] = [
     name: "Qatar Grand Prix",
     Max: [1, 10],
     Lewis: [0],
-    RedBull: [1,3, 10],
-    Mercedes: [0, 11]
+    RedBull: [1, 3, 10],
+    Mercedes: [0, 11],
   },
   {
     name: "Saudi Arabian Grand Prix",
@@ -61,22 +61,26 @@ export const positions = [
   "8th",
   "9th",
   "10th",
-  "Fastest Lap",
-  "Out of points",
+  "11th",
+  "12th",
+  "13th",
+  "14th",
+  "15th",
+  "16th",
+  "17th",
+  "18th",
+  "19th",
+  "20th",
 ];
 
 export const pointsSystem = [
-  [3, 2, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
-  [25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 1, 0],
+  25, 18, 15, 12, 10, 8, 6, 4, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
 export enum Drivers {
-  None,
-  Max,
-  Lewis,
+  None = "",
+  Max = "max_verstappen",
+  Lewis = "hamilton",
 }
 
 export enum Teams {

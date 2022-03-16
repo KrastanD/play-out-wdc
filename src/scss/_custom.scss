@@ -1,5 +1,93 @@
 // Custom.scss
 $redbull-color: #0600ef;
 $mercedes-color: #00d2be;
+$ferrari-color: #dc0000;
+$alpine-color: #0090ff;
+$haas-color: #ffffff;
+$aston-martin-color: #005f62;
+$alpha-tauri-color: #2b4562;
+$mclaren-color: #ff8700;
+$alfa-romeo-color: #900000;
+$williams-color: #005aff;
 
-@import "/node_modules/bootstrap/scss/bootstrap.scss";
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+.Global__red_bull-bg {
+  background-color: $redbull-color;
+}
+
+.Global__red_bull-bg:disabled {
+  background-color: $redbull-color;
+}
+
+.Global__mercedes-bg {
+  background-color: $mercedes-color;
+}
+
+.Global__mercedes-bg:disabled {
+  background-color: $mercedes-color;
+}
+
+.Global__alphatauri-bg {
+  background-color: $alpha-tauri-color;
+}
+
+.Global__alphatauri-bg:disabled {
+  background-color: $alpha-tauri-color;
+}
+
+.Global__alfa-bg {
+  background-color: $alfa-romeo-color;
+}
+
+.Global__alfa-bg:disabled {
+  background-color: $alfa-romeo-color;
+}
+
+.Global__alpine-bg {
+  background-color: $alpine-color;
+}
+
+.Global__alpine-bg:disabled {
+  background-color: $alpine-color;
+}
+
+.Global__aston_martin-bg {
+  background-color: $aston-martin-color;
+}
+
+.Global__aston_martin-bg:disabled {
+  background-color: $aston-martin-color;
+}
+
+.Global__ferrari-bg {
+  background-color: $ferrari-color;
+}
+
+.Global__ferrari-bg:disabled {
+  background-color: $ferrari-color;
+}
+
+.Global__haas-bg {
+  background-color: $haas-color;
+}
+
+.Global__haas-bg:disabled {
+  background-color: $haas-color;
+}
+
+.Global__mclaren-bg {
+  background-color: $mclaren-color;
+}
+
+.Global__mclaren-bg:disabled {
+  background-color: $mclaren-color;
+}
+
+.Global__williams-bg {
+  background-color: $williams-color;
+}
+
+.Global__williams-bg:disabled {
+  background-color: $williams-color;
+}

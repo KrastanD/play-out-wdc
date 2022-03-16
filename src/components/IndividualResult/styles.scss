@@ -1,0 +1,33 @@
+@import "/src/scss/custom";
+
+.IndividualResult__container {
+  position: relative;
+}
+
+.IndividualResult__fastestLapMark {
+  background-color: gold;
+  border-radius: 15px;
+  color: black;
+  width: 25px;
+  position: absolute;
+  padding-left: 2px;
+  top: -10px;
+  left: 75px;
+}
+
+.IndividualResult__darkBox {
+  width: 90px;
+  color: white !important;
+}
+
+.IndividualResult__lightBox {
+  width: 90px;
+  color: black !important;
+  border-width: 1px !important;
+  border-color: lightgray !important;
+}
+
+.IndividualResult__driverNumber {
+  font-size: large;
+  line-height: normal;
+}

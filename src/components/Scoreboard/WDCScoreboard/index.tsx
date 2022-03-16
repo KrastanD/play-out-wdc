@@ -1,20 +1,24 @@
+import { useSelector } from "react-redux";
 import { Drivers, pointsSystem } from "../../../utils/constants";
+import { selectWDCUserResults } from "../../PastResultsTable/wdcSlice";
 
-const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
+const Scoreboard = () => {
+  const raceResults = useSelector(selectWDCUserResults);
   const getDriverTotal = (driverNum: Drivers) => {
     let counter = 0;
     raceResults.forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === driverNum) {
-          counter += pointsSystem[raceIndex][pointIndex];
+          counter += pointsSystem[pointIndex];
         }
       });
     });
     return counter;
   };
 
-  const maxTotal = getDriverTotal(Drivers.Max) + 312.5;
-  const lewisTotal = getDriverTotal(Drivers.Lewis) + 293.5;
+  const maxTotal = getDriverTotal(Drivers.Max);
+  const lewisTotal = getDriverTotal(Drivers.Lewis);
+  const winner = maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧";
 
   return (
     <div className="container">
@@ -23,9 +27,7 @@ const Scoreboard = ({ raceResults }: { raceResults: number[][] }) => {
         <h4 className="col text-center">Lewis: {lewisTotal} pts</h4>
       </div>
       <div className="row">
-        <h3 className="col text-center">
-          Winner: {maxTotal >= lewisTotal ? "Max 🇳🇱" : "Lewis 🇬🇧"}
-        </h3>
+        <h3 className="col text-center">Winner: {winner}</h3>
       </div>
     </div>
   );

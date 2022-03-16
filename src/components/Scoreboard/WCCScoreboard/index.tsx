@@ -1,12 +1,16 @@
+import { useSelector } from "react-redux";
 import {
-  Teams,
   pointsSystem,
+  Teams,
   teamTiebreakerData,
 } from "../../../utils/constants";
+import { selectWCCResults } from "../../PastTeamResultsTable/wccSlice";
 
-const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
+const Scoreboard = () => {
   const redBullString = "Red Bull 🇦🇹";
   const mercedesString = "Mercedes 🇩🇪";
+
+  const raceResults = useSelector(selectWCCResults);
 
   if (raceResults[0][0] === 0) {
     return null;
@@ -16,7 +20,7 @@ const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
     raceResults.forEach((race, raceIndex) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === team) {
-          counter += pointsSystem[raceIndex][pointIndex];
+          counter += pointsSystem[pointIndex];
         }
       });
     });
@@ -50,12 +54,13 @@ const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
       }
     }
 
-    return ["temp", 2];
+    return ["", 2];
   };
 
   const redBullTotal = getTeamsTotal(Teams.RedBull) + 477.5;
   const mercedesTotal = getTeamsTotal(Teams.Mercedes) + 478.5;
   const tiebreaker = getTiebreakerWinner();
+  const winner = redBullTotal > mercedesTotal ? redBullString : mercedesString;
 
   return (
     <div className="container">
@@ -65,10 +70,7 @@ const Scoreboard = ({ raceResults }: { raceResults: Teams[][] }) => {
       </div>
       <div className="row">
         {redBullTotal !== mercedesTotal ? (
-          <h3 className="col text-center">
-            Winner:{" "}
-            {redBullTotal > mercedesTotal ? redBullString : mercedesString}
-          </h3>
+          <h3 className="col text-center">Winner: {winner}</h3>
         ) : (
           <h3 className="col text-center">
             Winner: {tiebreaker[0]} on countback of #{tiebreaker[1]} positions
