@@ -1,0 +1,22 @@
+@import "/src/scss/custom";
+
+.TeamResult__container {
+  position: relative;
+}
+
+.TeamResult__darkBox {
+  width: 200px;
+  color: white !important;
+}
+
+.TeamResult__lightBox {
+  width: 200px;
+  color: black !important;
+  border-width: 1px !important;
+  border-color: lightgray !important;
+}
+
+.TeamResult__driverNumber {
+  font-size: large;
+  line-height: normal;
+}

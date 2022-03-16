@@ -59,12 +59,12 @@ export interface Result {
 export interface Constructor {
   constructorId: ConstructorID;
   url: string;
-  name: Name;
+  name: ConstructorName;
   nationality: ConstructorNationality;
 }
 
 export enum ConstructorID {
-  Alfa = "alfa",
+  AlfaRomeo = "alfa",
   Alphatauri = "alphatauri",
   Alpine = "alpine",
   AstonMartin = "aston_martin",
@@ -76,7 +76,7 @@ export enum ConstructorID {
   Williams = "williams",
 }
 
-export enum Name {
+export enum ConstructorName {
   AlfaRomeo = "Alfa Romeo",
   AlphaTauri = "AlphaTauri",
   AlpineF1Team = "Alpine F1 Team",
@@ -150,4 +150,8 @@ export interface FastestLapTime {
 export interface ResultTime {
   millis: string;
   time: string;
+}
+export interface TeamResultType {
+  constructor: ConstructorName;
+  points: number;
 }

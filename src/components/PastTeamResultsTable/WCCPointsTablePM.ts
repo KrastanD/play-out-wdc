@@ -1,4 +1,4 @@
-import { raceMetadata, Teams } from "../../../utils/constants";
+import { raceMetadata, Teams } from "../../utils/constants";
 
 export const setPreviousResultsWCC = (
   raceResultsWCC: number[][],

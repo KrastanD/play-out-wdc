@@ -4,7 +4,7 @@ import {
   Teams,
   teamTiebreakerData,
 } from "../../../utils/constants";
-import { selectWCCResults } from "../../PointsTable/WCCPointsTable/wccSlice";
+import { selectWCCResults } from "../../PastTeamResultsTable/wccSlice";
 
 const Scoreboard = () => {
   const redBullString = "Red Bull 🇦🇹";

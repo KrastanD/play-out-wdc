@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StoreType } from "../../../store";
-import { pointsSystem, Teams } from "../../../utils/constants";
+import { StoreType } from "../../store";
+import { pointsSystem, Teams } from "../../utils/constants";
 import { setPreviousResultsWCC } from "./WCCPointsTablePM";
 
 interface WCCResultSetAction {

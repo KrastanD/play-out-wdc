@@ -6,23 +6,24 @@ export enum AppVersion {
   WCC,
 }
 
+export interface ChangeVersionAction {
+  type: string;
+  payload: AppVersion;
+}
+
 export const configSlice = createSlice({
   name: "config",
   initialState: {
     version: AppVersion.WDC,
   },
   reducers: {
-    switchVersion: (state) => {
-      if (state.version === AppVersion.WDC) {
-        state.version = AppVersion.WCC;
-      } else {
-        state.version = AppVersion.WDC;
-      }
+    changeVersion: (state, action: ChangeVersionAction) => {
+      state.version = action.payload;
     },
   },
 });
 
-export const { switchVersion } = configSlice.actions;
+export const { changeVersion } = configSlice.actions;
 
 export default configSlice.reducer;
 

@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import configReducer, { AppVersion } from "./config/configSlice";
 import { Teams } from "./utils/constants";
-import wdcReducer, {
-  WDCState,
-} from "./components/PointsTable/WDCPointsTable/wdcSlice";
-import wccReducer from "./components/PointsTable/WCCPointsTable/wccSlice";
+import wdcReducer, { WDCState } from "./components/PastResultsTable/wdcSlice";
+import wccReducer from "./components/PastTeamResultsTable/wccSlice";
 
 export default configureStore({
   reducer: {
