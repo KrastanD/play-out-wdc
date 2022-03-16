@@ -35,14 +35,16 @@ let initialState: WDCState = {
 };
 
 export const fetchResults = createAsyncThunk("wdc/fetchResults", async () => {
+  // TODO: pull string into constants
   const response = await fetch(
-    "http://ergast.com/api/f1/2021/results.json?limit=450"
+    "https://ergast.com/api/f1/2021/results.json?limit=450"
   );
 
   const jsonResponse: Promise<ResultsResponse> = response.json();
   return jsonResponse;
 });
 
+// TODO: Rename file and slice
 const wdcSlice = createSlice({
   name: "wdc",
   initialState,
