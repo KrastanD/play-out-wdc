@@ -155,3 +155,4 @@ export interface TeamResultType {
   constructor: ConstructorName;
   points: number;
 }
+export type TimeUnit = "second" | "minute" | "hour" | "day" | "month" | "year";
