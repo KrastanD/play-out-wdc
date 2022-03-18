@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import "./App.scss";
-import CountdownClock from "./components/CountdownClock";
 import Navbar from "./components/Navbar";
 import PastResultsTable from "./components/PastResultsTable";
 import PastTeamResultsTable from "./components/PastTeamResultsTable";
@@ -19,9 +18,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className="m-5">
-        <CountdownClock />
-      </div>
       <Table />
     </div>
   );
