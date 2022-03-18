@@ -12,22 +12,18 @@ const CountdownClock = () => {
     return () => clearInterval(checkTime);
   });
 
-  const bahrainFP1 = DateTime.local(2022, 3, 18);
+  const bahrainFP1 = DateTime.utc(2022, 3, 18, 12, 0, 0);
 
-  const bahrainFP1Month = bahrainFP1.month;
-  const bahrainFP1Date = bahrainFP1.day;
-
-  const monthDiff = bahrainFP1Month - now.month;
-  const dateDiff = bahrainFP1Date - now.day - 1;
-  const hourDiff = 23 - now.hour;
-  const minuteDiff = 60 - now.minute;
+  const timeDiff = bahrainFP1
+    .diff(now, ["months", "days", "hours", "minutes", "seconds"])
+    .toObject();
 
   const countdownString = `${getTimeString(
-    monthDiff,
+    timeDiff.months ?? 0,
     "month"
-  )}, ${getTimeString(dateDiff, "day")}, 
-  ${getTimeString(hourDiff, "hour")}, and
-  ${getTimeString(minuteDiff, "minute")}`;
+  )}, ${getTimeString(timeDiff.days ?? 0, "day")}, 
+    ${getTimeString(timeDiff.hours ?? 0, "hour")}, and
+    ${getTimeString(timeDiff.minutes ?? 0, "minute")}`;
 
   return (
     <div className="row justify-content-sm-center">
