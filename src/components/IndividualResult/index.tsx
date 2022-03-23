@@ -25,7 +25,7 @@ const IndividualResult = ({ position, race }: IndividualResultProps) => {
       )}
       <div className={buttonClass} key={position}>
         <strong className="IndividualResult__driverNumber">
-          {race.Results[position]?.Driver.permanentNumber}
+          {race.Results[position]?.Driver.code}
         </strong>{" "}
         | {pointsString}
       </div>
