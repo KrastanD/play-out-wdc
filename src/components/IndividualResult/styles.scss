@@ -1,5 +1,7 @@
 @import "/src/scss/custom";
 
+$width: 110px;
+
 .IndividualResult__container {
   position: relative;
 }
@@ -12,16 +14,16 @@
   position: absolute;
   padding-left: 2px;
   top: -10px;
-  left: 75px;
+  right: -10px;
 }
 
 .IndividualResult__darkBox {
-  width: 90px;
+  width: 110px;
   color: white !important;
 }
 
 .IndividualResult__lightBox {
-  width: 90px;
+  width: 110px;
   color: black !important;
   border-width: 1px !important;
   border-color: lightgray !important;

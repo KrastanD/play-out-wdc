@@ -1,16 +1,18 @@
 @import "/src/scss/custom";
 
+$width: 200px;
+
 .TeamResult__container {
   position: relative;
 }
 
 .TeamResult__darkBox {
-  width: 200px;
+  width: $width;
   color: white !important;
 }
 
 .TeamResult__lightBox {
-  width: 200px;
+  width: $width;
   color: black !important;
   border-width: 1px !important;
   border-color: lightgray !important;

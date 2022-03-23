@@ -22,21 +22,21 @@ const Navbar = () => {
 
   return (
     <nav className={navStyle}>
-      <button className="removeButtonStyle">
+      <div>
         <h3 className="mx-4 my-1 text-light">{titleText}</h3>
-      </button>
+      </div>
       <div>
         <button
           className="removeButtonStyle"
           onClick={() => dispatch(changeVersion(AppVersion.WDC))}
         >
-          <p className="mx-4 my-1 text-light Navbar--item">WDC Past Results</p>
+          <p className="mx-4 my-1 text-light Navbar--item">2021 WDC Results</p>
         </button>
         <button
           className="removeButtonStyle"
           onClick={() => dispatch(changeVersion(AppVersion.WCC))}
         >
-          <p className="mx-4 my-1 text-light Navbar--item">WCC Past Results</p>
+          <p className="mx-4 my-1 text-light Navbar--item">2021 WCC Results</p>
         </button>
       </div>
     </nav>
