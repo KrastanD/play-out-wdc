@@ -25,13 +25,15 @@ const PastResultsTable = () => {
 
   if (resultsStatus === RequestState.Succeeded) {
     return (
-      <div className="table-responsive">
-        <table className="table table-striped">
+      <div className="PastResultsTable">
+        <table className="PastResultsTable__table">
           <thead>
             <tr>
-              <th scope="col">Position</th>
+              <th className="PastResultsTable__header" scope="col">
+                Position
+              </th>
               {pastRaces.map((race, i) => (
-                <th key={i} scope="col">
+                <th className="PastResultsTable__header" key={i} scope="col">
                   {race.raceName}
                 </th>
               ))}
@@ -40,11 +42,11 @@ const PastResultsTable = () => {
           <tbody>
             {positions.map((positionValue, position) => {
               return (
-                <tr key={position}>
-                  <td>{positionValue}</td>
+                <tr className="PastResultsTable__row" key={position}>
+                  <td className="PastResultsTable__data">{positionValue}</td>
                   {pastRaces.map((race, raceIndex) => {
                     return (
-                      <td key={raceIndex}>
+                      <td className="PastResultsTable__data" key={raceIndex}>
                         <IndividualResult position={position} race={race} />
                       </td>
                     );
