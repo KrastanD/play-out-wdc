@@ -17,13 +17,13 @@ const Navbar = () => {
           className="Navbar__option"
           onClick={() => dispatch(changeVersion(AppVersion.WDC))}
         >
-          <p className="Navbar--itemText">2021 WDC Results</p>
+          <p className="Navbar__itemText">2021 WDC Results</p>
         </li>
         <li
           className="Navbar__option"
           onClick={() => dispatch(changeVersion(AppVersion.WCC))}
         >
-          <p className="Navbar--itemText">2021 WCC Results</p>
+          <p className="Navbar__itemText">2021 WCC Results</p>
         </li>
       </ul>
     </nav>
