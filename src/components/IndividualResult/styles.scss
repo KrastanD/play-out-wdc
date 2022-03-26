@@ -38,14 +38,14 @@ $width: 110px;
 
 .IndividualResult__darkBox {
   @extend .IndividualResult__box;
-  color: white !important;
+  color: white;
 }
 
 .IndividualResult__lightBox {
   @extend .IndividualResult__box;
-  color: black !important;
-  border-width: 1px !important;
-  border-color: lightgray !important;
+  color: black;
+  border-width: 1px;
+  border-color: lightgray;
 }
 
 .IndividualResult__driverCode {
