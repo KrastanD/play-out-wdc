@@ -6,6 +6,7 @@ import {
 } from "../../../utils/constants";
 import { selectWCCResults } from "../../PastTeamResultsTable/wccSlice";
 
+//TODO Remove bootstrap
 const Scoreboard = () => {
   const redBullString = "Red Bull 🇦🇹";
   const mercedesString = "Mercedes 🇩🇪";
