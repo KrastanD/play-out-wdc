@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Drivers, pointsSystem } from "../../../utils/constants";
 import { selectWDCUserResults } from "../../PastResultsTable/wdcSlice";
 
+//TODO Remove bootstrap
 const Scoreboard = () => {
   const raceResults = useSelector(selectWDCUserResults);
   const getDriverTotal = (driverNum: Drivers) => {

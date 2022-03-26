@@ -61,13 +61,15 @@ const PastTeamResultsTable = () => {
 
   if (resultsStatus === RequestState.Succeeded) {
     return (
-      <div className="table-responsive">
-        <table className="table table-striped">
+      <div className="PastResultsTable">
+        <table className="PastResultsTable__table">
           <thead>
-            <tr>
-              <th scope="col">Team Position</th>
+            <tr className="PastResultsTable__row">
+              <th className="PastResultsTable__header" scope="col">
+                Team Position
+              </th>
               {pastRaces.map((race, i) => (
-                <th key={i} scope="col">
+                <th className="PastResultsTable__header" key={i} scope="col">
                   {race.raceName}
                 </th>
               ))}
@@ -76,12 +78,12 @@ const PastTeamResultsTable = () => {
           <tbody>
             {[...Array(10)].map((_, index) => {
               return (
-                <tr>
-                  <td>{index + 1}</td>
+                <tr className="PastResultsTable__row">
+                  <td className="PastResultsTable__data">{index + 1}</td>
                   {arrayColumn(getAllTeamResults(), index).map(
                     (teamResult, raceIndex) => {
                       return (
-                        <td key={raceIndex}>
+                        <td className="PastResultsTable__data" key={raceIndex}>
                           <TeamResult result={teamResult} />
                         </td>
                       );

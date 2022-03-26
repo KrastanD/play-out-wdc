@@ -1,1 +1,29 @@
 @import "/src/scss/custom";
+
+.PastResultsTable {
+  overflow-x: auto;
+}
+
+.PastResultsTable__table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  vertical-align: top;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.PastResultsTable__row:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.PastResultsTable__data {
+  padding: 8px;
+}
+
+.PastResultsTable__header {
+  padding: 8px;
+  text-align: left;
+  border-bottom: black 2px solid;
+  vertical-align: bottom;
+}
