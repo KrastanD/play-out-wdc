@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { StoreType } from "../../store";
 import { pointsSystem, Teams } from "../../utils/constants";
-import { setPreviousResultsWCC } from "./WCCPointsTablePM";
+import setPreviousResultsWCC from "./WCCPointsTablePM";
 
 interface WCCResultSetAction {
   type: string;
@@ -77,7 +77,6 @@ const wccSlice = createSlice({
         // TODO: should do replacement in a more consistent way
         state[race][previousResults[0]] = Teams.None;
         state[race][selectedPosition] = teamNum;
-        return;
       }
     },
   },

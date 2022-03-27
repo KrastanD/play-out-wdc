@@ -25,5 +25,13 @@ module.exports = {
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "error",
     "react/require-default-props": "off",
+    "no-param-reassign": ["error", { props: false }], // allow reassignment of props with immer in redux
+  },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
 };

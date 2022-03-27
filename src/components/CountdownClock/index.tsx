@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { getTimeString } from "../../utils/helperFunctions";
 
-const CountdownClock = () => {
+function CountdownClock() {
   const [now, setNow] = useState(DateTime.now());
 
   useEffect(() => {
@@ -31,6 +31,6 @@ const CountdownClock = () => {
       <h3 className="text-center">{countdownString}</h3>
     </div>
   );
-};
+}
 
 export default CountdownClock;

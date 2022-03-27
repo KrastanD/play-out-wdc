@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { Drivers, pointsSystem } from "../../../utils/constants";
 import { selectWDCUserResults } from "../../PastResultsTable/wdcSlice";
 
-//TODO Remove bootstrap
-const Scoreboard = () => {
+// TODO Remove bootstrap
+function Scoreboard() {
   const raceResults = useSelector(selectWDCUserResults);
   const getDriverTotal = (driverNum: Drivers) => {
     let counter = 0;
-    raceResults.forEach((race, raceIndex) => {
+    raceResults.forEach((race) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === driverNum) {
           counter += pointsSystem[pointIndex];
@@ -32,6 +32,6 @@ const Scoreboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Scoreboard;

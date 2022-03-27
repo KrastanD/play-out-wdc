@@ -9,6 +9,5 @@ export function getConstructorIdFromName(name: ConstructorName): ConstructorID {
   return Object.values(ConstructorID)[indexOfName] as ConstructorID;
 }
 
-export const getTimeString = (amount: number, unit: TimeUnit): string => {
-  return amount === 1 ? `${amount} ${unit}` : `${amount} ${unit}s`;
-};
+export const getTimeString = (amount: number, unit: TimeUnit): string =>
+  amount === 1 ? `${amount} ${unit}` : `${amount} ${unit}s`;

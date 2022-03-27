@@ -1,48 +1,55 @@
-//https://github.com/facebook/react/issues/17596
+// https://github.com/facebook/react/issues/17596
+import React from "react";
 
 const longPressDuration = 610;
 
 export default class ContextMenuHandler {
   private callback: (() => void) | undefined;
+
   private longPressCountdown: NodeJS.Timeout | null;
 
   constructor() {
     this.longPressCountdown = null;
   }
 
-  onTouchStart = (
-    e: React.TouchEvent<HTMLButtonElement>,
-    callback: () => void
-  ) => {
+  public onTouchStart = (callback: () => void) => {
     this.callback = callback;
 
     this.longPressCountdown = setTimeout(() => {
-      this.callback && this.callback();
+      if (this.callback) {
+        this.callback();
+      }
     }, longPressDuration);
   };
 
-  onTouchMove = (e: React.TouchEvent<HTMLButtonElement>) => {
-    this.longPressCountdown && clearTimeout(this.longPressCountdown);
+  public onTouchMove = () => {
+    this.checkAndClearTimeout();
   };
 
-  onTouchCancel = (e: React.TouchEvent<HTMLButtonElement>) => {
-    this.longPressCountdown && clearTimeout(this.longPressCountdown);
+  public onTouchCancel = () => {
+    this.checkAndClearTimeout();
   };
 
-  onTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
-    this.longPressCountdown && clearTimeout(this.longPressCountdown);
+  public onTouchEnd = () => {
+    this.checkAndClearTimeout();
   };
 
-  onContextMenu = (
+  public onContextMenu = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     callback: () => void
   ) => {
     if (this.callback === undefined) {
       this.callback = callback;
     }
-    this.longPressCountdown && clearTimeout(this.longPressCountdown);
+    this.checkAndClearTimeout();
 
     this.callback();
     e.preventDefault();
   };
+
+  private checkAndClearTimeout() {
+    if (this.longPressCountdown) {
+      clearTimeout(this.longPressCountdown);
+    }
+  }
 }
