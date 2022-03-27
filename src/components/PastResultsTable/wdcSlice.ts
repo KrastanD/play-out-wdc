@@ -26,7 +26,7 @@ export interface WDCState {
   error: string | null;
 }
 
-let initialState: WDCState = {
+const initialState: WDCState = {
   // TODO: userResults size should be based on remaining races
   userResults: Array.from(Array(21), () => new Array(12).fill(Drivers.None)),
   pastRaces: [],
@@ -91,7 +91,7 @@ const wdcSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchResults.pending, (state, _) => {
+      .addCase(fetchResults.pending, (state) => {
         state.status = RequestState.Loading;
       })
       .addCase(fetchResults.fulfilled, (state, action) => {

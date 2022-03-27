@@ -5,20 +5,20 @@ import PastResultsTable from "./components/PastResultsTable";
 import PastTeamResultsTable from "./components/PastTeamResultsTable";
 import { AppVersion, selectConfigVersion } from "./config/configSlice";
 
+function Table({ version }: { version: AppVersion }) {
+  if (version === AppVersion.WDC) {
+    return <PastResultsTable />;
+  }
+  return <PastTeamResultsTable />;
+}
+
 function App() {
   const version = useSelector(selectConfigVersion);
-
-  const Table = () =>
-    version === AppVersion.WDC ? (
-      <PastResultsTable />
-    ) : (
-      <PastTeamResultsTable />
-    );
 
   return (
     <div>
       <Navbar />
-      <Table />
+      <Table version={version} />
     </div>
   );
 }

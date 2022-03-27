@@ -2,7 +2,7 @@ import { ConstructorName, TeamResultType } from "../../types";
 import { getConstructorIdFromName } from "../../utils/helperFunctions";
 import "./styles.scss";
 
-const TeamResult = ({ result }: { result: TeamResultType }) => {
+function TeamResult({ result }: { result: TeamResultType }) {
   const teamId = getConstructorIdFromName(result.constructor).toLowerCase();
   const textColor =
     result.constructor === ConstructorName.HaasF1Team ? "light" : "dark";
@@ -17,6 +17,6 @@ const TeamResult = ({ result }: { result: TeamResultType }) => {
       </div>
     </div>
   );
-};
+}
 
 export default TeamResult;

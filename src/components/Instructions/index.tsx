@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 
-const Instructions = () => {
+function Instructions() {
   const version = useSelector(selectConfigVersion);
 
   const backgroundStyle = `col col-sm-6 rounded my-2 bg-opacity-10 ${
@@ -30,6 +30,6 @@ const Instructions = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Instructions;

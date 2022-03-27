@@ -6,8 +6,8 @@ import {
 } from "../../../utils/constants";
 import { selectWCCResults } from "../../PastTeamResultsTable/wccSlice";
 
-//TODO Remove bootstrap
-const Scoreboard = () => {
+// TODO Remove bootstrap
+function Scoreboard() {
   const redBullString = "Red Bull 🇦🇹";
   const mercedesString = "Mercedes 🇩🇪";
 
@@ -18,7 +18,7 @@ const Scoreboard = () => {
   }
   const getTeamsTotal = (team: Teams) => {
     let counter = 0;
-    raceResults.forEach((race, raceIndex) => {
+    raceResults.forEach((race) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === team) {
           counter += pointsSystem[pointIndex];
@@ -29,11 +29,11 @@ const Scoreboard = () => {
   };
 
   const getTiebreakerWinner = (): (string | number)[] => {
-    let tiebreakerData = {
+    const tiebreakerData = {
       1: [...teamTiebreakerData[1]],
       2: [...teamTiebreakerData[2]],
     };
-    raceResults.slice(1).forEach((race, raceIndex) => {
+    raceResults.slice(1).forEach((race) => {
       race.forEach((pointWinner, pointIndex) => {
         if (pointWinner === Teams.RedBull) {
           tiebreakerData[Teams.RedBull][pointIndex] += 1;
@@ -43,7 +43,7 @@ const Scoreboard = () => {
         }
       });
     });
-    for (let i = 0; i < tiebreakerData[1].length; i++) {
+    for (let i = 0; i < tiebreakerData[1].length; i += 1) {
       if (
         tiebreakerData[Teams.RedBull][i] !== tiebreakerData[Teams.Mercedes][i]
       ) {
@@ -80,6 +80,6 @@ const Scoreboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Scoreboard;

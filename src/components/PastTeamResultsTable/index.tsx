@@ -11,7 +11,7 @@ import {
 } from "../PastResultsTable/wdcSlice";
 import TeamResult from "../TeamResult";
 
-const PastTeamResultsTable = () => {
+function PastTeamResultsTable() {
   const dispatch = useDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
@@ -34,6 +34,7 @@ const PastTeamResultsTable = () => {
         teamResults[teamResultsIndex].points += Number(result.points);
       } else {
         teamResults.push({
+          race: race.round,
           constructor: result.Constructor.name,
           points: Number(result.points),
         });
@@ -68,39 +69,44 @@ const PastTeamResultsTable = () => {
               <th className="PastResultsTable__header" scope="col">
                 Team Position
               </th>
-              {pastRaces.map((race, i) => (
-                <th className="PastResultsTable__header" key={i} scope="col">
+              {pastRaces.map((race) => (
+                <th
+                  className="PastResultsTable__header"
+                  scope="col"
+                  key={race.raceName}
+                >
                   {race.raceName}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {[...Array(10)].map((_, index) => {
-              return (
-                <tr className="PastResultsTable__row">
-                  <td className="PastResultsTable__data">{index + 1}</td>
-                  {arrayColumn(getAllTeamResults(), index).map(
-                    (teamResult, raceIndex) => {
-                      return (
-                        <td className="PastResultsTable__data" key={raceIndex}>
-                          <TeamResult result={teamResult} />
-                        </td>
-                      );
+            {Array.from(Array(10).keys()).map((value, index) => (
+              <tr className="PastResultsTable__row" key={value}>
+                <td className="PastResultsTable__data">{index + 1}</td>
+                {arrayColumn(getAllTeamResults(), index).map((teamResult) => (
+                  <td
+                    className="PastResultsTable__data"
+                    key={
+                      teamResult.race +
+                      teamResult.constructor +
+                      teamResult.points
                     }
-                  )}
-                </tr>
-              );
-            })}
+                  >
+                    <TeamResult result={teamResult} />
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     );
-  } else if (resultsStatus === RequestState.Failed) {
-    return <div>{resultsError}</div>;
-  } else {
-    return null;
   }
-};
+  if (resultsStatus === RequestState.Failed) {
+    return <div>{resultsError}</div>;
+  }
+  return null;
+}
 
 export default PastTeamResultsTable;

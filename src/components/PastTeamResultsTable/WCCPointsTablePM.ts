@@ -1,12 +1,12 @@
 import { raceMetadata, Teams } from "../../utils/constants";
 
-export const setPreviousResultsWCC = (
+const setPreviousResultsWCC = (
   raceResultsWCC: number[][],
   setRaceResultsWCC:
     | React.Dispatch<React.SetStateAction<number[][]>>
     | ((func: () => Teams[][]) => void)
 ) => {
-  let buttonClickRegistered = [...raceResultsWCC];
+  const buttonClickRegistered = [...raceResultsWCC];
 
   raceMetadata.forEach((race, index) => {
     if (race.RedBull) {
@@ -22,3 +22,5 @@ export const setPreviousResultsWCC = (
   });
   setRaceResultsWCC(() => buttonClickRegistered);
 };
+
+export default setPreviousResultsWCC;

@@ -11,7 +11,7 @@ import {
   RequestState,
 } from "./wdcSlice";
 
-const PastResultsTable = () => {
+function PastResultsTable() {
   const dispatch = useDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
@@ -32,37 +32,37 @@ const PastResultsTable = () => {
               <th className="PastResultsTable__header" scope="col">
                 Position
               </th>
-              {pastRaces.map((race, i) => (
-                <th className="PastResultsTable__header" key={i} scope="col">
+              {pastRaces.map((race) => (
+                <th
+                  className="PastResultsTable__header"
+                  scope="col"
+                  key={race.raceName}
+                >
                   {race.raceName}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {positions.map((positionValue, position) => {
-              return (
-                <tr className="PastResultsTable__row" key={position}>
-                  <td className="PastResultsTable__data">{positionValue}</td>
-                  {pastRaces.map((race, raceIndex) => {
-                    return (
-                      <td className="PastResultsTable__data" key={raceIndex}>
-                        <IndividualResult position={position} race={race} />
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            {positions.map((positionValue, position) => (
+              <tr className="PastResultsTable__row" key={positionValue}>
+                <td className="PastResultsTable__data">{positionValue}</td>
+                {pastRaces.map((race) => (
+                  <td className="PastResultsTable__data" key={race.round}>
+                    <IndividualResult position={position} race={race} />
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     );
-  } else if (resultsStatus === RequestState.Failed) {
-    return <div>{resultsError}</div>;
-  } else {
-    return null;
   }
-};
+  if (resultsStatus === RequestState.Failed) {
+    return <div>{resultsError}</div>;
+  }
+  return null;
+}
 
 export default PastResultsTable;

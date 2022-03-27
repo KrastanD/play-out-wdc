@@ -6,7 +6,7 @@ type IndividualResultProps = {
   race: Race;
 };
 
-const IndividualResult = ({ position, race }: IndividualResultProps) => {
+function IndividualResult({ position, race }: IndividualResultProps) {
   const teamId = race.Results[position]?.Constructor?.constructorId;
   const textColor = teamId === ConstructorID.Haas ? "light" : "dark";
   const buttonClass = `IndividualResult__${textColor}Box Global__${teamId}-bg`;
@@ -31,6 +31,6 @@ const IndividualResult = ({ position, race }: IndividualResultProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default IndividualResult;
