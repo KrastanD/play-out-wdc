@@ -1,12 +1,10 @@
 @import "/src/scss/custom";
 
-$width: 110px;
-
-.IndividualResult {
+.Result {
   position: relative;
 }
 
-.IndividualResult__fastestLapMark {
+.Result__fastestLapMark {
   display: inline-block;
   background-color: gold;
   border-radius: 15px;
@@ -21,7 +19,7 @@ $width: 110px;
   align-items: center;
 }
 
-.IndividualResult__box {
+.Result__box {
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -33,22 +31,24 @@ $width: 110px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   border-radius: 0.25rem;
-  width: 85px;
+
+  &--dark {
+    color: white;
+  }
+  &--light {
+    color: black;
+    border-width: 1px;
+    border-color: lightgray;
+  }
+  &--small {
+    width: 85px;
+  }
+  &--large {
+    width: 160px;
+  }
 }
 
-.IndividualResult__darkBox {
-  @extend .IndividualResult__box;
-  color: white;
-}
-
-.IndividualResult__lightBox {
-  @extend .IndividualResult__box;
-  color: black;
-  border-width: 1px;
-  border-color: lightgray;
-}
-
-.IndividualResult__driverCode {
+.Result__driverCode {
   font-size: large;
   line-height: normal;
 }

@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint --ext .js,.ts,.tsx src"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
