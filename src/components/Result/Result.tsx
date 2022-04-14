@@ -23,7 +23,8 @@ function Result({
     <div className="Result">
       {hasFastestLap && <div className="Result__fastestLapMark">+1</div>}
       <div className={boxStyle}>
-        <strong className="Result__driverCode">{name}</strong> | {points}
+        <strong className="Result__driverCode">{name}</strong>
+        <p className="Result__driverCode">{points}</p>
       </div>
     </div>
   );
