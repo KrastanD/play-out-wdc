@@ -36,6 +36,12 @@ function PastResultsTable() {
     return (
       <div className="PastResultsTable">
         <table className="PastResultsTable__table">
+          <colgroup>
+            <col width="80" />
+            {pastRaces.map((race) => (
+              <col key={race.raceName} width="120" />
+            ))}
+          </colgroup>
           <thead>
             <tr>
               <th className="PastResultsTable__header" scope="col">
