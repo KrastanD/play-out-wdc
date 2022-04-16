@@ -1,4 +1,4 @@
-# Play Out WDC
+# Play Out
 
 A website where users can see the results of the current and previous F1 world championships
 

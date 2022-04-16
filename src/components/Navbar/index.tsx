@@ -3,7 +3,7 @@ import { AppVersion, changeVersion } from "../../config/configSlice";
 import "./styles.scss";
 
 function Navbar() {
-  const titleText = "Play Out WDC";
+  const titleText = "Play Out";
 
   const dispatch = useDispatch();
 
