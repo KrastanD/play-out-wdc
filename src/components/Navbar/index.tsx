@@ -9,16 +9,34 @@ function Navbar() {
 
   return (
     <nav className="Navbar">
-      <div>
-        <p className="Navbar__title">{titleText}</p>
-      </div>
+      <p className="Navbar__title">{titleText}</p>
       <ul className="Navbar__list">
         <li className="Navbar__option">
           <button
             className="Navbar__button"
             type="button"
-            onClick={() => dispatch(changeVersion(AppVersion.WDC))}
-            onKeyPress={() => dispatch(changeVersion(AppVersion.WDC))}
+            onClick={() => dispatch(changeVersion(AppVersion.WDC2022))}
+            onKeyPress={() => dispatch(changeVersion(AppVersion.WDC2022))}
+          >
+            <p className="Navbar__itemText">2022 WDC Results</p>
+          </button>
+        </li>
+        <li className="Navbar__option">
+          <button
+            className="Navbar__button"
+            type="button"
+            onClick={() => dispatch(changeVersion(AppVersion.WCC2022))}
+            onKeyPress={() => dispatch(changeVersion(AppVersion.WCC2022))}
+          >
+            <p className="Navbar__itemText">2022 WCC Results</p>
+          </button>
+        </li>
+        <li className="Navbar__option">
+          <button
+            className="Navbar__button"
+            type="button"
+            onClick={() => dispatch(changeVersion(AppVersion.WDC2021))}
+            onKeyPress={() => dispatch(changeVersion(AppVersion.WDC2021))}
           >
             <p className="Navbar__itemText">2021 WDC Results</p>
           </button>
@@ -27,8 +45,8 @@ function Navbar() {
           <button
             className="Navbar__button"
             type="button"
-            onClick={() => dispatch(changeVersion(AppVersion.WCC))}
-            onKeyPress={() => dispatch(changeVersion(AppVersion.WCC))}
+            onClick={() => dispatch(changeVersion(AppVersion.WCC2021))}
+            onKeyPress={() => dispatch(changeVersion(AppVersion.WCC2021))}
           >
             <p className="Navbar__itemText">2021 WCC Results</p>
           </button>

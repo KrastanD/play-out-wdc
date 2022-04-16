@@ -30,7 +30,7 @@
 }
 
 .Navbar__title {
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   font-weight: 500;
   color: white;
 }
@@ -38,14 +38,13 @@
 .Navbar__list {
   list-style-type: none;
   display: flex;
+  padding-left: 0;
 }
 
 .Navbar__option {
   cursor: pointer;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
 }
 
 .Navbar__itemText {
@@ -55,7 +54,7 @@
 
 @media (max-width: 768px) {
   .Navbar__title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .Navbar__itemText {
@@ -63,7 +62,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 550px) {
   .Navbar__title {
     font-size: 1.25rem;
   }
@@ -73,9 +72,19 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   .Navbar__title {
     font-size: 1rem;
+  }
+
+  .Navbar__itemText {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .Navbar__title {
+    font-size: 0.9rem;
   }
 
   .Navbar__itemText {

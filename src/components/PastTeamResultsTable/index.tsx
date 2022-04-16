@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 import { StoreType } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
@@ -7,6 +8,7 @@ import {
   fetchResults,
   RequestState,
   selectWDCPastRaces,
+  selectWDCRequestYear,
   selectWDCStatus,
 } from "../PastResultsTable/wdcSlice";
 import TeamResult from "../TeamResult";
@@ -17,12 +19,18 @@ function PastTeamResultsTable() {
   const pastRaces = useSelector(selectWDCPastRaces);
   const resultsStatus = useSelector(selectWDCStatus);
   const resultsError = useSelector((state: StoreType) => state.wdc.error);
+  const config = useSelector(selectConfigVersion);
+  let year = 2021;
+  if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
+    year = 2022;
+  }
+  const requestYear = useSelector(selectWDCRequestYear);
 
   useEffect(() => {
-    if (resultsStatus === RequestState.Idle) {
-      dispatch(fetchResults());
+    if (resultsStatus === RequestState.Idle || requestYear !== year) {
+      dispatch(fetchResults({ year }));
     }
-  }, [resultsStatus, dispatch]);
+  }, [resultsStatus, config]);
 
   const getTeamResults = (race: Race) => {
     const teamResults: TeamResultType[] = [];
@@ -64,6 +72,12 @@ function PastTeamResultsTable() {
     return (
       <div className="PastResultsTable">
         <table className="PastResultsTable__table">
+          <colgroup>
+            <col width="80" />
+            {pastRaces.map((race) => (
+              <col key={race.raceName} width="120" />
+            ))}
+          </colgroup>
           <thead>
             <tr className="PastResultsTable__row">
               <th className="PastResultsTable__header" scope="col">

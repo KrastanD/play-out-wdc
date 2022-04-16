@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { StoreType } from "../store";
 
 export enum AppVersion {
-  WDC,
-  WCC,
+  WDC2021,
+  WCC2021,
+  WDC2022,
+  WCC2022,
 }
 
 export interface ChangeVersionAction {
@@ -14,7 +16,7 @@ export interface ChangeVersionAction {
 export const configSlice = createSlice({
   name: "config",
   initialState: {
-    version: AppVersion.WDC,
+    version: AppVersion.WDC2022,
   },
   reducers: {
     changeVersion: (state, action: ChangeVersionAction) => {
