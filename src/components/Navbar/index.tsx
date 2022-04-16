@@ -9,9 +9,7 @@ function Navbar() {
 
   return (
     <nav className="Navbar">
-      <div>
-        <p className="Navbar__title">{titleText}</p>
-      </div>
+      <p className="Navbar__title">{titleText}</p>
       <ul className="Navbar__list">
         <li className="Navbar__option">
           <button
