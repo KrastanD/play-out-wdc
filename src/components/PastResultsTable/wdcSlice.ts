@@ -20,9 +20,11 @@ export enum RequestState {
 }
 
 export interface WDCState {
+  // TODO: Is userResults still necessary?
   userResults: Drivers[][];
   pastRaces: Race[];
   status: RequestState;
+  requestYear: number;
   error: string | null;
 }
 
@@ -31,18 +33,22 @@ const initialState: WDCState = {
   userResults: Array.from(Array(21), () => new Array(12).fill(Drivers.None)),
   pastRaces: [],
   status: RequestState.Idle,
+  requestYear: 2022,
   error: null,
 };
 
-export const fetchResults = createAsyncThunk("wdc/fetchResults", async () => {
-  // TODO: pull string into constants
-  const response = await fetch(
-    "https://ergast.com/api/f1/2021/results.json?limit=450"
-  );
+export const fetchResults = createAsyncThunk(
+  "wdc/fetchResults",
+  async ({ year }: { year: number }) => {
+    // TODO: pull string into constants
+    const response = await fetch(
+      `https://ergast.com/api/f1/${year}/results.json?limit=450`
+    );
 
-  const jsonResponse: Promise<ResultsResponse> = response.json();
-  return jsonResponse;
-});
+    const jsonResponse: Promise<ResultsResponse> = response.json();
+    return jsonResponse;
+  }
+);
 
 // TODO: Rename file and slice
 const wdcSlice = createSlice({
@@ -97,6 +103,7 @@ const wdcSlice = createSlice({
       .addCase(fetchResults.fulfilled, (state, action) => {
         const races: Race[] = action.payload.MRData.RaceTable.Races;
         state.pastRaces = races;
+        state.requestYear = new Date(races[0].date).getFullYear();
         state.status = RequestState.Succeeded;
       })
       .addCase(fetchResults.rejected, (state, action) => {
@@ -113,5 +120,6 @@ export const selectWDCUserResults = (state: StoreType) => state.wdc.userResults;
 export const selectWDCPastRaces = (state: StoreType) => state.wdc.pastRaces;
 
 export const selectWDCStatus = (state: StoreType) => state.wdc.status;
+export const selectWDCRequestYear = (state: StoreType) => state.wdc.requestYear;
 
 export const { wdcResultSet } = wdcSlice.actions;

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 import { StoreType } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
@@ -17,12 +18,17 @@ function PastTeamResultsTable() {
   const pastRaces = useSelector(selectWDCPastRaces);
   const resultsStatus = useSelector(selectWDCStatus);
   const resultsError = useSelector((state: StoreType) => state.wdc.error);
+  const config = useSelector(selectConfigVersion);
+  let year = 2021;
+  if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
+    year = 2022;
+  }
 
   useEffect(() => {
     if (resultsStatus === RequestState.Idle) {
-      dispatch(fetchResults());
+      dispatch(fetchResults({ year }));
     }
-  }, [resultsStatus, dispatch]);
+  }, [resultsStatus, config]);
 
   const getTeamResults = (race: Race) => {
     const teamResults: TeamResultType[] = [];

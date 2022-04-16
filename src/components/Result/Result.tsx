@@ -18,14 +18,12 @@ function Result({
   hasFastestLap,
   size,
 }: ResultProps) {
-  const boxStyle = `Result__box Result__box--${size} Result__box--${textColor} Global__${teamId}-bg`;
+  const boxStyle = `Result Result--${size} Result--${textColor} Global__${teamId}-bg`;
   return (
-    <div className="Result">
+    <div className={boxStyle}>
       {hasFastestLap && <div className="Result__fastestLapMark">+1</div>}
-      <div className={boxStyle}>
-        <strong className="Result__driverCode">{name}</strong>
-        <p className="Result__driverCode">{points}</p>
-      </div>
+      <strong className="Result__driverCode">{name}</strong>
+      <p className="Result__driverCode">{points}</p>
     </div>
   );
 }

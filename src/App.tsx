@@ -6,7 +6,7 @@ import PastTeamResultsTable from "./components/PastTeamResultsTable";
 import { AppVersion, selectConfigVersion } from "./config/configSlice";
 
 function Table({ version }: { version: AppVersion }) {
-  if (version === AppVersion.WDC) {
+  if (version === AppVersion.WDC2021 || version === AppVersion.WDC2022) {
     return <PastResultsTable />;
   }
   return <PastTeamResultsTable />;
