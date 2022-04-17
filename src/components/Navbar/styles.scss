@@ -7,8 +7,6 @@
   height: 60px;
   padding-left: 20px;
   background-color: $f1-red;
-  font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue",
-    Arial, sans-serif;
 }
 
 .Navbar__button {
@@ -33,6 +31,7 @@
   font-size: 1.7rem;
   font-weight: 500;
   color: white;
+  font-family: "TitilliumWeb-Bold";
 }
 
 .Navbar__list {
@@ -50,6 +49,7 @@
 .Navbar__itemText {
   font-size: 1.4rem;
   color: white;
+  font-family: "TitilliumWeb-Regular";
 }
 
 @media (max-width: 768px) {
