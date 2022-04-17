@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppVersion, selectConfigVersion } from "../../config/configSlice";
-import { StoreType } from "../../store";
+import { StoreType, useAppDispatch } from "../../store";
 import { positions } from "../../utils/constants";
 import IndividualResult from "../IndividualResult";
+import Spinner from "../Spinner";
 import "./styles.scss";
 import {
   fetchResults,
@@ -14,7 +15,7 @@ import {
 } from "./wdcSlice";
 
 function PastResultsTable() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
   const resultsStatus = useSelector(selectWDCStatus);
@@ -76,6 +77,13 @@ function PastResultsTable() {
   }
   if (resultsStatus === RequestState.Failed) {
     return <div>{resultsError}</div>;
+  }
+  if (resultsStatus === RequestState.Loading) {
+    return (
+      <div className="PastResultsTable__loader">
+        <Spinner />
+      </div>
+    );
   }
   return null;
 }
