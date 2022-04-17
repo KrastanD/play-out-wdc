@@ -13,3 +13,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: "TitilliumWeb-Regular";
+  src: url(../assets/fonts/TitilliumWeb-Regular.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "TitilliumWeb-Bold";
+  src: url(../assets/fonts/TitilliumWeb-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Formula1-Regular";
+  src: url(../assets/fonts/Formula1-Regular.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Formula1-Bold";
+  src: url(../assets/fonts/Formula1-Bold.ttf);
+  font-weight: bold;
+}
