@@ -1,11 +1,11 @@
-import { useDispatch } from "react-redux";
 import { AppVersion, changeVersion } from "../../config/configSlice";
+import { useAppDispatch } from "../../store";
 import "./styles.scss";
 
 function Navbar() {
   const titleText = "Play Out";
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <nav className="Navbar">

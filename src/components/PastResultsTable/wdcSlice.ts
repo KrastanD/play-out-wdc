@@ -28,6 +28,10 @@ export interface WDCState {
   error: string | null;
 }
 
+export type FetchResultsProps = {
+  year: number;
+};
+
 const initialState: WDCState = {
   // TODO: userResults size should be based on remaining races
   userResults: Array.from(Array(21), () => new Array(12).fill(Drivers.None)),
@@ -39,7 +43,7 @@ const initialState: WDCState = {
 
 export const fetchResults = createAsyncThunk(
   "wdc/fetchResults",
-  async ({ year }: { year: number }) => {
+  async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const response = await fetch(
       `https://ergast.com/api/f1/${year}/results.json?limit=450`

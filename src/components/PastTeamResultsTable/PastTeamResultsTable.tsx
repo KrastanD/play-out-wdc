@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppVersion, selectConfigVersion } from "../../config/configSlice";
-import { StoreType } from "../../store";
+import { StoreType, useAppDispatch } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
 import {
@@ -11,10 +11,11 @@ import {
   selectWDCRequestYear,
   selectWDCStatus,
 } from "../PastResultsTable/wdcSlice";
+import Spinner from "../Spinner";
 import TeamResult from "../TeamResult";
 
 function PastTeamResultsTable() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
   const resultsStatus = useSelector(selectWDCStatus);
@@ -119,6 +120,13 @@ function PastTeamResultsTable() {
   }
   if (resultsStatus === RequestState.Failed) {
     return <div>{resultsError}</div>;
+  }
+  if (resultsStatus === RequestState.Loading) {
+    return (
+      <div className="PastResultsTable__loader">
+        <Spinner />
+      </div>
+    );
   }
   return null;
 }
