@@ -11,3 +11,30 @@ export function getConstructorIdFromName(name: ConstructorName): ConstructorID {
 
 export const getTimeString = (amount: number, unit: TimeUnit): string =>
   amount === 1 ? `${amount} ${unit}` : `${amount} ${unit}s`;
+
+export function getTeamColor(team: ConstructorID) {
+  switch (team) {
+    case "mercedes":
+      return "#00d2be";
+    case "ferrari":
+      return "#dc0000";
+    case "red_bull":
+      return "#0600ef";
+    case "mclaren":
+      return "#ff8700";
+    case "alpine":
+      return "#0090ff";
+    case "haas":
+      return "#ffffff";
+    case "aston_martin":
+      return "#005f62";
+    case "williams":
+      return "#005aff";
+    case "alfa":
+      return "#900000";
+    case "alphatauri":
+      return "#2b4562";
+    default:
+      return "#000000";
+  }
+}

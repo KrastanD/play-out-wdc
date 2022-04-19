@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 import { StoreType, useAppDispatch } from "../../store";
 import { positions } from "../../utils/constants";
+import Chart from "../Chart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
 import "./styles.scss";
@@ -72,6 +73,7 @@ function PastResultsTable() {
             ))}
           </tbody>
         </table>
+        <Chart races={pastRaces} />
       </div>
     );
   }
