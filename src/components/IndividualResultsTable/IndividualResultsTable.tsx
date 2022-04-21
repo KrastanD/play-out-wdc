@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { AppVersion, selectConfigVersion } from "../../config/configSlice";
 import { StoreType, useAppDispatch } from "../../store";
 import { positions } from "../../utils/constants";
-import Chart from "../Chart";
+import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
 import "./styles.scss";
@@ -15,7 +15,7 @@ import {
   selectWDCRequestYear,
 } from "./wdcSlice";
 
-function PastResultsTable() {
+function IndividualResultsTable() {
   const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
@@ -36,8 +36,8 @@ function PastResultsTable() {
 
   if (resultsStatus === RequestState.Succeeded) {
     return (
-      <div className="PastResultsTable">
-        <table className="PastResultsTable__table">
+      <div className="IndividualResultsTable">
+        <table className="IndividualResultsTable__table">
           <colgroup>
             <col width="80" />
             {pastRaces.map((race) => (
@@ -46,12 +46,12 @@ function PastResultsTable() {
           </colgroup>
           <thead>
             <tr>
-              <th className="PastResultsTable__header" scope="col">
+              <th className="IndividualResultsTable__header" scope="col">
                 Position
               </th>
               {pastRaces.map((race) => (
                 <th
-                  className="PastResultsTable__header"
+                  className="IndividualResultsTable__header"
                   scope="col"
                   key={race.raceName}
                 >
@@ -62,10 +62,12 @@ function PastResultsTable() {
           </thead>
           <tbody>
             {positions.map((positionValue, position) => (
-              <tr className="PastResultsTable__row" key={positionValue}>
-                <td className="PastResultsTable__data">{positionValue}</td>
+              <tr className="IndividualResultsTable__row" key={positionValue}>
+                <td className="IndividualResultsTable__data">
+                  {positionValue}
+                </td>
                 {pastRaces.map((race) => (
-                  <td className="PastResultsTable__data" key={race.round}>
+                  <td className="IndividualResultsTable__data" key={race.round}>
                     <IndividualResult position={position} race={race} />
                   </td>
                 ))}
@@ -73,7 +75,7 @@ function PastResultsTable() {
             ))}
           </tbody>
         </table>
-        <Chart races={pastRaces} />
+        <IndividualChart races={pastRaces} />
       </div>
     );
   }
@@ -82,7 +84,7 @@ function PastResultsTable() {
   }
   if (resultsStatus === RequestState.Loading) {
     return (
-      <div className="PastResultsTable__loader">
+      <div className="IndividualResultsTable__loader">
         <Spinner />
       </div>
     );
@@ -90,4 +92,4 @@ function PastResultsTable() {
   return null;
 }
 
-export default PastResultsTable;
+export default IndividualResultsTable;

@@ -1,6 +1,6 @@
 import { AppVersion, changeVersion } from "../../config/configSlice";
 import { useAppDispatch } from "../../store";
-import "./styles.scss";
+import "./Navbar.styles.scss";
 
 function Navbar() {
   const titleText = "Play Out";

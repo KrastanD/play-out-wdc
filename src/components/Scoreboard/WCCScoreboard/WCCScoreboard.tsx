@@ -4,7 +4,7 @@ import {
   Teams,
   teamTiebreakerData,
 } from "../../../utils/constants";
-import { selectWCCResults } from "../../PastTeamResultsTable/wccSlice";
+import { selectWCCResults } from "../../TeamResultsTable/wccSlice";
 
 // TODO Remove bootstrap
 function Scoreboard() {

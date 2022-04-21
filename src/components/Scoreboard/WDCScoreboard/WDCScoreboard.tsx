@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Drivers, pointsSystem } from "../../../utils/constants";
-import { selectWDCUserResults } from "../../PastResultsTable/wdcSlice";
+import { selectWDCUserResults } from "../../IndividualResultsTable/wdcSlice";
 
 // TODO Remove bootstrap
 function Scoreboard() {

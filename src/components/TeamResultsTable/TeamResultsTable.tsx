@@ -10,7 +10,7 @@ import {
   selectWDCPastRaces,
   selectWDCRequestYear,
   selectWDCStatus,
-} from "../PastResultsTable/wdcSlice";
+} from "../IndividualResultsTable/wdcSlice";
 import Spinner from "../Spinner";
 import TeamResult from "../TeamResult";
 
@@ -71,8 +71,8 @@ function PastTeamResultsTable() {
 
   if (resultsStatus === RequestState.Succeeded) {
     return (
-      <div className="PastResultsTable">
-        <table className="PastResultsTable__table">
+      <div className="IndividualResultsTable">
+        <table className="IndividualResultsTable__table">
           <colgroup>
             <col width="80" />
             {pastRaces.map((race) => (
@@ -80,13 +80,13 @@ function PastTeamResultsTable() {
             ))}
           </colgroup>
           <thead>
-            <tr className="PastResultsTable__row">
-              <th className="PastResultsTable__header" scope="col">
+            <tr className="IndividualResultsTable__row">
+              <th className="IndividualResultsTable__header" scope="col">
                 Team Position
               </th>
               {pastRaces.map((race) => (
                 <th
-                  className="PastResultsTable__header"
+                  className="IndividualResultsTable__header"
                   scope="col"
                   key={race.raceName}
                 >
@@ -97,11 +97,11 @@ function PastTeamResultsTable() {
           </thead>
           <tbody>
             {Array.from(Array(10).keys()).map((value, index) => (
-              <tr className="PastResultsTable__row" key={value}>
-                <td className="PastResultsTable__data">{index + 1}</td>
+              <tr className="IndividualResultsTable__row" key={value}>
+                <td className="IndividualResultsTable__data">{index + 1}</td>
                 {arrayColumn(getAllTeamResults(), index).map((teamResult) => (
                   <td
-                    className="PastResultsTable__data"
+                    className="IndividualResultsTable__data"
                     key={
                       teamResult.race +
                       teamResult.constructor +
@@ -123,7 +123,7 @@ function PastTeamResultsTable() {
   }
   if (resultsStatus === RequestState.Loading) {
     return (
-      <div className="PastResultsTable__loader">
+      <div className="IndividualResultsTable__loader">
         <Spinner />
       </div>
     );

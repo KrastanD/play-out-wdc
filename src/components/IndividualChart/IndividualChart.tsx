@@ -54,7 +54,7 @@ function getDriverDataSet(races: Race[]) {
   return data;
 }
 
-function Chart({ races }: { races: Race[] }) {
+function IndividualChart({ races }: { races: Race[] }) {
   const driverData = getDriverDataSet(races);
   const options = {
     responsive: true,
@@ -81,4 +81,4 @@ function Chart({ races }: { races: Race[] }) {
   return <Line options={options} data={data} />;
 }
 
-export default Chart;
+export default IndividualChart;
