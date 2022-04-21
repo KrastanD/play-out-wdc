@@ -1,10 +1,10 @@
 @import "/src/scss/custom";
 
-.PastResultsTable {
+.IndividualResultsTable {
   overflow-x: auto;
 }
 
-.PastResultsTable__table {
+.IndividualResultsTable__table {
   width: 100%;
   margin-bottom: 1rem;
   color: #212529;
@@ -13,16 +13,16 @@
   border-collapse: collapse;
 }
 
-.PastResultsTable__row:nth-child(even) {
+.IndividualResultsTable__row:nth-child(even) {
   background-color: #f1f1f1;
 }
 
-.PastResultsTable__data {
+.IndividualResultsTable__data {
   padding: 8px;
   font-family: "TitilliumWeb-Regular";
 }
 
-.PastResultsTable__header {
+.IndividualResultsTable__header {
   padding: 8px;
   text-align: left;
   border-bottom: black 2px solid;
@@ -30,7 +30,7 @@
   font-family: "TitilliumWeb-Regular";
 }
 
-.PastResultsTable__loader {
+.IndividualResultsTable__loader {
   display: flex;
   justify-content: center;
   padding-top: 2rem;

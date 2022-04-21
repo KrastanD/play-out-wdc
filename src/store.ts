@@ -2,8 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import configReducer, { AppVersion } from "./config/configSlice";
 import { Teams } from "./utils/constants";
-import wdcReducer, { WDCState } from "./components/PastResultsTable/wdcSlice";
-import wccReducer from "./components/PastTeamResultsTable/wccSlice";
+import wdcReducer, {
+  WDCState,
+} from "./components/IndividualResultsTable/wdcSlice";
+import wccReducer from "./components/TeamResultsTable/wccSlice";
 
 const store = configureStore({
   reducer: {
