@@ -65,7 +65,7 @@ function IndividualChart({ races }: { races: Race[] }) {
       },
       title: {
         display: true,
-        text: "Championship Results",
+        text: "Driver's Championship Results",
       },
     },
   };

@@ -12,6 +12,7 @@ import {
   selectWDCStatus,
 } from "../IndividualResultsTable/wdcSlice";
 import Spinner from "../Spinner";
+import TeamChart from "../TeamChart";
 import TeamResult from "../TeamResult";
 
 function PastTeamResultsTable() {
@@ -115,6 +116,7 @@ function PastTeamResultsTable() {
             ))}
           </tbody>
         </table>
+        <TeamChart races={pastRaces} />
       </div>
     );
   }
