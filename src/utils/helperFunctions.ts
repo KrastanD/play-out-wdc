@@ -25,7 +25,7 @@ export function getTeamColor(team: ConstructorID) {
     case "alpine":
       return "#0090ff";
     case "haas":
-      return "#ffffff";
+      return "#000000";
     case "aston_martin":
       return "#005f62";
     case "williams":
