@@ -31,7 +31,9 @@ interface ChartDriverData {
 function getDriverDataSet(races: Race[]) {
   const data: ChartDriverData[] = [];
   races.forEach((race, index) => {
-    race.Results.forEach((result) => {
+    const results = race.Results ?? race.SprintResults;
+
+    results.forEach((result) => {
       if (index === 0) {
         const driverObject: ChartDriverData = {
           driver: result.Driver,

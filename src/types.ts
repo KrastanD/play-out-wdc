@@ -127,6 +127,7 @@ export interface Race {
   date: Date;
   time: string;
   Results: Result[];
+  SprintResults: Result[];
 }
 
 export interface RaceTable {
