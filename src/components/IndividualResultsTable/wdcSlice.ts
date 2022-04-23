@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreType } from "../../store";
 import { Race, ResultsResponse } from "../../types";
 
@@ -21,14 +21,67 @@ export type FetchResultsProps = {
   year: number;
 };
 
+type Action = PayloadAction<
+  ResultsResponse,
+  string,
+  {
+    arg: FetchResultsProps;
+    requestId: string;
+    requestStatus: "fulfilled";
+  },
+  never
+>;
+
 const initialState: WDCState = {
-  // TODO: userResults size should be based on remaining races
   pastRaces: [],
   raceStatus: RequestState.Idle,
   sprintStatus: RequestState.Idle,
   requestYear: 2022,
   error: null,
 };
+
+function sortRaces(a: Race, b: Race) {
+  const aNum = Number(a.round);
+  const bNum = Number(b.round);
+  if (aNum < bNum) {
+    return -1;
+  }
+  if (aNum > bNum) {
+    return 1;
+  }
+  if (a.raceName.length > b.raceName.length) {
+    return -1;
+  }
+  if (a.raceName.length < b.raceName.length) {
+    return 1;
+  }
+  return 0;
+}
+
+function onFetchSuccess(action: Action, state: WDCState, isSprint = false) {
+  const sprints: Race[] = action.payload.MRData.RaceTable.Races;
+  const responseYear = Number(action.payload.MRData.RaceTable.season);
+
+  if (state.requestYear !== responseYear) {
+    state.pastRaces = [];
+  }
+  if (sprints.length > 0) {
+    sprints.forEach((sprint) => {
+      const raceName = isSprint ? `${sprint.raceName} Sprint` : sprint.raceName;
+
+      if (
+        state.pastRaces.findIndex(
+          (pastRace) => pastRace.raceName === raceName
+        ) === -1
+      ) {
+        sprint.raceName = raceName;
+        state.pastRaces.push(sprint);
+      }
+    });
+    state.requestYear = responseYear;
+  }
+  state.pastRaces.sort((a, b) => sortRaces(a, b));
+}
 
 export const fetchRaceResults = createAsyncThunk(
   "wdc/fetchResults",
@@ -65,38 +118,7 @@ const wdcSlice = createSlice({
         state.raceStatus = RequestState.Loading;
       })
       .addCase(fetchRaceResults.fulfilled, (state, action) => {
-        const races: Race[] = action.payload.MRData.RaceTable.Races;
-        const responseYear = Number(action.payload.MRData.RaceTable.season);
-        if (state.requestYear !== responseYear) {
-          state.pastRaces = [];
-        }
-        races.forEach((race) => {
-          if (
-            state.pastRaces.findIndex(
-              (pastRace) => pastRace.raceName === race.raceName
-            ) === -1
-          ) {
-            state.pastRaces.push(race);
-          }
-        });
-        state.pastRaces.sort((a, b) => {
-          const aNum = Number(a.round);
-          const bNum = Number(b.round);
-          if (aNum < bNum) {
-            return -1;
-          }
-          if (aNum > bNum) {
-            return 1;
-          }
-          if (a.raceName.length > b.raceName.length) {
-            return -1;
-          }
-          if (a.raceName.length < b.raceName.length) {
-            return 1;
-          }
-          return 0;
-        });
-        state.requestYear = responseYear;
+        onFetchSuccess(action, state);
         state.raceStatus = RequestState.Succeeded;
       })
       .addCase(fetchRaceResults.rejected, (state, action) => {
@@ -107,41 +129,7 @@ const wdcSlice = createSlice({
         state.sprintStatus = RequestState.Loading;
       })
       .addCase(fetchSprintResults.fulfilled, (state, action) => {
-        const sprints: Race[] = action.payload.MRData.RaceTable.Races;
-        const responseYear = Number(action.payload.MRData.RaceTable.season);
-        if (state.requestYear !== responseYear) {
-          state.pastRaces = [];
-        }
-        if (sprints.length > 0) {
-          sprints.forEach((sprint) => {
-            if (
-              state.pastRaces.findIndex(
-                (pastRace) => pastRace.raceName === `${sprint.raceName} Sprint`
-              ) === -1
-            ) {
-              sprint.raceName = `${sprint.raceName} Sprint`;
-              state.pastRaces.push(sprint);
-            }
-          });
-          state.requestYear = responseYear;
-        }
-        state.pastRaces.sort((a, b) => {
-          const aNum = Number(a.round);
-          const bNum = Number(b.round);
-          if (aNum < bNum) {
-            return -1;
-          }
-          if (aNum > bNum) {
-            return 1;
-          }
-          if (a.raceName.length > b.raceName.length) {
-            return -1;
-          }
-          if (a.raceName.length < b.raceName.length) {
-            return 1;
-          }
-          return 0;
-        });
+        onFetchSuccess(action, state, true);
         state.sprintStatus = RequestState.Succeeded;
       })
       .addCase(fetchSprintResults.rejected, (state) => {
