@@ -1,16 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { StoreType } from "../../store";
 import { Race, ResultsResponse } from "../../types";
-import { Drivers, pointsSystem } from "../../utils/constants";
-
-interface WDCResultSetAction {
-  type: string;
-  payload: {
-    driverNum: Drivers;
-    race: number;
-    selectedPosition: number;
-  };
-}
 
 export enum RequestState {
   Idle = "idle",
@@ -20,8 +10,6 @@ export enum RequestState {
 }
 
 export interface WDCState {
-  // TODO: Is userResults still necessary?
-  userResults: Drivers[][];
   pastRaces: Race[];
   raceStatus: RequestState;
   sprintStatus: RequestState;
@@ -35,7 +23,6 @@ export type FetchResultsProps = {
 
 const initialState: WDCState = {
   // TODO: userResults size should be based on remaining races
-  userResults: Array.from(Array(21), () => new Array(12).fill(Drivers.None)),
   pastRaces: [],
   raceStatus: RequestState.Idle,
   sprintStatus: RequestState.Idle,
@@ -71,47 +58,7 @@ export const fetchSprintResults = createAsyncThunk(
 const wdcSlice = createSlice({
   name: "wdc",
   initialState,
-  reducers: {
-    wdcResultSet(state, action: WDCResultSetAction) {
-      const { selectedPosition, race, driverNum } = action.payload;
-
-      const fastestLapIndex = pointsSystem.length - 2;
-      const didNotFinishIndex = pointsSystem.length - 1;
-
-      if (selectedPosition === fastestLapIndex) {
-        if (state.userResults[race][selectedPosition] === driverNum) {
-          state.userResults[race][selectedPosition] = Drivers.None;
-        } else {
-          if (state.userResults[race][didNotFinishIndex] === driverNum) {
-            return;
-          }
-          state.userResults[race][selectedPosition] = driverNum;
-        }
-        return;
-      }
-
-      const previousResult = state.userResults[race].findIndex(
-        (x) => x === driverNum
-      );
-
-      if (
-        state.userResults[race][state.userResults[0].length - 2] === driverNum
-      ) {
-        if (selectedPosition === didNotFinishIndex) {
-          return;
-        }
-      }
-
-      if (previousResult !== -1 && previousResult !== fastestLapIndex) {
-        state.userResults[race][previousResult] = Drivers.None;
-        if (previousResult === selectedPosition) {
-          return;
-        }
-      }
-
-      state.userResults[race][selectedPosition] = driverNum;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchRaceResults.pending, (state) => {
@@ -205,13 +152,9 @@ const wdcSlice = createSlice({
 
 export default wdcSlice.reducer;
 
-export const selectWDCUserResults = (state: StoreType) => state.wdc.userResults;
-
 export const selectWDCPastRaces = (state: StoreType) => state.wdc.pastRaces;
 
 export const selectWDCRaceStatus = (state: StoreType) => state.wdc.raceStatus;
 export const selectWDCSprintStatus = (state: StoreType) =>
   state.wdc.sprintStatus;
 export const selectWDCRequestYear = (state: StoreType) => state.wdc.requestYear;
-
-export const { wdcResultSet } = wdcSlice.actions;

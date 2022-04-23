@@ -9,12 +9,12 @@ import Spinner from "../Spinner";
 import "./styles.scss";
 import {
   fetchRaceResults,
-  selectWDCRaceStatus,
-  selectWDCPastRaces,
+  fetchSprintResults,
   RequestState,
+  selectWDCPastRaces,
+  selectWDCRaceStatus,
   selectWDCRequestYear,
   selectWDCSprintStatus,
-  fetchSprintResults,
 } from "./wdcSlice";
 
 function IndividualResultsTable() {
