@@ -8,19 +8,32 @@ import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
 import "./styles.scss";
 import {
-  fetchResults,
-  selectWDCStatus,
+  fetchRaceResults,
+  selectWDCRaceStatus,
   selectWDCPastRaces,
   RequestState,
   selectWDCRequestYear,
+  selectWDCSprintStatus,
+  fetchSprintResults,
 } from "./wdcSlice";
 
 function IndividualResultsTable() {
   const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
-  const resultsStatus = useSelector(selectWDCStatus);
-  const resultsError = useSelector((state: StoreType) => state.wdc.error);
+  const resultsRaceStatus = useSelector(selectWDCRaceStatus);
+  const resultsSprintStatus = useSelector(selectWDCSprintStatus);
+  const resultsSuccess =
+    resultsRaceStatus === RequestState.Succeeded &&
+    resultsSprintStatus === RequestState.Succeeded;
+  const resultsLoading =
+    resultsRaceStatus === RequestState.Loading ||
+    resultsSprintStatus === RequestState.Loading;
+  const resultsError =
+    resultsRaceStatus === RequestState.Failed ||
+    resultsSprintStatus === RequestState.Failed;
+
+  const errorData = useSelector((state: StoreType) => state.wdc.error);
   const config = useSelector(selectConfigVersion);
   let year = 2021;
   if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
@@ -29,12 +42,13 @@ function IndividualResultsTable() {
   const requestYear = useSelector(selectWDCRequestYear);
 
   useEffect(() => {
-    if (resultsStatus === RequestState.Idle || requestYear !== year) {
-      dispatch(fetchResults({ year }));
+    if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
+      dispatch(fetchRaceResults({ year }));
+      dispatch(fetchSprintResults({ year }));
     }
-  }, [resultsStatus, config]);
+  }, [resultsRaceStatus, config]);
 
-  if (resultsStatus === RequestState.Succeeded) {
+  if (resultsSuccess) {
     return (
       <div className="IndividualResultsTable">
         <table className="IndividualResultsTable__table">
@@ -67,7 +81,10 @@ function IndividualResultsTable() {
                   {positionValue}
                 </td>
                 {pastRaces.map((race) => (
-                  <td className="IndividualResultsTable__data" key={race.round}>
+                  <td
+                    className="IndividualResultsTable__data"
+                    key={String(race.raceName)}
+                  >
                     <IndividualResult position={position} race={race} />
                   </td>
                 ))}
@@ -79,10 +96,10 @@ function IndividualResultsTable() {
       </div>
     );
   }
-  if (resultsStatus === RequestState.Failed) {
-    return <div>{resultsError}</div>;
+  if (resultsError) {
+    return <div>{errorData}</div>;
   }
-  if (resultsStatus === RequestState.Loading) {
+  if (resultsLoading) {
     return (
       <div className="IndividualResultsTable__loader">
         <Spinner />

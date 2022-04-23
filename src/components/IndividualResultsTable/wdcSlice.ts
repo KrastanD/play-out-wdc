@@ -23,7 +23,8 @@ export interface WDCState {
   // TODO: Is userResults still necessary?
   userResults: Drivers[][];
   pastRaces: Race[];
-  status: RequestState;
+  raceStatus: RequestState;
+  sprintStatus: RequestState;
   requestYear: number;
   error: string | null;
 }
@@ -36,21 +37,33 @@ const initialState: WDCState = {
   // TODO: userResults size should be based on remaining races
   userResults: Array.from(Array(21), () => new Array(12).fill(Drivers.None)),
   pastRaces: [],
-  status: RequestState.Idle,
+  raceStatus: RequestState.Idle,
+  sprintStatus: RequestState.Idle,
   requestYear: 2022,
   error: null,
 };
 
-export const fetchResults = createAsyncThunk(
+export const fetchRaceResults = createAsyncThunk(
   "wdc/fetchResults",
   async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const response = await fetch(
       `https://ergast.com/api/f1/${year}/results.json?limit=450`
     );
+    const raceJson: Promise<ResultsResponse> = response.json();
+    return raceJson;
+  }
+);
 
-    const jsonResponse: Promise<ResultsResponse> = response.json();
-    return jsonResponse;
+export const fetchSprintResults = createAsyncThunk(
+  "wdc/fetchSprintResults",
+  async ({ year }: FetchResultsProps) => {
+    // TODO: pull string into constants
+    const sprintResponse = await fetch(
+      `https://ergast.com/api/f1/${year}/sprint.json?limit=450`
+    );
+    const sprintJson: Promise<ResultsResponse> = sprintResponse.json();
+    return sprintJson;
   }
 );
 
@@ -101,18 +114,91 @@ const wdcSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchResults.pending, (state) => {
-        state.status = RequestState.Loading;
+      .addCase(fetchRaceResults.pending, (state) => {
+        state.raceStatus = RequestState.Loading;
       })
-      .addCase(fetchResults.fulfilled, (state, action) => {
+      .addCase(fetchRaceResults.fulfilled, (state, action) => {
         const races: Race[] = action.payload.MRData.RaceTable.Races;
-        state.pastRaces = races;
-        state.requestYear = new Date(races[0].date).getFullYear();
-        state.status = RequestState.Succeeded;
+        const responseYear = Number(action.payload.MRData.RaceTable.season);
+        if (state.requestYear !== responseYear) {
+          state.pastRaces = [];
+        }
+        races.forEach((race) => {
+          if (
+            state.pastRaces.findIndex(
+              (pastRace) => pastRace.raceName === race.raceName
+            ) === -1
+          ) {
+            state.pastRaces.push(race);
+          }
+        });
+        state.pastRaces.sort((a, b) => {
+          const aNum = Number(a.round);
+          const bNum = Number(b.round);
+          if (aNum < bNum) {
+            return -1;
+          }
+          if (aNum > bNum) {
+            return 1;
+          }
+          if (a.raceName.length > b.raceName.length) {
+            return -1;
+          }
+          if (a.raceName.length < b.raceName.length) {
+            return 1;
+          }
+          return 0;
+        });
+        state.requestYear = responseYear;
+        state.raceStatus = RequestState.Succeeded;
       })
-      .addCase(fetchResults.rejected, (state, action) => {
-        state.status = RequestState.Failed;
+      .addCase(fetchRaceResults.rejected, (state, action) => {
+        state.raceStatus = RequestState.Failed;
         state.error = action.error.message ?? "Error retrieving race results";
+      })
+      .addCase(fetchSprintResults.pending, (state) => {
+        state.sprintStatus = RequestState.Loading;
+      })
+      .addCase(fetchSprintResults.fulfilled, (state, action) => {
+        const sprints: Race[] = action.payload.MRData.RaceTable.Races;
+        const responseYear = Number(action.payload.MRData.RaceTable.season);
+        if (state.requestYear !== responseYear) {
+          state.pastRaces = [];
+        }
+        if (sprints.length > 0) {
+          sprints.forEach((sprint) => {
+            if (
+              state.pastRaces.findIndex(
+                (pastRace) => pastRace.raceName === `${sprint.raceName} Sprint`
+              ) === -1
+            ) {
+              sprint.raceName = `${sprint.raceName} Sprint`;
+              state.pastRaces.push(sprint);
+            }
+          });
+          state.requestYear = responseYear;
+        }
+        state.pastRaces.sort((a, b) => {
+          const aNum = Number(a.round);
+          const bNum = Number(b.round);
+          if (aNum < bNum) {
+            return -1;
+          }
+          if (aNum > bNum) {
+            return 1;
+          }
+          if (a.raceName.length > b.raceName.length) {
+            return -1;
+          }
+          if (a.raceName.length < b.raceName.length) {
+            return 1;
+          }
+          return 0;
+        });
+        state.sprintStatus = RequestState.Succeeded;
+      })
+      .addCase(fetchSprintResults.rejected, (state) => {
+        state.sprintStatus = RequestState.Failed;
       });
   },
 });
@@ -123,7 +209,9 @@ export const selectWDCUserResults = (state: StoreType) => state.wdc.userResults;
 
 export const selectWDCPastRaces = (state: StoreType) => state.wdc.pastRaces;
 
-export const selectWDCStatus = (state: StoreType) => state.wdc.status;
+export const selectWDCRaceStatus = (state: StoreType) => state.wdc.raceStatus;
+export const selectWDCSprintStatus = (state: StoreType) =>
+  state.wdc.sprintStatus;
 export const selectWDCRequestYear = (state: StoreType) => state.wdc.requestYear;
 
 export const { wdcResultSet } = wdcSlice.actions;

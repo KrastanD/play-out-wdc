@@ -5,11 +5,11 @@ import { StoreType, useAppDispatch } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
 import {
-  fetchResults,
+  fetchRaceResults,
   RequestState,
   selectWDCPastRaces,
   selectWDCRequestYear,
-  selectWDCStatus,
+  selectWDCRaceStatus,
 } from "../IndividualResultsTable/wdcSlice";
 import Spinner from "../Spinner";
 import TeamChart from "../TeamChart";
@@ -19,7 +19,7 @@ function PastTeamResultsTable() {
   const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
-  const resultsStatus = useSelector(selectWDCStatus);
+  const resultsStatus = useSelector(selectWDCRaceStatus);
   const resultsError = useSelector((state: StoreType) => state.wdc.error);
   const config = useSelector(selectConfigVersion);
   let year = 2021;
@@ -30,7 +30,7 @@ function PastTeamResultsTable() {
 
   useEffect(() => {
     if (resultsStatus === RequestState.Idle || requestYear !== year) {
-      dispatch(fetchResults({ year }));
+      dispatch(fetchRaceResults({ year }));
     }
   }, [resultsStatus, config]);
 

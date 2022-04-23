@@ -7,14 +7,16 @@ type IndividualResultProps = {
 };
 
 function IndividualResult({ position, race }: IndividualResultProps) {
-  const teamId = race.Results[position]?.Constructor?.constructorId;
+  const results = race.Results ?? race.SprintResults;
+  const teamId: ConstructorID | undefined =
+    results[position]?.Constructor?.constructorId;
   const textColor = teamId === ConstructorID.Haas ? "light" : "dark";
   const hasFastestLap =
-    race.Results[position]?.FastestLap?.rank === "1" && position < 10;
+    results[position]?.FastestLap?.rank === "1" && position < 10;
   const pointsString = hasFastestLap
-    ? `${Number(race.Results[position]?.points) - 1}`
-    : race.Results[position]?.points;
-  const name = race.Results[position]?.Driver.code;
+    ? `${Number(results[position]?.points) - 1}`
+    : results[position]?.points;
+  const name = results[position]?.Driver.code;
 
   return (
     <Result
