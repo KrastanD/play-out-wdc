@@ -8,8 +8,7 @@ type IndividualResultProps = {
 
 function IndividualResult({ position, race }: IndividualResultProps) {
   const results = race.Results ?? race.SprintResults;
-  const teamId: ConstructorID | undefined =
-    results[position]?.Constructor?.constructorId;
+  const teamId = results[position]?.Constructor?.constructorId;
   const textColor = teamId === ConstructorID.Haas ? "light" : "dark";
   const hasFastestLap =
     results[position]?.FastestLap?.rank === "1" && position < 10;

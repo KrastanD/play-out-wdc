@@ -5,13 +5,11 @@ import { Teams } from "./utils/constants";
 import wdcReducer, {
   WDCState,
 } from "./components/IndividualResultsTable/wdcSlice";
-import wccReducer from "./components/TeamResultsTable/wccSlice";
 
 const store = configureStore({
   reducer: {
     config: configReducer,
     wdc: wdcReducer,
-    wcc: wccReducer,
   },
   devTools: true,
 });
