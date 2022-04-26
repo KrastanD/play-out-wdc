@@ -36,7 +36,8 @@ function PastTeamResultsTable() {
 
   const getTeamResults = (race: Race) => {
     const teamResults: TeamResultType[] = [];
-    race.Results.forEach((result) => {
+    const results = race.Results ?? race.SprintResults;
+    results.forEach((result) => {
       const teamResultsIndex = teamResults.findIndex(
         (teamResult) => teamResult.constructor === result.Constructor.name
       );

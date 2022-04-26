@@ -10,7 +10,8 @@ interface ChartTeamData {
 function getTeamDataSet(races: Race[]) {
   const data: ChartTeamData[] = [];
   races.forEach((race, raceIndex) => {
-    race.Results.forEach((result) => {
+    const results = race.Results ?? race.SprintResults;
+    results.forEach((result) => {
       const teamObject = data.find(
         (team) =>
           team.teamMetadata.constructorId === result.Constructor.constructorId
