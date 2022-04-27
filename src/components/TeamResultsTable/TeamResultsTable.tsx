@@ -10,6 +10,8 @@ import {
   selectWDCPastRaces,
   selectWDCRequestYear,
   selectWDCRaceStatus,
+  selectWDCSprintStatus,
+  fetchSprintResults,
 } from "../IndividualResultsTable/wdcSlice";
 import Spinner from "../Spinner";
 import TeamChart from "../TeamChart";
@@ -19,24 +21,38 @@ function PastTeamResultsTable() {
   const dispatch = useAppDispatch();
 
   const pastRaces = useSelector(selectWDCPastRaces);
-  const resultsStatus = useSelector(selectWDCRaceStatus);
-  const resultsError = useSelector((state: StoreType) => state.wdc.error);
+  const resultsRaceStatus = useSelector(selectWDCRaceStatus);
+  const resultsSprintStatus = useSelector(selectWDCSprintStatus);
+  const requestYear = useSelector(selectWDCRequestYear);
+  const errorData = useSelector((state: StoreType) => state.wdc.error);
   const config = useSelector(selectConfigVersion);
+
+  const resultsSuccess =
+    resultsRaceStatus === RequestState.Succeeded &&
+    resultsSprintStatus === RequestState.Succeeded;
+  const resultsLoading =
+    resultsRaceStatus === RequestState.Loading ||
+    resultsSprintStatus === RequestState.Loading;
+  const resultsError =
+    resultsRaceStatus === RequestState.Failed ||
+    resultsSprintStatus === RequestState.Failed;
+
   let year = 2021;
   if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
     year = 2022;
   }
-  const requestYear = useSelector(selectWDCRequestYear);
 
   useEffect(() => {
-    if (resultsStatus === RequestState.Idle || requestYear !== year) {
+    if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
       dispatch(fetchRaceResults({ year }));
+      dispatch(fetchSprintResults({ year }));
     }
-  }, [resultsStatus, config]);
+  }, [resultsRaceStatus, config]);
 
   const getTeamResults = (race: Race) => {
     const teamResults: TeamResultType[] = [];
-    race.Results.forEach((result) => {
+    const results = race.Results ?? race.SprintResults;
+    results.forEach((result) => {
       const teamResultsIndex = teamResults.findIndex(
         (teamResult) => teamResult.constructor === result.Constructor.name
       );
@@ -70,7 +86,7 @@ function PastTeamResultsTable() {
     return allTeamResults;
   };
 
-  if (resultsStatus === RequestState.Succeeded) {
+  if (resultsSuccess) {
     return (
       <div className="IndividualResultsTable">
         <table className="IndividualResultsTable__table">
@@ -120,10 +136,10 @@ function PastTeamResultsTable() {
       </div>
     );
   }
-  if (resultsStatus === RequestState.Failed) {
-    return <div>{resultsError}</div>;
+  if (resultsError) {
+    return <div>{errorData}</div>;
   }
-  if (resultsStatus === RequestState.Loading) {
+  if (resultsLoading) {
     return (
       <div className="IndividualResultsTable__loader">
         <Spinner />

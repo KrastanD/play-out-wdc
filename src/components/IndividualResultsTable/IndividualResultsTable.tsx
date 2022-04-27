@@ -23,6 +23,10 @@ function IndividualResultsTable() {
   const pastRaces = useSelector(selectWDCPastRaces);
   const resultsRaceStatus = useSelector(selectWDCRaceStatus);
   const resultsSprintStatus = useSelector(selectWDCSprintStatus);
+  const requestYear = useSelector(selectWDCRequestYear);
+  const errorData = useSelector((state: StoreType) => state.wdc.error);
+  const config = useSelector(selectConfigVersion);
+
   const resultsSuccess =
     resultsRaceStatus === RequestState.Succeeded &&
     resultsSprintStatus === RequestState.Succeeded;
@@ -33,13 +37,10 @@ function IndividualResultsTable() {
     resultsRaceStatus === RequestState.Failed ||
     resultsSprintStatus === RequestState.Failed;
 
-  const errorData = useSelector((state: StoreType) => state.wdc.error);
-  const config = useSelector(selectConfigVersion);
   let year = 2021;
   if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
     year = 2022;
   }
-  const requestYear = useSelector(selectWDCRequestYear);
 
   useEffect(() => {
     if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
