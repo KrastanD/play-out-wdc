@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { AppVersion, selectConfigVersion } from "../../config/configSlice";
-import { StoreType, useAppDispatch } from "../../store";
+import { AppVersion, selectConfigVersion } from "../../slices/configSlice";
+import { useAppDispatch } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
 import {
   fetchRaceResults,
-  RequestState,
-  selectWDCPastRaces,
-  selectWDCRequestYear,
-  selectWDCRaceStatus,
-  selectWDCSprintStatus,
   fetchSprintResults,
-} from "../IndividualResultsTable/wdcSlice";
+  RequestState,
+  selectPastRaces,
+  selectRaceStatus,
+  selectRequestError,
+  selectRequestYear,
+  selectSprintStatus,
+} from "../../slices/resultsSlice";
 import Spinner from "../Spinner";
 import TeamChart from "../TeamChart";
 import TeamResult from "../TeamResult";
@@ -20,11 +21,11 @@ import TeamResult from "../TeamResult";
 function PastTeamResultsTable() {
   const dispatch = useAppDispatch();
 
-  const pastRaces = useSelector(selectWDCPastRaces);
-  const resultsRaceStatus = useSelector(selectWDCRaceStatus);
-  const resultsSprintStatus = useSelector(selectWDCSprintStatus);
-  const requestYear = useSelector(selectWDCRequestYear);
-  const errorData = useSelector((state: StoreType) => state.wdc.error);
+  const pastRaces = useSelector(selectPastRaces);
+  const resultsRaceStatus = useSelector(selectRaceStatus);
+  const resultsSprintStatus = useSelector(selectSprintStatus);
+  const requestYear = useSelector(selectRequestYear);
+  const errorData = useSelector(selectRequestError);
   const config = useSelector(selectConfigVersion);
 
   const resultsSuccess =

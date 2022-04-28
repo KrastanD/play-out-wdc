@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { AppVersion, selectConfigVersion } from "../../config/configSlice";
+import { AppVersion, selectConfigVersion } from "../../slices/configSlice";
 
 function Instructions() {
   const version = useSelector(selectConfigVersion);
