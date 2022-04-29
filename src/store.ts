@@ -1,23 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import configReducer, { AppVersion } from "./config/configSlice";
-import { Teams } from "./utils/constants";
-import wdcReducer, {
-  WDCState,
-} from "./components/IndividualResultsTable/wdcSlice";
+import resultsReducer, { ResultsSlice } from "./slices/resultsSlice";
+import configReducer, { AppVersion } from "./slices/configSlice";
 
 const store = configureStore({
   reducer: {
     config: configReducer,
-    wdc: wdcReducer,
+    results: resultsReducer,
   },
   devTools: true,
 });
 
 export interface StoreType {
   config: { version: AppVersion };
-  wdc: WDCState;
-  wcc: Teams[][];
+  results: ResultsSlice;
 }
 
 export type AppDispatch = typeof store.dispatch;

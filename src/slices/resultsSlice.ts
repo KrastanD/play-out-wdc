@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StoreType } from "../../store";
-import { Race, ResultsResponse } from "../../types";
+import { StoreType } from "../store";
+import { Race, ResultsResponse } from "../types";
 
 export enum RequestState {
   Idle = "idle",
@@ -9,7 +9,7 @@ export enum RequestState {
   Failed = "failed",
 }
 
-export interface WDCState {
+export interface ResultsSlice {
   pastRaces: Race[];
   raceStatus: RequestState;
   sprintStatus: RequestState;
@@ -32,7 +32,7 @@ type Action = PayloadAction<
   never
 >;
 
-const initialState: WDCState = {
+const initialState: ResultsSlice = {
   pastRaces: [],
   raceStatus: RequestState.Idle,
   sprintStatus: RequestState.Idle,
@@ -58,7 +58,7 @@ function sortRaces(a: Race, b: Race) {
   return 0;
 }
 
-function onFetchSuccess(action: Action, state: WDCState, isSprint = false) {
+function onFetchSuccess(action: Action, state: ResultsSlice, isSprint = false) {
   const sprints: Race[] = action.payload.MRData.RaceTable.Races;
   const responseYear = Number(action.payload.MRData.RaceTable.season);
 
@@ -84,7 +84,7 @@ function onFetchSuccess(action: Action, state: WDCState, isSprint = false) {
 }
 
 export const fetchRaceResults = createAsyncThunk(
-  "wdc/fetchResults",
+  "results/fetchResults",
   async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const response = await fetch(
@@ -96,7 +96,7 @@ export const fetchRaceResults = createAsyncThunk(
 );
 
 export const fetchSprintResults = createAsyncThunk(
-  "wdc/fetchSprintResults",
+  "results/fetchSprintResults",
   async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const sprintResponse = await fetch(
@@ -108,8 +108,8 @@ export const fetchSprintResults = createAsyncThunk(
 );
 
 // TODO: Rename file and slice
-const wdcSlice = createSlice({
-  name: "wdc",
+const resultsSlice = createSlice({
+  name: "results",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -138,11 +138,13 @@ const wdcSlice = createSlice({
   },
 });
 
-export default wdcSlice.reducer;
+export default resultsSlice.reducer;
 
-export const selectWDCPastRaces = (state: StoreType) => state.wdc.pastRaces;
+export const selectPastRaces = (state: StoreType) => state.results.pastRaces;
 
-export const selectWDCRaceStatus = (state: StoreType) => state.wdc.raceStatus;
-export const selectWDCSprintStatus = (state: StoreType) =>
-  state.wdc.sprintStatus;
-export const selectWDCRequestYear = (state: StoreType) => state.wdc.requestYear;
+export const selectRaceStatus = (state: StoreType) => state.results.raceStatus;
+export const selectSprintStatus = (state: StoreType) =>
+  state.results.sprintStatus;
+export const selectRequestYear = (state: StoreType) =>
+  state.results.requestYear;
+export const selectRequestError = (state: StoreType) => state.results.error;

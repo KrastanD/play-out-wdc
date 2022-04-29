@@ -1,30 +1,31 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { AppVersion, selectConfigVersion } from "../../config/configSlice";
-import { StoreType, useAppDispatch } from "../../store";
+import { AppVersion, selectConfigVersion } from "../../slices/configSlice";
+import { useAppDispatch } from "../../store";
 import { positions } from "../../utils/constants";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
-import "./styles.scss";
 import {
   fetchRaceResults,
   fetchSprintResults,
   RequestState,
-  selectWDCPastRaces,
-  selectWDCRaceStatus,
-  selectWDCRequestYear,
-  selectWDCSprintStatus,
-} from "./wdcSlice";
+  selectPastRaces,
+  selectRaceStatus,
+  selectRequestError,
+  selectRequestYear,
+  selectSprintStatus,
+} from "../../slices/resultsSlice";
+import "./styles.scss";
 
 function IndividualResultsTable() {
   const dispatch = useAppDispatch();
 
-  const pastRaces = useSelector(selectWDCPastRaces);
-  const resultsRaceStatus = useSelector(selectWDCRaceStatus);
-  const resultsSprintStatus = useSelector(selectWDCSprintStatus);
-  const requestYear = useSelector(selectWDCRequestYear);
-  const errorData = useSelector((state: StoreType) => state.wdc.error);
+  const pastRaces = useSelector(selectPastRaces);
+  const resultsRaceStatus = useSelector(selectRaceStatus);
+  const resultsSprintStatus = useSelector(selectSprintStatus);
+  const requestYear = useSelector(selectRequestYear);
+  const errorData = useSelector(selectRequestError);
   const config = useSelector(selectConfigVersion);
 
   const resultsSuccess =

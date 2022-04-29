@@ -1,4 +1,4 @@
-import { AppVersion, changeVersion } from "../../config/configSlice";
+import { AppVersion, changeVersion } from "../../slices/configSlice";
 import { useAppDispatch } from "../../store";
 import "./Navbar.styles.scss";
 
