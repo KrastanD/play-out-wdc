@@ -10,8 +10,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<IndividualResultsTable />} />
-        <Route path="/constructors" element={<PastTeamResultsTable />} />
-        <Route path="/2021" element={<IndividualResultsTable />} />
+        <Route path="/drivers/2022" element={<IndividualResultsTable />} />
+        <Route path="/constructors/2022" element={<PastTeamResultsTable />} />
+        <Route path="/drivers/2021" element={<IndividualResultsTable />} />
         <Route path="/constructors/2021" element={<PastTeamResultsTable />} />
       </Routes>
     </div>

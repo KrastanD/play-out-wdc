@@ -10,7 +10,11 @@ function Navbar() {
 
   return (
     <nav className="Navbar">
-      <p className="Navbar__title">{titleText}</p>
+      <button className="Navbar__button" type="button">
+        <Link className="Navbar__title" to="/">
+          {titleText}
+        </Link>
+      </button>
       <ul className="Navbar__list">
         <li className="Navbar__option">
           <button
@@ -19,7 +23,7 @@ function Navbar() {
             onClick={() => dispatch(changeVersion(AppVersion.WDC2022))}
             onKeyPress={() => dispatch(changeVersion(AppVersion.WDC2022))}
           >
-            <Link className="Navbar__itemText" to="/">
+            <Link className="Navbar__itemText" to="/drivers/2022">
               2022 WDC Results
             </Link>
           </button>
@@ -31,7 +35,7 @@ function Navbar() {
             onClick={() => dispatch(changeVersion(AppVersion.WCC2022))}
             onKeyPress={() => dispatch(changeVersion(AppVersion.WCC2022))}
           >
-            <Link className="Navbar__itemText" to="/constructors">
+            <Link className="Navbar__itemText" to="/constructors/2022">
               2022 WCC Results
             </Link>
           </button>
@@ -43,7 +47,7 @@ function Navbar() {
             onClick={() => dispatch(changeVersion(AppVersion.WDC2021))}
             onKeyPress={() => dispatch(changeVersion(AppVersion.WDC2021))}
           >
-            <Link className="Navbar__itemText" to="/2021">
+            <Link className="Navbar__itemText" to="/drivers/2021">
               2021 WDC Results
             </Link>
           </button>
