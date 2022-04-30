@@ -1,24 +1,20 @@
-import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-import Navbar from "./components/Navbar";
 import IndividualResultsTable from "./components/IndividualResultsTable";
+import Navbar from "./components/Navbar";
 import PastTeamResultsTable from "./components/TeamResultsTable";
-import { AppVersion, selectConfigVersion } from "./slices/configSlice";
-
-function Table({ version }: { version: AppVersion }) {
-  if (version === AppVersion.WDC2021 || version === AppVersion.WDC2022) {
-    return <IndividualResultsTable />;
-  }
-  return <PastTeamResultsTable />;
-}
 
 function App() {
-  const version = useSelector(selectConfigVersion);
-
   return (
     <div>
       <Navbar />
-      <Table version={version} />
+      <Routes>
+        <Route path="/" element={<IndividualResultsTable />} />
+        <Route path="/drivers/2022" element={<IndividualResultsTable />} />
+        <Route path="/constructors/2022" element={<PastTeamResultsTable />} />
+        <Route path="/drivers/2021" element={<IndividualResultsTable />} />
+        <Route path="/constructors/2021" element={<PastTeamResultsTable />} />
+      </Routes>
     </div>
   );
 }
