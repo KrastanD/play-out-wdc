@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import IndividualResultsTable from "./components/IndividualResultsTable";
