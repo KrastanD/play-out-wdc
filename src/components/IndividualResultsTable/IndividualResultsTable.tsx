@@ -1,11 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { AppVersion, selectConfigVersion } from "../../slices/configSlice";
-import { useAppDispatch } from "../../store";
-import { positions } from "../../utils/constants";
-import IndividualChart from "../IndividualChart";
-import IndividualResult from "../IndividualResult";
-import Spinner from "../Spinner";
+import { useParams } from "react-router-dom";
 import {
   fetchRaceResults,
   fetchSprintResults,
@@ -16,17 +11,23 @@ import {
   selectRequestYear,
   selectSprintStatus,
 } from "../../slices/resultsSlice";
+import { useAppDispatch } from "../../store";
+import { positions } from "../../utils/constants";
+import IndividualChart from "../IndividualChart";
+import IndividualResult from "../IndividualResult";
+import Spinner from "../Spinner";
 import "./styles.scss";
 
 function IndividualResultsTable() {
   const dispatch = useAppDispatch();
-
+  const params = useParams();
   const pastRaces = useSelector(selectPastRaces);
   const resultsRaceStatus = useSelector(selectRaceStatus);
   const resultsSprintStatus = useSelector(selectSprintStatus);
   const requestYear = useSelector(selectRequestYear);
   const errorData = useSelector(selectRequestError);
-  const config = useSelector(selectConfigVersion);
+
+  const year = Number(params.year ?? new Date().getFullYear());
 
   const resultsSuccess =
     resultsRaceStatus === RequestState.Succeeded &&
@@ -38,17 +39,12 @@ function IndividualResultsTable() {
     resultsRaceStatus === RequestState.Failed ||
     resultsSprintStatus === RequestState.Failed;
 
-  let year = 2021;
-  if (config === AppVersion.WDC2022 || config === AppVersion.WCC2022) {
-    year = 2022;
-  }
-
   useEffect(() => {
     if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
       dispatch(fetchRaceResults({ year }));
       dispatch(fetchSprintResults({ year }));
     }
-  }, [resultsRaceStatus, config]);
+  }, [resultsRaceStatus, year]);
 
   if (resultsSuccess) {
     return (
