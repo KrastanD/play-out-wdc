@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
+import { ChangeEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.styles.scss";
 
 function Navbar() {
+  const navigation = useNavigate();
   const titleText = "Play Out";
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    const year = e.target.value;
+    navigation(`/drivers/${year}`);
+  };
 
   return (
     <nav className="Navbar">
@@ -11,7 +19,24 @@ function Navbar() {
           {titleText}
         </Link>
       </button>
-      <ul className="Navbar__list">
+      {/*
+      TODO: responsive styling
+      */}
+      <div className="Navbar__list">
+        <select
+          value="Drivers"
+          className="Navbar__button Navbar__option Navbar__title"
+          onChange={handleChange}
+        >
+          <option selected hidden>
+            Drivers
+          </option>
+          <option>2022 </option>
+          <option>2021 </option>
+        </select>
+      </div>
+
+      {/* <ul className="Navbar__list">
         <li className="Navbar__option">
           <Link className="Navbar__itemText" to="/drivers/2022">
             2022 WDC Results
@@ -32,7 +57,7 @@ function Navbar() {
             2021 WCC Results
           </Link>
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 }
