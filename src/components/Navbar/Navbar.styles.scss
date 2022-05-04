@@ -54,6 +54,49 @@
   text-decoration: none;
 }
 
+//Navbar2
+.Navbar__menuItem {
+  @extend .Navbar__itemText;
+  margin-left: 20px;
+  &:hover{
+    .Navbar__dropdown {
+      display: block;
+    }
+  }
+}
+
+.Navbar__menuContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.Navbar__dropdown {
+  position: absolute;
+  display: none;
+  margin-left: -5px;
+  background-color: rgba(black, .7);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 100;
+}
+
+.Navbar__dropdownItem {
+  @extend .Navbar__button;
+  @extend .Navbar__itemText;
+  padding: 5px;
+  &:hover {
+    background-color: $f1-red;
+    border-radius: 5px;
+  }
+}
+
+.Navbar__list2{
+  @extend .Navbar__list;
+  flex-direction: column;
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .Navbar__title {
     font-size: 1.4rem;
