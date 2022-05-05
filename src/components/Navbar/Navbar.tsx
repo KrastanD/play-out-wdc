@@ -1,16 +1,9 @@
-import { ChangeEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Dropdown from "../Dropdown";
 import "./Navbar.styles.scss";
 
 function Navbar() {
-  const navigation = useNavigate();
   const titleText = "Play Out";
-
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    const year = e.target.value;
-    navigation(`/drivers/${year}`);
-  };
 
   return (
     <nav className="Navbar">
@@ -19,45 +12,22 @@ function Navbar() {
           {titleText}
         </Link>
       </button>
-      {/*
-      TODO: responsive styling
-      */}
-      <div className="Navbar__list">
-        <select
-          value="Drivers"
-          className="Navbar__button Navbar__option Navbar__title"
-          onChange={handleChange}
-        >
-          <option selected hidden>
-            Drivers
-          </option>
-          <option>2022 </option>
-          <option>2021 </option>
-        </select>
+      <div className="Navbar__container">
+        <Dropdown
+          title="Drivers"
+          items={[
+            { text: "2022", linkto: "/drivers/2022" },
+            { text: "2021", linkto: "/drivers/2021" },
+          ]}
+        />
+        <Dropdown
+          title="Constructors"
+          items={[
+            { text: "2022", linkto: "/constructors/2022" },
+            { text: "2021", linkto: "/constructors/2021" },
+          ]}
+        />
       </div>
-
-      {/* <ul className="Navbar__list">
-        <li className="Navbar__option">
-          <Link className="Navbar__itemText" to="/drivers/2022">
-            2022 WDC Results
-          </Link>
-        </li>
-        <li className="Navbar__option">
-          <Link className="Navbar__itemText" to="/constructors/2022">
-            2022 WCC Results
-          </Link>
-        </li>
-        <li className="Navbar__option">
-          <Link className="Navbar__itemText" to="/drivers/2021">
-            2021 WDC Results
-          </Link>
-        </li>
-        <li className="Navbar__option">
-          <Link className="Navbar__itemText" to="/constructors/2021">
-            2021 WCC Results
-          </Link>
-        </li>
-      </ul> */}
     </nav>
   );
 }
