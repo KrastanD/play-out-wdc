@@ -35,75 +35,18 @@
   text-decoration: none;
 }
 
-.Navbar__list {
-  list-style-type: none;
-  display: flex;
-  padding-left: 0;
-}
-
-.Navbar__option {
-  cursor: pointer;
-  margin-left: 1.5vw;
-  margin-right: 1.5vw;
-}
-
-.Navbar__itemText {
-  font-size: 1.4rem;
-  color: white;
-  font-family: "TitilliumWeb-Regular";
-  text-decoration: none;
-}
-
-//Navbar2
-.Navbar__menuItem {
-  @extend .Navbar__itemText;
-  margin-left: 20px;
-  &:hover{
-    .Navbar__dropdown {
-      display: block;
-    }
-  }
-}
-
-.Navbar__menuContainer {
+.Navbar__container {
   display: flex;
   flex-direction: row;
   padding: 20px;
-}
-
-.Navbar__dropdown {
-  position: absolute;
-  display: none;
-  margin-left: -5px;
-  background-color: rgba(black, .7);
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 100;
-}
-
-.Navbar__dropdownItem {
-  @extend .Navbar__button;
-  @extend .Navbar__itemText;
-  padding: 5px;
-  &:hover {
-    background-color: $f1-red;
-    border-radius: 5px;
+  & > :first-child {
+    margin-right: 15px;
   }
-}
-
-.Navbar__list2{
-  @extend .Navbar__list;
-  flex-direction: column;
-  margin: 0;
 }
 
 @media (max-width: 768px) {
   .Navbar__title {
     font-size: 1.4rem;
-  }
-
-  .Navbar__itemText {
-    font-size: 1.2rem;
   }
 }
 
@@ -111,28 +54,16 @@
   .Navbar__title {
     font-size: 1.25rem;
   }
-
-  .Navbar__itemText {
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 480px) {
   .Navbar__title {
     font-size: 1rem;
   }
-
-  .Navbar__itemText {
-    font-size: 0.9rem;
-  }
 }
 
 @media (max-width: 360px) {
   .Navbar__title {
     font-size: 0.9rem;
-  }
-
-  .Navbar__itemText {
-    font-size: 0.8rem;
   }
 }

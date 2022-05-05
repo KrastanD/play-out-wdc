@@ -1,0 +1,82 @@
+@import "../../scss/custom";
+
+.Dropdown__button {
+  display: inline-block;
+  border: none;
+  padding: 0.5rem 0rem;
+  margin: 0;
+  text-decoration: none;
+  background: transparent;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.Dropdown__text {
+  font-size: 1.4rem;
+  color: white;
+  font-family: "TitilliumWeb-Regular";
+  text-decoration: none;
+}
+
+.Dropdown {
+  @extend .Dropdown__text;
+  &:hover{
+    .Dropdown__list {
+      display: flex;
+    }
+  }
+}
+
+.Dropdown__item {
+  @extend .Dropdown__button;
+  @extend .Dropdown__text;
+  padding: 5px;
+  &:hover {
+    background-color: $f1-red;
+    border-radius: 5px;
+  }
+}
+
+.Dropdown__list{
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  margin-left: -5px;
+  padding: 10px;
+  background-color: rgba(black, .7);
+  border-radius: 5px;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .Dropdown__text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .Dropdown__text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .Dropdown__text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .Dropdown__text {
+    font-size: 0.8rem;
+  }
+}
