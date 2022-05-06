@@ -1,11 +1,11 @@
-import { ConstructorName, TeamResultType } from "../../types";
+import { TeamResultType } from "../../types";
+import { darkTextColorTeams } from "../../utils/constants";
 import { getConstructorIdFromName } from "../../utils/helperFunctions";
 import Result from "../Result";
 
 function TeamResult({ result }: { result: TeamResultType }) {
   const teamId = getConstructorIdFromName(result.constructor);
-  const textColor =
-    result.constructor === ConstructorName.HaasF1Team ? "light" : "dark";
+  const textColor = darkTextColorTeams.includes(teamId) ? "light" : "dark";
 
   return (
     <Result
