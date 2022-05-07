@@ -9,6 +9,18 @@ $alpha-tauri-color: #2b4562;
 $mclaren-color: #ff8700;
 $alfa-romeo-color: #900000;
 $williams-color: #005aff;
+$racing-point-color: 	#F596C8;
+$toro-rosso-color: #469BFF;
+$renault-color: #FFF500;
+$sauber-color: #006EFF;
+$manor-color: #ed1b24;
+$lotus-f1-color: #FFB800;
+$marussia-color: #6E0000;
+$caterham-color: #004F30;
+$hrt-color: #FBB900;
+$team-lotus-color: #003C1C;
+$virgin-color: #F4322C;
+$force-india-color: #FF80C7;
 $f1-red: #ff1801;
 
 .Global__red_bull-bg {
@@ -89,4 +101,100 @@ $f1-red: #ff1801;
 
 .Global__williams-bg:disabled {
   background-color: $williams-color;
+}
+
+.Global__racing_point-bg {
+  background-color: $racing-point-color;
+}
+
+.Global__racing_point-bg:disabled {
+  background-color: $racing-point-color;
+}
+
+.Global__toro_rosso-bg {
+  background-color: $toro-rosso-color;
+}
+
+.Global__toro_rosso-bg:disabled {
+  background-color: $toro-rosso-color;
+}
+
+.Global__renault-bg {
+  background-color: $renault-color;
+}
+
+.Global__renault-bg:disabled {
+  background-color: $renault-color;
+}
+
+.Global__sauber-bg {
+  background-color: $sauber-color;
+}
+
+.Global__sauber-bg:disabled {
+  background-color: $sauber-color;
+}
+
+.Global__manor-bg {
+  background-color: $manor-color;
+}
+
+.Global__manor-bg:disabled {
+  background-color: $manor-color;
+}
+
+.Global__lotus_f1-bg {
+  background-color: $lotus-f1-color;
+}
+
+.Global__lotus_f1-bg:disabled {
+  background-color: $lotus-f1-color;
+}
+
+.Global__marussia-bg {
+  background-color: $marussia-color;
+}
+
+.Global__marussia-bg:disabled {
+  background-color: $marussia-color;
+}
+
+.Global__caterham-bg {
+  background-color: $caterham-color;
+}
+
+.Global__caterham-bg:disabled {
+  background-color: $caterham-color;
+}
+
+.Global__hrt-bg {
+  background-color: $hrt-color;
+}
+
+.Global__hrt-bg:disabled {
+  background-color: $hrt-color;
+}
+
+.Global__lotus_racing-bg {
+  background-color: $team-lotus-color;
+}
+
+.Global__lotus_racing-bg:disabled {
+  background-color: $team-lotus-color;
+}
+
+.Global__virgin-bg {
+  background-color: $virgin-color;
+}
+
+.Global__virgin-bg:disabled {
+  background-color: $virgin-color;
+}
+
+.Global__force_india-bg {
+  background-color: $force-india-color;
+}
+
+.Global__force_india-bg:disabled {
+  background-color: $force-india-color;
 }

@@ -37,6 +37,18 @@ export enum ConstructorName {
   Mercedes = "Mercedes",
   RedBull = "Red Bull",
   Williams = "Williams",
+  RacingPoint = "Racing Point",
+  Renault = "Renault",
+  ToroRosso = "Toro Rosso",
+  ForceIndia = "Force India",
+  Sauber = "Sauber",
+  Manor = "Manor",
+  LotusF1 = "Lotus F1",
+  Caterham = "Caterham",
+  Marussia = "Marussia",
+  Hrt = "HRT",
+  LotusRacing = "Team Lotus",
+  Virgin = "Virgin",
 }
 
 export enum ConstructorNationality {
@@ -60,6 +72,18 @@ export enum ConstructorID {
   Mercedes = "mercedes",
   RedBull = "red_bull",
   Williams = "williams",
+  RacingPoint = "racing_point",
+  Renault = "renault",
+  ToroRosso = "toro_rosso",
+  ForceIndia = "force_india",
+  Sauber = "sauber",
+  Manor = "manor",
+  LotusF1 = "lotus_f1",
+  Caterham = "caterham",
+  Marussia = "marussia",
+  Hrt = "hrt",
+  LotusRacing = "lotus_racing",
+  Virgin = "virgin",
 }
 
 export interface Constructor {

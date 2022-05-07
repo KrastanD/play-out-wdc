@@ -1,4 +1,5 @@
-import { ConstructorID, Race } from "../../types";
+import { Race } from "../../types";
+import { darkTextColorTeams } from "../../utils/constants";
 import Result from "../Result";
 
 type IndividualResultProps = {
@@ -9,7 +10,7 @@ type IndividualResultProps = {
 function IndividualResult({ position, race }: IndividualResultProps) {
   const results = race.Results ?? race.SprintResults;
   const teamId = results[position]?.Constructor?.constructorId;
-  const textColor = teamId === ConstructorID.Haas ? "light" : "dark";
+  const textColor = darkTextColorTeams.includes(teamId) ? "light" : "dark";
   const hasFastestLap =
     results[position]?.FastestLap?.rank === "1" && position < 10;
   const pointsString = hasFastestLap
