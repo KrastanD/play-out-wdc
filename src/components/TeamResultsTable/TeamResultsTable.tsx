@@ -85,7 +85,7 @@ function PastTeamResultsTable() {
 
   if (resultsSuccess) {
     const allResults = getAllTeamResults();
-    const maxTeams = allResults.reduce((acc, curr, array) => {
+    const maxTeams = allResults.reduce((acc, curr) => {
       if (curr.length > acc) {
         return curr.length;
       }
