@@ -88,7 +88,7 @@ export const fetchRaceResults = createAsyncThunk(
   async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const response = await fetch(
-      `https://ergast.com/api/f1/${year}/results.json?limit=450`
+      `https://ergast.com/api/f1/${year}/results.json?limit=500`
     );
     const raceJson: Promise<ResultsResponse> = response.json();
     return raceJson;
@@ -100,7 +100,7 @@ export const fetchSprintResults = createAsyncThunk(
   async ({ year }: FetchResultsProps) => {
     // TODO: pull string into constants
     const sprintResponse = await fetch(
-      `https://ergast.com/api/f1/${year}/sprint.json?limit=450`
+      `https://ergast.com/api/f1/${year}/sprint.json?limit=500`
     );
     const sprintJson: Promise<ResultsResponse> = sprintResponse.json();
     return sprintJson;

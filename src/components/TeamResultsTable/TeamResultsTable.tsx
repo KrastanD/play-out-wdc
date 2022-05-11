@@ -84,6 +84,13 @@ function PastTeamResultsTable() {
   };
 
   if (resultsSuccess) {
+    const allResults = getAllTeamResults();
+    const maxTeams = allResults.reduce((acc, curr) => {
+      if (curr.length > acc) {
+        return curr.length;
+      }
+      return acc;
+    }, allResults[0].length);
     return (
       <div className="IndividualResultsTable">
         <table className="IndividualResultsTable__table">
@@ -110,21 +117,26 @@ function PastTeamResultsTable() {
             </tr>
           </thead>
           <tbody>
-            {Array.from(Array(10).keys()).map((value, index) => (
+            {Array.from(Array(maxTeams).keys()).map((value, index) => (
               <tr className="IndividualResultsTable__row" key={value}>
                 <td className="IndividualResultsTable__data">{index + 1}</td>
-                {arrayColumn(getAllTeamResults(), index).map((teamResult) => (
-                  <td
-                    className="IndividualResultsTable__data"
-                    key={
-                      teamResult.race +
-                      teamResult.constructor +
-                      teamResult.points
-                    }
-                  >
-                    <TeamResult result={teamResult} />
-                  </td>
-                ))}
+                {arrayColumn(allResults, index).map((teamResult) => {
+                  if (teamResult === undefined) {
+                    return <TeamResult />;
+                  }
+                  return (
+                    <td
+                      className="IndividualResultsTable__data"
+                      key={
+                        teamResult.race +
+                        teamResult.constructor +
+                        teamResult.points
+                      }
+                    >
+                      <TeamResult result={teamResult} />
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
