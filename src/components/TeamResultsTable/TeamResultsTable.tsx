@@ -122,7 +122,11 @@ function PastTeamResultsTable() {
                 <td className="IndividualResultsTable__data">{index + 1}</td>
                 {arrayColumn(allResults, index).map((teamResult) => {
                   if (teamResult === undefined) {
-                    return <TeamResult />;
+                    return (
+                      <td>
+                        <TeamResult />
+                      </td>
+                    );
                   }
                   return (
                     <td
