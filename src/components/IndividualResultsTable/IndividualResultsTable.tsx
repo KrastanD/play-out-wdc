@@ -47,7 +47,7 @@ function IndividualResultsTable() {
 
   if (resultsSuccess) {
     const maxDrivers = pastRaces.reduce((acc, curr) => {
-      if (curr.Results.length > acc) {
+      if (curr.Results?.length > acc) {
         return curr.Results.length;
       }
       return acc;
