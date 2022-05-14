@@ -8,14 +8,18 @@ type IndividualResultProps = {
 };
 
 function IndividualResult({ position, race }: IndividualResultProps) {
+  const FIRST_FL_YEAR = 2019;
+  const addFL = new Date(race.date).getFullYear() >= FIRST_FL_YEAR;
+
   const results = race.Results ?? race.SprintResults;
   const teamId = results[position]?.Constructor?.constructorId;
   const textColor = darkTextColorTeams.includes(teamId) ? "light" : "dark";
   const hasFastestLap =
     results[position]?.FastestLap?.rank === "1" && position < 10;
-  const pointsString = hasFastestLap
-    ? `${Number(results[position]?.points) - 1}`
-    : results[position]?.points;
+  const pointsString =
+    hasFastestLap && addFL
+      ? `${Number(results[position]?.points) - 1}`
+      : results[position]?.points;
   const name = results[position]?.Driver.code;
 
   return (
@@ -24,7 +28,7 @@ function IndividualResult({ position, race }: IndividualResultProps) {
       teamId={teamId}
       textColor={textColor}
       points={pointsString}
-      hasFastestLap={hasFastestLap}
+      hasFastestLap={addFL && hasFastestLap}
       size="small"
     />
   );
