@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Dropdown.styles.scss";
 
-interface DropdownOption {
+export interface DropdownOption {
   text: string;
   linkto: string;
 }

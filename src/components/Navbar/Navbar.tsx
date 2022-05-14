@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
-import Dropdown from "../Dropdown";
+import Dropdown, { DropdownOption } from "../Dropdown";
 import "./Navbar.styles.scss";
+
+function getDropdownOptions(path: string) {
+  const START_YEAR = 2010;
+  const currYear = new Date().getFullYear();
+  const yearArray: DropdownOption[] = [];
+  for (let year = currYear; year >= START_YEAR; year -= 1) {
+    yearArray.push({ text: year.toString(), linkto: `${path}/${year}` });
+  }
+  return yearArray;
+}
 
 function Navbar() {
   const titleText = "Play Out";
@@ -13,19 +23,10 @@ function Navbar() {
         </Link>
       </button>
       <div className="Navbar__container">
-        <Dropdown
-          title="Drivers"
-          items={[
-            { text: "2022", linkto: "/drivers/2022" },
-            { text: "2021", linkto: "/drivers/2021" },
-          ]}
-        />
+        <Dropdown title="Drivers" items={getDropdownOptions("/drivers")} />
         <Dropdown
           title="Constructors"
-          items={[
-            { text: "2022", linkto: "/constructors/2022" },
-            { text: "2021", linkto: "/constructors/2021" },
-          ]}
+          items={getDropdownOptions("/constructors")}
         />
       </div>
     </nav>

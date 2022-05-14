@@ -25,7 +25,6 @@ export const positions = [
 
 export const darkTextColorTeams = [
   ConstructorID.Haas,
-  ConstructorID.RacingPoint,
   ConstructorID.Renault,
   ConstructorID.LotusF1,
   ConstructorID.Hrt,

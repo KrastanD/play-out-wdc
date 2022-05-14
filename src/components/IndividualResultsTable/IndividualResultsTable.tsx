@@ -12,7 +12,6 @@ import {
   selectSprintStatus,
 } from "../../slices/resultsSlice";
 import { useAppDispatch } from "../../store";
-import { positions } from "../../utils/constants";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
@@ -47,6 +46,13 @@ function IndividualResultsTable() {
   }, [resultsRaceStatus, year]);
 
   if (resultsSuccess) {
+    const maxDrivers = pastRaces.reduce((acc, curr) => {
+      if (curr.Results?.length > acc) {
+        return curr.Results.length;
+      }
+      return acc;
+    }, pastRaces[0].Results.length);
+
     return (
       <div className="IndividualResultsTable">
         <table className="IndividualResultsTable__table">
@@ -73,21 +79,23 @@ function IndividualResultsTable() {
             </tr>
           </thead>
           <tbody>
-            {positions.map((positionValue, position) => (
-              <tr className="IndividualResultsTable__row" key={positionValue}>
-                <td className="IndividualResultsTable__data">
-                  {positionValue}
-                </td>
-                {pastRaces.map((race) => (
-                  <td
-                    className="IndividualResultsTable__data"
-                    key={String(race.raceName)}
-                  >
-                    <IndividualResult position={position} race={race} />
+            {Array.from(Array(maxDrivers).keys()).map(
+              (positionValue, position) => (
+                <tr className="IndividualResultsTable__row" key={positionValue}>
+                  <td className="IndividualResultsTable__data">
+                    {positionValue + 1}
                   </td>
-                ))}
-              </tr>
-            ))}
+                  {pastRaces.map((race) => (
+                    <td
+                      className="IndividualResultsTable__data"
+                      key={String(race.raceName)}
+                    >
+                      <IndividualResult position={position} race={race} />
+                    </td>
+                  ))}
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <IndividualChart races={pastRaces} />
