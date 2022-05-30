@@ -12,9 +12,14 @@ import {
   selectSprintStatus,
 } from "../../slices/resultsSlice";
 import { useAppDispatch } from "../../store";
+import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
+import Table from "../Table";
+import TableData from "../TableData";
+import TableHeaderCell from "../TableHeaderCell";
+import TableRow from "../TableRow";
 import Title from "../Title";
 import "./styles.scss";
 
@@ -55,53 +60,44 @@ function IndividualResultsTable() {
     }, pastRaces[0].Results.length);
 
     return (
-      <div className="IndividualResultsTable">
+      <>
         <Title />
-        <table className="IndividualResultsTable__table">
-          <colgroup>
-            <col width="80" />
-            {pastRaces.map((race) => (
-              <col key={race.raceName} width="120" />
-            ))}
-          </colgroup>
-          <thead>
-            <tr>
-              <th className="IndividualResultsTable__header" scope="col">
-                Position
-              </th>
+        <HorizontalScroll>
+          <Table>
+            <colgroup>
+              <col width="80" />
               {pastRaces.map((race) => (
-                <th
-                  className="IndividualResultsTable__header"
-                  scope="col"
-                  key={race.raceName}
-                >
-                  {race.raceName}
-                </th>
+                <col key={race.raceName} width="120" />
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from(Array(maxDrivers).keys()).map(
-              (positionValue, position) => (
-                <tr className="IndividualResultsTable__row" key={positionValue}>
-                  <td className="IndividualResultsTable__data">
-                    {positionValue + 1}
-                  </td>
-                  {pastRaces.map((race) => (
-                    <td
-                      className="IndividualResultsTable__data"
-                      key={String(race.raceName)}
-                    >
-                      <IndividualResult position={position} race={race} />
-                    </td>
-                  ))}
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
+            </colgroup>
+            <thead>
+              <tr>
+                <TableHeaderCell>Position</TableHeaderCell>
+                {pastRaces.map((race) => (
+                  <TableHeaderCell key={race.raceName}>
+                    {race.raceName}
+                  </TableHeaderCell>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from(Array(maxDrivers).keys()).map(
+                (positionValue, position) => (
+                  <TableRow key={positionValue}>
+                    <TableData>{positionValue + 1}</TableData>
+                    {pastRaces.map((race) => (
+                      <TableData key={String(race.raceName)}>
+                        <IndividualResult position={position} race={race} />
+                      </TableData>
+                    ))}
+                  </TableRow>
+                )
+              )}
+            </tbody>
+          </Table>
+        </HorizontalScroll>
         <IndividualChart races={pastRaces} />
-      </div>
+      </>
     );
   }
   if (resultsError) {

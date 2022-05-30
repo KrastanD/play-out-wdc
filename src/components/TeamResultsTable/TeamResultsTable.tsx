@@ -14,7 +14,12 @@ import {
 import { useAppDispatch } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
+import HorizontalScroll from "../HorizontalScroll";
 import Spinner from "../Spinner";
+import Table from "../Table";
+import TableData from "../TableData";
+import TableHeaderCell from "../TableHeaderCell";
+import TableRow from "../TableRow";
 import TeamChart from "../TeamChart";
 import TeamResult from "../TeamResult";
 import Title from "../Title";
@@ -58,7 +63,7 @@ function PastTeamResultsTable() {
         teamResults[teamResultsIndex].points += Number(result.points);
       } else {
         teamResults.push({
-          race: race.round,
+          race: race.raceName,
           constructor: result.Constructor.name,
           points: Number(result.points),
         });
@@ -93,62 +98,57 @@ function PastTeamResultsTable() {
       return acc;
     }, allResults[0].length);
     return (
-      <div className="IndividualResultsTable">
+      <>
         <Title />
-        <table className="IndividualResultsTable__table">
-          <colgroup>
-            <col width="80" />
-            {pastRaces.map((race) => (
-              <col key={race.raceName} width="120" />
-            ))}
-          </colgroup>
-          <thead>
-            <tr className="IndividualResultsTable__row">
-              <th className="IndividualResultsTable__header" scope="col">
-                Team Position
-              </th>
+        <HorizontalScroll>
+          <Table>
+            <colgroup>
+              <col width="80" />
               {pastRaces.map((race) => (
-                <th
-                  className="IndividualResultsTable__header"
-                  scope="col"
-                  key={race.raceName}
-                >
-                  {race.raceName}
-                </th>
+                <col key={race.raceName} width="120" />
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from(Array(maxTeams).keys()).map((value, index) => (
-              <tr className="IndividualResultsTable__row" key={value}>
-                <td className="IndividualResultsTable__data">{index + 1}</td>
-                {arrayColumn(allResults, index).map((teamResult) => {
-                  if (teamResult === undefined) {
+            </colgroup>
+            <thead>
+              <TableRow>
+                <TableHeaderCell>Team Position</TableHeaderCell>
+                {pastRaces.map((race) => (
+                  <TableHeaderCell key={race.raceName}>
+                    {race.raceName}
+                  </TableHeaderCell>
+                ))}
+              </TableRow>
+            </thead>
+            <tbody>
+              {Array.from(Array(maxTeams).keys()).map((value, index) => (
+                <TableRow key={value}>
+                  <TableData>{index + 1}</TableData>
+                  {arrayColumn(allResults, index).map((teamResult) => {
+                    if (teamResult === undefined) {
+                      return (
+                        <td>
+                          <TeamResult />
+                        </td>
+                      );
+                    }
                     return (
-                      <td>
-                        <TeamResult />
-                      </td>
+                      <TableData
+                        key={
+                          teamResult.race +
+                          teamResult.constructor +
+                          teamResult.points
+                        }
+                      >
+                        <TeamResult result={teamResult} />
+                      </TableData>
                     );
-                  }
-                  return (
-                    <td
-                      className="IndividualResultsTable__data"
-                      key={
-                        teamResult.race +
-                        teamResult.constructor +
-                        teamResult.points
-                      }
-                    >
-                      <TeamResult result={teamResult} />
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  })}
+                </TableRow>
+              ))}
+            </tbody>
+          </Table>
+        </HorizontalScroll>
         <TeamChart races={pastRaces} />
-      </div>
+      </>
     );
   }
   if (resultsError) {
