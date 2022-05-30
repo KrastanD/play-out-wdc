@@ -15,6 +15,7 @@ import { useAppDispatch } from "../../store";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
 import Spinner from "../Spinner";
+import Title from "../Title";
 import "./styles.scss";
 
 function IndividualResultsTable() {
@@ -55,6 +56,7 @@ function IndividualResultsTable() {
 
     return (
       <div className="IndividualResultsTable">
+        <Title />
         <table className="IndividualResultsTable__table">
           <colgroup>
             <col width="80" />

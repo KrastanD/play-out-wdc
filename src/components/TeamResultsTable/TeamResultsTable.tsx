@@ -17,6 +17,7 @@ import { arrayColumn } from "../../utils/helperFunctions";
 import Spinner from "../Spinner";
 import TeamChart from "../TeamChart";
 import TeamResult from "../TeamResult";
+import Title from "../Title";
 
 function PastTeamResultsTable() {
   const dispatch = useAppDispatch();
@@ -93,6 +94,7 @@ function PastTeamResultsTable() {
     }, allResults[0].length);
     return (
       <div className="IndividualResultsTable">
+        <Title />
         <table className="IndividualResultsTable__table">
           <colgroup>
             <col width="80" />
