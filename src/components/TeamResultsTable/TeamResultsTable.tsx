@@ -14,6 +14,7 @@ import {
 import { useAppDispatch } from "../../store";
 import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
+import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import Spinner from "../Spinner";
 import Table from "../Table";
@@ -148,6 +149,7 @@ function PastTeamResultsTable() {
           </Table>
         </HorizontalScroll>
         <TeamChart races={pastRaces} />
+        <Footer />
       </>
     );
   }

@@ -12,6 +12,7 @@ import {
   selectSprintStatus,
 } from "../../slices/resultsSlice";
 import { useAppDispatch } from "../../store";
+import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
@@ -97,6 +98,7 @@ function IndividualResultsTable() {
           </Table>
         </HorizontalScroll>
         <IndividualChart races={pastRaces} />
+        <Footer />
       </>
     );
   }
