@@ -1,26 +1,6 @@
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { Constructor, Driver, Race } from "../../types";
 import { getTeamColor } from "../../utils/helperFunctions";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import Chart from "../Chart";
 
 interface ChartDriverData {
   driver: Driver;
@@ -81,19 +61,7 @@ function getDriverDataSet(races: Race[]) {
 
 function IndividualChart({ races }: { races: Race[] }) {
   const driverData = getDriverDataSet(races);
-  const options = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: "left" as const,
-      },
-      title: {
-        display: true,
-        text: "Driver's Championship Results",
-      },
-    },
-  };
+
   const labels = races.map((race) => race.raceName);
   const data = {
     labels,
@@ -103,7 +71,7 @@ function IndividualChart({ races }: { races: Race[] }) {
       borderColor: getTeamColor(driver.team.constructorId),
     })),
   };
-  return <Line options={options} data={data} />;
+  return <Chart data={data} title="Drivers' Championship Results" />;
 }
 
 export default IndividualChart;

@@ -1,6 +1,6 @@
-import { Line } from "react-chartjs-2";
 import { Constructor, Race } from "../../types";
 import { getTeamColor } from "../../utils/helperFunctions";
+import Chart from "../Chart";
 
 interface ChartTeamData {
   teamMetadata: Constructor;
@@ -36,19 +36,6 @@ function getTeamDataSet(races: Race[]) {
 
 function TeamChart({ races }: { races: Race[] }) {
   const teamData = getTeamDataSet(races);
-  const options = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: "left" as const,
-      },
-      title: {
-        display: true,
-        text: "Constructor's Championship Results",
-      },
-    },
-  };
   const labels = races.map((race) => race.raceName);
   const data = {
     labels,
@@ -59,7 +46,7 @@ function TeamChart({ races }: { races: Race[] }) {
     })),
   };
 
-  return <Line options={options} data={data} />;
+  return <Chart data={data} title="Constructors' Championship Results" />;
 }
 
 export default TeamChart;
