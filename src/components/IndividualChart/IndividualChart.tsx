@@ -1,4 +1,4 @@
-import { Constructor, Driver, Race } from "../../types";
+import { Constructor, ConstructorID, Driver, Race } from "../../types";
 import { getTeamColor } from "../../utils/helperFunctions";
 import Chart from "../Chart";
 
@@ -12,6 +12,22 @@ interface IResultsMap {
   [key: string]: {
     [key: string]: { driver: Driver; team: Constructor; points: number };
   };
+}
+
+class DashedDrivers {
+  hasTeamShown: { [key in ConstructorID]?: boolean };
+
+  constructor() {
+    this.hasTeamShown = {};
+  }
+
+  shouldDashDriver(team: ConstructorID) {
+    if (this.hasTeamShown[team]) {
+      return true;
+    }
+    this.hasTeamShown[team] = true;
+    return false;
+  }
 }
 
 function getDriverDataSet(races: Race[]) {
@@ -61,14 +77,18 @@ function getDriverDataSet(races: Race[]) {
 
 function IndividualChart({ races }: { races: Race[] }) {
   const driverData = getDriverDataSet(races);
-
   const labels = races.map((race) => race.raceName);
+  const dashedDrivers = new DashedDrivers();
+
   const data = {
     labels,
     datasets: driverData.map((driver) => ({
       label: driver.driver.code,
       data: driver.results,
       borderColor: getTeamColor(driver.team.constructorId),
+      ...(dashedDrivers.shouldDashDriver(driver.team.constructorId) && {
+        borderDash: [10, 5],
+      }),
     })),
   };
   return <Chart data={data} title="Drivers' Championship Results" />;
