@@ -27,11 +27,6 @@
 
 .Dropdown {
   @extend .Dropdown__text;
-  &:hover{
-    .Dropdown__list {
-      display: flex;
-    }
-  }
 }
 
 .Dropdown__item {
@@ -45,7 +40,6 @@
 }
 
 .Dropdown__list{
-  display: none;
   position: absolute;
   flex-direction: column;
   list-style-type: none;
