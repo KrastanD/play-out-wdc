@@ -36,7 +36,7 @@ const initialState: ResultsSlice = {
   pastRaces: [],
   raceStatus: RequestState.Idle,
   sprintStatus: RequestState.Idle,
-  requestYear: 2022,
+  requestYear: 0,
   error: null,
 };
 
@@ -78,8 +78,9 @@ function onFetchSuccess(action: Action, state: ResultsSlice, isSprint = false) {
         state.pastRaces.push(sprint);
       }
     });
-    state.requestYear = responseYear;
   }
+  state.requestYear = responseYear;
+
   state.pastRaces.sort((a, b) => sortRaces(a, b));
 }
 
