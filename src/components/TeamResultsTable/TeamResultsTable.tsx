@@ -16,6 +16,7 @@ import { Race, TeamResultType } from "../../types";
 import { arrayColumn } from "../../utils/helperFunctions";
 import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
+import NoResults from "../NoResults";
 import Spinner from "../Spinner";
 import Table from "../Table";
 import TableData from "../TableData";
@@ -47,11 +48,17 @@ function PastTeamResultsTable() {
     resultsSprintStatus === RequestState.Failed;
 
   useEffect(() => {
-    if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
+    if (
+      (resultsRaceStatus === RequestState.Idle ||
+        resultsRaceStatus === RequestState.Succeeded) &&
+      (resultsSprintStatus === RequestState.Idle ||
+        resultsSprintStatus === RequestState.Succeeded) &&
+      requestYear !== year
+    ) {
       dispatch(fetchRaceResults({ year }));
       dispatch(fetchSprintResults({ year }));
     }
-  }, [resultsRaceStatus, year]);
+  }, [resultsRaceStatus, resultsSprintStatus, year, requestYear]);
 
   const getTeamResults = (race: Race) => {
     const teamResults: TeamResultType[] = [];
@@ -91,6 +98,10 @@ function PastTeamResultsTable() {
   };
 
   if (resultsSuccess) {
+    if (pastRaces.length === 0) {
+      return <NoResults />;
+    }
+
     const allResults = getAllTeamResults();
     const maxTeams = allResults.reduce((acc, curr) => {
       if (curr.length > acc) {
@@ -163,7 +174,7 @@ function PastTeamResultsTable() {
       </div>
     );
   }
-  return null;
+  return <NoResults />;
 }
 
 export default PastTeamResultsTable;

@@ -16,6 +16,7 @@ import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
 import IndividualResult from "../IndividualResult";
+import NoResults from "../NoResults";
 import Spinner from "../Spinner";
 import Table from "../Table";
 import TableData from "../TableData";
@@ -44,15 +45,24 @@ function IndividualResultsTable() {
   const resultsError =
     resultsRaceStatus === RequestState.Failed ||
     resultsSprintStatus === RequestState.Failed;
-
   useEffect(() => {
-    if (resultsRaceStatus === RequestState.Idle || requestYear !== year) {
+    if (
+      (resultsRaceStatus === RequestState.Idle ||
+        resultsRaceStatus === RequestState.Succeeded) &&
+      (resultsSprintStatus === RequestState.Idle ||
+        resultsSprintStatus === RequestState.Succeeded) &&
+      requestYear !== year
+    ) {
       dispatch(fetchRaceResults({ year }));
       dispatch(fetchSprintResults({ year }));
     }
-  }, [resultsRaceStatus, year]);
+  }, [resultsRaceStatus, resultsSprintStatus, year, requestYear]);
 
   if (resultsSuccess) {
+    if (pastRaces.length === 0) {
+      return <NoResults />;
+    }
+
     const maxDrivers = pastRaces.reduce((acc, curr) => {
       if (curr.Results?.length > acc) {
         return curr.Results.length;
@@ -112,7 +122,7 @@ function IndividualResultsTable() {
       </div>
     );
   }
-  return null;
+  return <NoResults />;
 }
 
 export default IndividualResultsTable;
