@@ -91,7 +91,7 @@ function IndividualResultsTable() {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="IndividualResultsTable__row">
               {Array.from(Array(maxDrivers).keys()).map(
                 (positionValue, position) => (
                   <TableRow key={positionValue}>
