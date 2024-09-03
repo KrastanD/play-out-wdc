@@ -126,4 +126,8 @@ export const Constructors: ConstructorsType = {
     name: ConstructorName.Caterham,
     mainColor: "#004F30",
   },
+  [ConstructorID.Rb]: {
+    name: ConstructorName.Rb,
+    mainColor: "#1636C1",
+  },
 };

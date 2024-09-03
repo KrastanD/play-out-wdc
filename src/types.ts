@@ -49,6 +49,7 @@ export enum ConstructorName {
   Hrt = "HRT",
   LotusRacing = "Team Lotus",
   Virgin = "Virgin",
+  Rb = "RB F1 Team",
 }
 
 export enum ConstructorNationality {
@@ -84,6 +85,7 @@ export enum ConstructorID {
   Hrt = "hrt",
   LotusRacing = "lotus_racing",
   Virgin = "virgin",
+  Rb = "rb",
 }
 
 export interface Constructor {

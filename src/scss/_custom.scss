@@ -22,6 +22,7 @@ $team-lotus-color: #003C1C;
 $virgin-color: #F4322C;
 $force-india-color: #FF80C7;
 $f1-red: #ff1801;
+$rb-color: #1636C1;
 
 .Global__red_bull-bg {
   background-color: $redbull-color;
@@ -197,4 +198,12 @@ $f1-red: #ff1801;
 
 .Global__force_india-bg:disabled {
   background-color: $force-india-color;
+}
+
+.Global__rb-bg {
+  background-color: $rb-color;
+}
+
+.Global__rb-bg:disabled {
+  background-color: $rb-color;
 }
