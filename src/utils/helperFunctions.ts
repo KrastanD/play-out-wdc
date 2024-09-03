@@ -17,7 +17,6 @@ export function getConstructorIdFromName(
 }
 
 export function getTeamColor(constructorId: ConstructorID) {
-  console.log(Constructors[constructorId].mainColor);
   return Constructors[constructorId].mainColor;
 }
 
