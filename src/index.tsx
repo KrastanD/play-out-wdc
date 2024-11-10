@@ -6,10 +6,13 @@ import App from "./App";
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import store from "./store";
+import { worker } from "./mocks/browser";
 
 const container = document.getElementById("root");
 
 const root = container && createRoot(container);
+
+await worker.start();
 
 if (root) {
   root.render(
