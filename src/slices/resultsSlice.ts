@@ -87,24 +87,72 @@ function onFetchSuccess(action: Action, state: ResultsSlice, isSprint = false) {
 export const fetchRaceResults = createAsyncThunk(
   "results/fetchResults",
   async ({ year }: FetchResultsProps) => {
-    // TODO: pull string into constants
     const response = await fetch(
-      `https://ergast.com/api/f1/${year}/results.json?limit=500`
+      `https://ergast.com/api/f1/${year}/results.json?limit=100`
     );
-    const raceJson: Promise<ResultsResponse> = response.json();
-    return raceJson;
+    const firstJson: ResultsResponse = await response.json();
+    const races = firstJson.MRData.RaceTable.Races;
+
+    let limit = Number(firstJson.MRData.limit),
+      offset = Number(firstJson.MRData.offset),
+      total = Number(firstJson.MRData.total);
+
+    while (offset + limit < total + limit) {
+      const response = await fetch(
+        `https://ergast.com/api/f1/${year}/results.json?limit=100&offset=${
+          offset + limit
+        }`
+      );
+      const json: ResultsResponse = await response.json();
+      limit = Number(json.MRData.limit);
+      offset = Number(json.MRData.offset);
+      total = Number(json.MRData.total);
+      if (races.at(-1)?.round === json.MRData.RaceTable.Races?.[0]?.round) {
+        json.MRData.RaceTable.Races[0].Results.forEach((result) =>
+          races.at(-1)?.Results.push(result)
+        );
+        races.push(...json.MRData.RaceTable.Races.slice(1));
+      } else if (json.MRData.RaceTable.Races.length) {
+        races.push(...json.MRData.RaceTable.Races);
+      }
+    }
+    return firstJson;
   }
 );
 
 export const fetchSprintResults = createAsyncThunk(
   "results/fetchSprintResults",
   async ({ year }: FetchResultsProps) => {
-    // TODO: pull string into constants
     const sprintResponse = await fetch(
-      `https://ergast.com/api/f1/${year}/sprint.json?limit=500`
+      `https://ergast.com/api/f1/${year}/sprint.json?limit=100`
     );
-    const sprintJson: Promise<ResultsResponse> = sprintResponse.json();
-    return sprintJson;
+    const firstJson: ResultsResponse = await sprintResponse.json();
+    const races = firstJson.MRData.RaceTable.Races;
+
+    let limit = Number(firstJson.MRData.limit),
+      offset = Number(firstJson.MRData.offset),
+      total = Number(firstJson.MRData.total);
+
+    while (offset + limit < total + limit) {
+      const response = await fetch(
+        `https://ergast.com/api/f1/${year}/sprint.json?limit=100&offset=${
+          offset + limit
+        }`
+      );
+      const json: ResultsResponse = await response.json();
+      limit = Number(json.MRData.limit);
+      offset = Number(json.MRData.offset);
+      total = Number(json.MRData.total);
+      if (races.at(-1)?.round === json.MRData.RaceTable.Races?.[0]?.round) {
+        json.MRData.RaceTable.Races[0].SprintResults.forEach((result) =>
+          races.at(-1)?.SprintResults.push(result)
+        );
+        races.push(...json.MRData.RaceTable.Races.slice(1));
+      } else if (json.MRData.RaceTable.Races.length) {
+        races.push(...json.MRData.RaceTable.Races);
+      }
+    }
+    return firstJson;
   }
 );
 
