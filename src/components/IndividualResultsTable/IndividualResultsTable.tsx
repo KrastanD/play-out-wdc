@@ -1,17 +1,10 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import {
-  fetchRaceResults,
-  fetchSprintResults,
-  RequestState,
-  selectPastRaces,
-  selectRaceStatus,
-  selectRequestError,
-  selectRequestYear,
-  selectSprintStatus,
-} from "../../slices/resultsSlice";
-import { useAppDispatch } from "../../store";
+  useFetchRaceResultsQuery,
+  useFetchSprintResultsQuery,
+} from "../../slices/api";
+import { mergeRacesAndSprints } from "../../utils/mergeRacesAndSprints";
 import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
@@ -26,49 +19,49 @@ import Title from "../Title";
 import "./styles.scss";
 
 function IndividualResultsTable() {
-  const dispatch = useAppDispatch();
   const params = useParams();
-  const pastRaces = useSelector(selectPastRaces);
-  const resultsRaceStatus = useSelector(selectRaceStatus);
-  const resultsSprintStatus = useSelector(selectSprintStatus);
-  const requestYear = useSelector(selectRequestYear);
-  const errorData = useSelector(selectRequestError);
-
   const year = Number(params.year ?? new Date().getFullYear());
 
-  const resultsSuccess =
-    resultsRaceStatus === RequestState.Succeeded &&
-    resultsSprintStatus === RequestState.Succeeded;
-  const resultsLoading =
-    resultsRaceStatus === RequestState.Loading ||
-    resultsSprintStatus === RequestState.Loading;
-  const resultsError =
-    resultsRaceStatus === RequestState.Failed ||
-    resultsSprintStatus === RequestState.Failed;
-  useEffect(() => {
-    if (
-      (resultsRaceStatus === RequestState.Idle ||
-        resultsRaceStatus === RequestState.Succeeded) &&
-      (resultsSprintStatus === RequestState.Idle ||
-        resultsSprintStatus === RequestState.Succeeded) &&
-      requestYear !== year
-    ) {
-      dispatch(fetchRaceResults({ year }));
-      dispatch(fetchSprintResults({ year }));
-    }
-  }, [resultsRaceStatus, resultsSprintStatus, year, requestYear]);
+  const {
+    data: races,
+    error: raceError,
+    isLoading: isRaceQueryLoading,
+    isSuccess: isRaceQuerySuccess,
+  } = useFetchRaceResultsQuery({ year });
 
-  if (resultsSuccess) {
-    if (pastRaces.length === 0) {
+  const {
+    data: sprints,
+    error: sprintError,
+    isLoading: isSprintQueryLoading,
+    isSuccess: isSprintQuerySuccess,
+  } = useFetchSprintResultsQuery({ year });
+
+  if (raceError || sprintError) {
+    return (
+      <div>
+        <p>Something went wrong :(</p>
+      </div>
+    );
+  }
+
+  if (isRaceQueryLoading || isSprintQueryLoading) {
+    return (
+      <div className="IndividualResultsTable__loader">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isRaceQuerySuccess && isSprintQuerySuccess) {
+    const allRaces = mergeRacesAndSprints(races, sprints);
+
+    if (allRaces.length === 0) {
       return <NoResults />;
     }
 
-    const maxDrivers = pastRaces.reduce((acc, curr) => {
-      if (curr.Results?.length > acc) {
-        return curr.Results.length;
-      }
-      return acc;
-    }, pastRaces[0].Results.length);
+    const maxDrivers = races.reduce((acc, curr) => {
+      return Math.max(acc, curr.Results.length);
+    }, races[0].Results.length);
 
     return (
       <>
@@ -77,14 +70,14 @@ function IndividualResultsTable() {
           <Table>
             <colgroup>
               <col width="80" />
-              {pastRaces.map((race) => (
+              {allRaces.map((race) => (
                 <col key={race.raceName} width="120" />
               ))}
             </colgroup>
             <thead>
               <tr>
                 <TableHeaderCell>Position</TableHeaderCell>
-                {pastRaces.map((race) => (
+                {allRaces.map((race) => (
                   <TableHeaderCell key={race.raceName}>
                     {race.raceName}
                   </TableHeaderCell>
@@ -92,36 +85,25 @@ function IndividualResultsTable() {
               </tr>
             </thead>
             <tbody className="IndividualResultsTable__row">
-              {Array.from(Array(maxDrivers).keys()).map(
-                (positionValue, position) => (
-                  <TableRow key={positionValue}>
-                    <TableData>{positionValue + 1}</TableData>
-                    {pastRaces.map((race) => (
-                      <TableData key={String(race.raceName)}>
-                        <IndividualResult position={position} race={race} />
-                      </TableData>
-                    ))}
-                  </TableRow>
-                )
-              )}
+              {Array.from({ length: maxDrivers }).map((_, position) => (
+                <TableRow key={position}>
+                  <TableData>{position + 1}</TableData>
+                  {allRaces.map((race) => (
+                    <TableData key={String(race.raceName)}>
+                      <IndividualResult position={position} race={race} />
+                    </TableData>
+                  ))}
+                </TableRow>
+              ))}
             </tbody>
           </Table>
         </HorizontalScroll>
-        <IndividualChart races={pastRaces} />
+        <IndividualChart races={allRaces} />
         <Footer />
       </>
     );
   }
-  if (resultsError) {
-    return <div>{errorData}</div>;
-  }
-  if (resultsLoading) {
-    return (
-      <div className="IndividualResultsTable__loader">
-        <Spinner />
-      </div>
-    );
-  }
+
   return <NoResults />;
 }
 

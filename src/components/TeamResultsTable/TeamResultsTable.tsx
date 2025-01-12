@@ -1,19 +1,11 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  fetchRaceResults,
-  fetchSprintResults,
-  RequestState,
-  selectPastRaces,
-  selectRaceStatus,
-  selectRequestError,
-  selectRequestYear,
-  selectSprintStatus,
-} from "../../slices/resultsSlice";
-import { useAppDispatch } from "../../store";
-import { Race, TeamResultType } from "../../types";
+  useFetchRaceResultsQuery,
+  useFetchSprintResultsQuery,
+} from "../../slices/api";
+import { getAllTeamResults } from "../../utils/getAllTeamResults";
 import { arrayColumn } from "../../utils/helperFunctions";
+import { mergeRacesAndSprints } from "../../utils/mergeRacesAndSprints";
 import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import NoResults from "../NoResults";
@@ -27,88 +19,52 @@ import TeamResult from "../TeamResult";
 import Title from "../Title";
 
 function PastTeamResultsTable() {
-  const dispatch = useAppDispatch();
   const params = useParams();
-  const pastRaces = useSelector(selectPastRaces);
-  const resultsRaceStatus = useSelector(selectRaceStatus);
-  const resultsSprintStatus = useSelector(selectSprintStatus);
-  const requestYear = useSelector(selectRequestYear);
-  const errorData = useSelector(selectRequestError);
-
   const year = Number(params.year ?? new Date().getFullYear());
 
-  const resultsSuccess =
-    resultsRaceStatus === RequestState.Succeeded &&
-    resultsSprintStatus === RequestState.Succeeded;
-  const resultsLoading =
-    resultsRaceStatus === RequestState.Loading ||
-    resultsSprintStatus === RequestState.Loading;
-  const resultsError =
-    resultsRaceStatus === RequestState.Failed ||
-    resultsSprintStatus === RequestState.Failed;
+  const {
+    data: races,
+    error: raceError,
+    isLoading: isRaceQueryLoading,
+    isSuccess: isRaceQuerySuccess,
+  } = useFetchRaceResultsQuery({ year });
 
-  useEffect(() => {
-    if (
-      (resultsRaceStatus === RequestState.Idle ||
-        resultsRaceStatus === RequestState.Succeeded) &&
-      (resultsSprintStatus === RequestState.Idle ||
-        resultsSprintStatus === RequestState.Succeeded) &&
-      requestYear !== year
-    ) {
-      dispatch(fetchRaceResults({ year }));
-      dispatch(fetchSprintResults({ year }));
-    }
-  }, [resultsRaceStatus, resultsSprintStatus, year, requestYear]);
+  const {
+    data: sprints,
+    error: sprintError,
+    isLoading: isSprintQueryLoading,
+    isSuccess: isSprintQuerySuccess,
+  } = useFetchSprintResultsQuery({ year });
 
-  const getTeamResults = (race: Race) => {
-    const teamResults: TeamResultType[] = [];
-    const results = race.Results ?? race.SprintResults;
-    results.forEach((result) => {
-      const teamResultsIndex = teamResults.findIndex(
-        (teamResult) => teamResult.constructor === result.Constructor.name
-      );
-      if (teamResultsIndex > -1) {
-        teamResults[teamResultsIndex].points += Number(result.points);
-      } else {
-        teamResults.push({
-          race: race.raceName,
-          constructor: result.Constructor.name,
-          points: Number(result.points),
-        });
-      }
-    });
-    teamResults.sort((constructorA, constructorB) => {
-      if (constructorA.points > constructorB.points) {
-        return -1;
-      }
-      if (constructorB.points > constructorA.points) {
-        return 1;
-      }
-      return 0;
-    });
-    return teamResults;
-  };
+  if (raceError || sprintError) {
+    return (
+      <div>
+        <p>Something went wrong :(</p>
+      </div>
+    );
+  }
 
-  const getAllTeamResults = () => {
-    const allTeamResults: TeamResultType[][] = [];
-    pastRaces.forEach((race) => {
-      allTeamResults.push(getTeamResults(race));
-    });
-    return allTeamResults;
-  };
+  if (isRaceQueryLoading || isSprintQueryLoading) {
+    return (
+      <div className="IndividualResultsTable__loader">
+        <Spinner />
+      </div>
+    );
+  }
 
-  if (resultsSuccess) {
-    if (pastRaces.length === 0) {
+  if (isRaceQuerySuccess && isSprintQuerySuccess) {
+    const allRaces = mergeRacesAndSprints(races, sprints);
+
+    if (allRaces.length === 0) {
       return <NoResults />;
     }
 
-    const allResults = getAllTeamResults();
+    const allResults = getAllTeamResults(allRaces);
+
     const maxTeams = allResults.reduce((acc, curr) => {
-      if (curr.length > acc) {
-        return curr.length;
-      }
-      return acc;
+      return Math.max(acc, curr.length);
     }, allResults[0].length);
+
     return (
       <>
         <Title />
@@ -116,14 +72,14 @@ function PastTeamResultsTable() {
           <Table>
             <colgroup>
               <col width="80" />
-              {pastRaces.map((race) => (
+              {allRaces.map((race) => (
                 <col key={race.raceName} width="120" />
               ))}
             </colgroup>
             <thead>
               <TableRow>
                 <TableHeaderCell>Team Position</TableHeaderCell>
-                {pastRaces.map((race) => (
+                {allRaces.map((race) => (
                   <TableHeaderCell key={race.raceName}>
                     {race.raceName}
                   </TableHeaderCell>
@@ -131,8 +87,8 @@ function PastTeamResultsTable() {
               </TableRow>
             </thead>
             <tbody>
-              {Array.from(Array(maxTeams).keys()).map((value, index) => (
-                <TableRow key={value}>
+              {Array.from({ length: maxTeams }).map((_, index) => (
+                <TableRow key={index}>
                   <TableData>{index + 1}</TableData>
                   {arrayColumn(allResults, index).map((teamResult) => {
                     if (teamResult === undefined) {
@@ -159,21 +115,12 @@ function PastTeamResultsTable() {
             </tbody>
           </Table>
         </HorizontalScroll>
-        <TeamChart races={pastRaces} />
+        <TeamChart races={allRaces} />
         <Footer />
       </>
     );
   }
-  if (resultsError) {
-    return <div>{errorData}</div>;
-  }
-  if (resultsLoading) {
-    return (
-      <div className="IndividualResultsTable__loader">
-        <Spinner />
-      </div>
-    );
-  }
+
   return <NoResults />;
 }
 
