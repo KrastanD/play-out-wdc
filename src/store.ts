@@ -1,17 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import resultsReducer, { ResultsSlice } from "./slices/resultsSlice";
+import { api } from "./slices/api";
 
 const store = configureStore({
   reducer: {
-    results: resultsReducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
   devTools: true,
 });
-
-export interface StoreType {
-  results: ResultsSlice;
-}
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
