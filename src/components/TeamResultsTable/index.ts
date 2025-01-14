@@ -1,3 +1,3 @@
-import PastTeamResultsTable from "./TeamResultsTable";
+import TeamResultsTable from "./TeamResultsTable";
 
-export default PastTeamResultsTable;
+export default TeamResultsTable;
