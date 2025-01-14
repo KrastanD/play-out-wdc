@@ -1,6 +1,6 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import IndividualResultsTable from "./components/IndividualResultsTable";
+import DriversChampionshipScreen from "./components/DriversChampionshipScreen";
 import Navbar from "./components/Navbar";
 import PastTeamResultsTable from "./components/TeamResultsTable";
 
@@ -9,9 +9,12 @@ function App() {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={<IndividualResultsTable />} />
+        <Route path="/" element={<DriversChampionshipScreen />} />
         <Route path="/drivers" element={<Outlet />}>
-          <Route path="/drivers/:year" element={<IndividualResultsTable />} />
+          <Route
+            path="/drivers/:year"
+            element={<DriversChampionshipScreen />}
+          />
         </Route>
         <Route path="/constructors" element={<Outlet />}>
           <Route
