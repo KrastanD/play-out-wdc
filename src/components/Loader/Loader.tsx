@@ -1,4 +1,5 @@
 import Spinner from "../Spinner";
+import "./Loader.styles.scss";
 
 function Loader() {
   return (

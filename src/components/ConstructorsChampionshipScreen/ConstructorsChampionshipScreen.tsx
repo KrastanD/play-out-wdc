@@ -21,6 +21,7 @@ function ConstructorsChampionshipScreen() {
     error: raceError,
     isLoading: isRaceQueryLoading,
     isSuccess: isRaceQuerySuccess,
+    isFetching: isRaceQueryFetching,
   } = useFetchRaceResultsQuery({ year });
 
   const {
@@ -28,6 +29,7 @@ function ConstructorsChampionshipScreen() {
     error: sprintError,
     isLoading: isSprintQueryLoading,
     isSuccess: isSprintQuerySuccess,
+    isFetching: isSprintQueryFetching,
   } = useFetchSprintResultsQuery({ year });
 
   if (raceError || sprintError) {
@@ -38,7 +40,12 @@ function ConstructorsChampionshipScreen() {
     );
   }
 
-  if (isRaceQueryLoading || isSprintQueryLoading) {
+  if (
+    isRaceQueryLoading ||
+    isSprintQueryLoading ||
+    isRaceQueryFetching ||
+    isSprintQueryFetching
+  ) {
     return <Loader />;
   }
 

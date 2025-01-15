@@ -21,6 +21,7 @@ function DriversChampionshipScreen() {
     data: races,
     error: raceError,
     isLoading: isRaceQueryLoading,
+    isFetching: isRaceQueryFetching,
     isSuccess: isRaceQuerySuccess,
   } = useFetchRaceResultsQuery({ year });
 
@@ -28,6 +29,7 @@ function DriversChampionshipScreen() {
     data: sprints,
     error: sprintError,
     isLoading: isSprintQueryLoading,
+    isFetching: isSprintQueryFetching,
     isSuccess: isSprintQuerySuccess,
   } = useFetchSprintResultsQuery({ year });
 
@@ -39,7 +41,12 @@ function DriversChampionshipScreen() {
     );
   }
 
-  if (isRaceQueryLoading || isSprintQueryLoading) {
+  if (
+    isRaceQueryLoading ||
+    isSprintQueryLoading ||
+    isRaceQueryFetching ||
+    isSprintQueryFetching
+  ) {
     return <Loader />;
   }
 

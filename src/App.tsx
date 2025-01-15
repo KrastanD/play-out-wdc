@@ -1,8 +1,8 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import ConstructorsChampionshipScreen from "./components/ConstructorsChampionshipScreen";
 import DriversChampionshipScreen from "./components/DriversChampionshipScreen";
 import Navbar from "./components/Navbar";
-import PastTeamResultsTable from "./components/TeamResultsTable";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/constructors" element={<Outlet />}>
           <Route
             path="/constructors/:year"
-            element={<PastTeamResultsTable />}
+            element={<ConstructorsChampionshipScreen />}
           />
         </Route>
       </Routes>
