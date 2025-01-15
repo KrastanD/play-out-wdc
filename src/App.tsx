@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router";
 import "./App.scss";
 import ConstructorsChampionshipScreen from "./components/ConstructorsChampionshipScreen";
 import DriversChampionshipScreen from "./components/DriversChampionshipScreen";
