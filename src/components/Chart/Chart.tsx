@@ -42,7 +42,7 @@ function Chart({ data, title }: ChartProps) {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "left" as const,
+        position: "bottom" as const,
       },
       title: {
         display: true,
