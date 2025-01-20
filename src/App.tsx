@@ -2,11 +2,13 @@ import { Outlet, Route, Routes } from "react-router";
 import "./App.scss";
 import ConstructorsChampionshipScreen from "./components/ConstructorsChampionshipScreen";
 import DriversChampionshipScreen from "./components/DriversChampionshipScreen";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import ErrorScreen from "./components/ErrorScreen/ErrorScreen";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Navbar />
       <Routes>
         <Route path="/" element={<DriversChampionshipScreen />} />
@@ -22,7 +24,14 @@ function App() {
             element={<ConstructorsChampionshipScreen />}
           />
         </Route>
+        <Route
+          path="*"
+          element={
+            <ErrorScreen error="We couldn't find the page you were looking for" />
+          }
+        />
       </Routes>
+      <Footer />
     </div>
   );
 }

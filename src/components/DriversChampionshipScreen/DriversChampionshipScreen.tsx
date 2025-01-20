@@ -5,13 +5,12 @@ import {
   useFetchSprintResultsQuery,
 } from "../../slices/api";
 import { mergeRacesAndSprints } from "../../utils/mergeRacesAndSprints";
-import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
 import IndividualResultsTable from "../IndividualResultsTable";
-import NoResults from "../NoResults";
-import Title from "../Title";
 import Loader from "../Loader";
+import ErrorScreen from "../ErrorScreen/ErrorScreen";
+import Title from "../Title";
 
 function DriversChampionshipScreen() {
   const params = useParams();
@@ -34,11 +33,7 @@ function DriversChampionshipScreen() {
   } = useFetchSprintResultsQuery({ year });
 
   if (raceError || sprintError) {
-    return (
-      <div>
-        <p>Something went wrong :(</p>
-      </div>
-    );
+    return <ErrorScreen error="Something went wrong :(" />;
   }
 
   if (
@@ -61,13 +56,12 @@ function DriversChampionshipScreen() {
             <IndividualResultsTable allRaces={allRaces} />
           </HorizontalScroll>
           <IndividualChart races={allRaces} />
-          <Footer />
         </>
       );
     }
   }
 
-  return <NoResults />;
+  return <ErrorScreen error="There is no data for this season" />;
 }
 
 export default DriversChampionshipScreen;
