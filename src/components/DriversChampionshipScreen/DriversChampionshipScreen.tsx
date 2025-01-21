@@ -1,17 +1,16 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import {
   useFetchRaceResultsQuery,
   useFetchSprintResultsQuery,
 } from "../../slices/api";
 import { mergeRacesAndSprints } from "../../utils/mergeRacesAndSprints";
-import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import IndividualChart from "../IndividualChart";
 import IndividualResultsTable from "../IndividualResultsTable";
-import NoResults from "../NoResults";
-import Title from "../Title";
 import Loader from "../Loader";
+import ErrorScreen from "../ErrorScreen/ErrorScreen";
+import Title from "../Title";
 
 function DriversChampionshipScreen() {
   const params = useParams();
@@ -33,12 +32,12 @@ function DriversChampionshipScreen() {
     isSuccess: isSprintQuerySuccess,
   } = useFetchSprintResultsQuery({ year });
 
+  if (year < 2010) {
+    return <ErrorScreen error="We don't currently support years before 2010" />;
+  }
+
   if (raceError || sprintError) {
-    return (
-      <div>
-        <p>Something went wrong :(</p>
-      </div>
-    );
+    return <ErrorScreen error="Something went wrong :(" />;
   }
 
   if (
@@ -61,13 +60,12 @@ function DriversChampionshipScreen() {
             <IndividualResultsTable allRaces={allRaces} />
           </HorizontalScroll>
           <IndividualChart races={allRaces} />
-          <Footer />
         </>
       );
     }
   }
 
-  return <NoResults />;
+  return <ErrorScreen error="There is no data for this season" />;
 }
 
 export default DriversChampionshipScreen;

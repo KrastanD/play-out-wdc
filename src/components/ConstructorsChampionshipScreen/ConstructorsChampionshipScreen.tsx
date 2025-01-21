@@ -4,10 +4,9 @@ import {
   useFetchSprintResultsQuery,
 } from "../../slices/api";
 import { mergeRacesAndSprints } from "../../utils/mergeRacesAndSprints";
-import Footer from "../Footer";
 import HorizontalScroll from "../HorizontalScroll";
 import Loader from "../Loader";
-import NoResults from "../NoResults";
+import ErrorScreen from "../ErrorScreen";
 import TeamChart from "../TeamChart";
 import TeamResultsTable from "../TeamResultsTable";
 import Title from "../Title";
@@ -32,12 +31,12 @@ function ConstructorsChampionshipScreen() {
     isFetching: isSprintQueryFetching,
   } = useFetchSprintResultsQuery({ year });
 
+  if (year < 2010) {
+    return <ErrorScreen error="We don't currently support years before 2010" />;
+  }
+
   if (raceError || sprintError) {
-    return (
-      <div>
-        <p>Something went wrong :(</p>
-      </div>
-    );
+    return <ErrorScreen error="Something went wrong :(" />;
   }
 
   if (
@@ -60,13 +59,12 @@ function ConstructorsChampionshipScreen() {
             <TeamResultsTable races={allRaces} />
           </HorizontalScroll>
           <TeamChart races={allRaces} />
-          <Footer />
         </>
       );
     }
   }
 
-  return <NoResults />;
+  return <ErrorScreen error="There is no data for this season" />;
 }
 
 export default ConstructorsChampionshipScreen;

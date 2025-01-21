@@ -1,28 +1,37 @@
-import { Outlet, Route, Routes } from "react-router";
+import { Navigate, Outlet, Route, Routes } from "react-router";
 import "./App.scss";
 import ConstructorsChampionshipScreen from "./components/ConstructorsChampionshipScreen";
 import DriversChampionshipScreen from "./components/DriversChampionshipScreen";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import ErrorScreen from "./components/ErrorScreen/ErrorScreen";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<DriversChampionshipScreen />} />
-        <Route path="/drivers" element={<Outlet />}>
+      <ErrorBoundary fallback={<ErrorScreen error="Something went wrong :(" />}>
+        <Routes>
           <Route
-            path="/drivers/:year"
-            element={<DriversChampionshipScreen />}
+            path="/"
+            element={<Navigate to={`/drivers/${new Date().getFullYear()}`} />}
           />
-        </Route>
-        <Route path="/constructors" element={<Outlet />}>
+          <Route path="drivers" element={<Outlet />}>
+            <Route path=":year" element={<DriversChampionshipScreen />} />
+          </Route>
+          <Route path="constructors" element={<Outlet />}>
+            <Route path=":year" element={<ConstructorsChampionshipScreen />} />
+          </Route>
           <Route
-            path="/constructors/:year"
-            element={<ConstructorsChampionshipScreen />}
+            path="*"
+            element={
+              <ErrorScreen error="We couldn't find the page you were looking for" />
+            }
           />
-        </Route>
-      </Routes>
+        </Routes>
+      </ErrorBoundary>
+      <Footer />
     </div>
   );
 }
