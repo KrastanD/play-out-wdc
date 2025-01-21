@@ -31,6 +31,10 @@ function ConstructorsChampionshipScreen() {
     isFetching: isSprintQueryFetching,
   } = useFetchSprintResultsQuery({ year });
 
+  if (year < 2010) {
+    return <ErrorScreen error="We don't currently support years before 2010" />;
+  }
+
   if (raceError || sprintError) {
     return <ErrorScreen error="Something went wrong :(" />;
   }
