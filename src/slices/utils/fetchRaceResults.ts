@@ -23,7 +23,7 @@ export async function fetchRaceResults(year: number) {
 }
 
 async function fetchResultsJson(year: number, limit: number, offset: number) {
-  const baseUrl = "https://ergast.com/api/f1/";
+  const baseUrl = "https://api.jolpi.ca/ergast/f1/";
   const response = await fetch(
     `${baseUrl}${year}/results.json?limit=${limit}&offset=${offset}`
   );
