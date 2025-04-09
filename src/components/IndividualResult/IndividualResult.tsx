@@ -9,7 +9,10 @@ type IndividualResultProps = {
 
 function IndividualResult({ position, race }: IndividualResultProps) {
   const FIRST_FL_YEAR = 2019;
-  const addFL = new Date(race.date).getFullYear() >= FIRST_FL_YEAR;
+  const LAST_FL_YEAR = 2024;
+  const addFL =
+    new Date(race.date).getFullYear() >= FIRST_FL_YEAR &&
+    new Date(race.date).getFullYear() <= LAST_FL_YEAR;
 
   const results = race.Results ?? race.SprintResults;
   const teamId = results[position]?.Constructor?.constructorId;
