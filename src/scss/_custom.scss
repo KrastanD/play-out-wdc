@@ -23,6 +23,8 @@ $virgin-color: #F4322C;
 $force-india-color: #FF80C7;
 $f1-red: #ff1801;
 $rb-color: #1636C1;
+$audi-color: #C00000;
+$cadillac-color: #111111;
 
 .Global__red_bull-bg {
   background-color: $redbull-color;
@@ -206,4 +208,14 @@ $rb-color: #1636C1;
 
 .Global__rb-bg:disabled {
   background-color: $rb-color;
+}
+
+.Global__audi-bg,
+.Global__audi-bg:disabled {
+  background-color: $audi-color;
+}
+
+.Global__cadillac-bg,
+.Global__cadillac-bg:disabled {
+  background-color: $cadillac-color;
 }
