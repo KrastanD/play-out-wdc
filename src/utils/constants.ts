@@ -130,4 +130,12 @@ export const Constructors: ConstructorsType = {
     name: ConstructorName.Rb,
     mainColor: "#1636C1",
   },
+  [ConstructorID.Audi]: {
+    name: ConstructorName.Audi,
+    mainColor: "#C00000",
+  },
+  [ConstructorID.Cadillac]: {
+    name: ConstructorName.Cadillac,
+    mainColor: "#111111",
+  },
 };

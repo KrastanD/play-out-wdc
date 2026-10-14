@@ -50,6 +50,8 @@ export enum ConstructorName {
   LotusRacing = "Team Lotus",
   Virgin = "Virgin",
   Rb = "RB F1 Team",
+  Audi = "Audi",
+  Cadillac = "Cadillac F1 Team",
 }
 
 export enum ConstructorNationality {
@@ -86,6 +88,8 @@ export enum ConstructorID {
   LotusRacing = "lotus_racing",
   Virgin = "virgin",
   Rb = "rb",
+  Audi = "audi",
+  Cadillac = "cadillac",
 }
 
 export interface Constructor {
